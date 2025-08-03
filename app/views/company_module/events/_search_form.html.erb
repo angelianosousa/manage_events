@@ -1,0 +1,39 @@
+<nav class="navbar card mb-4">
+  <div class="container-fluid card-body py-0">
+    <div></div>
+
+    <%= search_form_for @q, url: company_events_path, class: 'container-fluid' do |f| %>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="input-group input-group-sm">
+            <span class="input-group-text" id="inputGroup-sizing-sm">
+              <%= bootstrap_icon('', 'bi-search') %>
+            </span>
+
+            <%= f.text_field :name_or_description_cont, class: 'form-control form-control-sm', placeholder: 'Nome ou descrição...' %>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <%= f.select :category_name_eq, options_for_select(Event.pluck(:category_name).uniq),
+                                      { include_blank: 'Categorias' },
+                                      { class: 'form-select form-select-sm' } %>
+        </div>
+
+        <div class="col-md">
+          <%= f.select :status_eq, options_for_select(Event.statuses.map { |key, value| [key, value]}),
+                               { include_blank: 'Status' },
+                               { class: 'form-select form-select-sm' } %>
+        </div>
+
+        <div class="col-md">
+          <div class="btn-group">
+            <%= f.submit 'Pesquisar', class: 'btn btn-outline-dark btn-sm' %>
+            <%= link_to 'Limpar', company_events_path, class: 'btn btn-outline-dark btn-sm' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+  </div>
+</nav>

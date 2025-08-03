@@ -1,0 +1,69 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Financeiro</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <% event.tickets.each do |ticket| %>
+          <h5>Ingresso <%= ticket.name %></h5>
+
+          <div class="card border-dark mb-4">
+            <div class="card-body">
+              <table class="table table-borderless">
+                <thead class="table-light">
+                  <tr>
+                    <th>Quantidade total</th>
+                    <th>Valor do ingresso</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td><%= ticket.quantity %></td>
+                    <td><%= humanized_money_with_symbol ticket.price %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h5>Pagamentos</h5>
+
+          <div class="card">
+            <div class="card-body">
+              <table class="table">
+                <thead class="table-light">
+                  <tr>
+                    <th>Cliente</th>
+                    <th>Data de vencimento</th>
+                    <th>Meio de pagamento</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% ticket.ticket_payments.includes(:client).each do |payment| %>
+                    <tr>
+                      <td><%= payment.client.name %></td>
+                      <td><%= I18n.l payment.due_date, format: :short %></td>
+                      <td><%= badge_payment_method(payment.payment_method) %></td>
+                      <td><%= badge_payment_status(payment.status) %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>

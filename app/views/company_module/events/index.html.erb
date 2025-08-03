@@ -1,0 +1,73 @@
+<%= content_for :page_header do %>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+
+      <div class="navbar-brand">
+        <h4 class="mb-0">
+          <i class="bi bi-calendar-event"></i> Eventos
+        </h4>
+
+        <small>Gerencie seus eventos</small>
+      </div>
+
+      <%= link_to_new_resource(' Novo evento', new_company_event_path, 'btn-dark') %>
+    </div>
+  </nav>
+<% end %>
+
+<p style="color: green"><%= notice %></p>
+
+<%= render 'search_form' %>
+
+<% if @events.any? %>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    <% @events.each do |event| %>
+
+      <div class="col card-group">
+        <div class="card">
+          <div class="card-body">
+            <div class="mb-3">
+              <h5 class="card-title mb-0"><%= event.name %></h5>
+
+              <div class="d-flex justify-content-between">
+                <small class="mt-0"><span class="badge text-bg-secondary"><%= event.category_name %></span></small>
+                
+                <span>
+                  <%= event_visibility(event) %>
+                  <%= badge_status_event(event) %>
+                </span>
+              </div>
+            </div>
+
+            <div class="card-text mb-3">
+              <% ticket = event.tickets.last %>
+
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(' Inicio ', 'bi-calendar-date') %><%= I18n.l event.date_start, format: :short %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(' Fim ', 'bi-calendar-date') %><%= I18n.l event.date_end, format: :short %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(event.address.address_name, 'bi-geo-alt') %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(" #{ticket.ticket_payments.count} de #{ticket.quantity} participantes", 'bi-people') %></p>
+            </div>
+
+            <%= event_progress(ticket).html_safe %>
+          </div>
+
+          <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+              <b class='fs-6'><%= humanized_money_with_symbol ticket.price %></b>
+
+              <div class="d-flex justify-content-right">
+                <%= link_to_show_resource('', company_event_path(event.id)) %>
+                <%= link_to_edit_resource('', edit_company_event_path(event.id)) %>
+                <%= link_to_delete_resource('', company_event_path(event.id)) %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-center">Sem eventos...</p>
+<% end %>
+

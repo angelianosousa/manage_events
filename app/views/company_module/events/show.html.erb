@@ -1,0 +1,125 @@
+<div class="container">
+  <%= content_for :page_header do %>
+    <nav class="navbar">
+      <div class="container">
+
+        <div class="navbar-brand mb-3">
+          <h5 class="mb-0">
+            <%= @event.name %>
+            
+            <%= badge_status_event(@event)%>
+          </h5>
+
+          <small style="color: gray;"><%= @event.category_name %></small>
+        </div>
+
+        <div class="d-flex">
+          <p class="text-right me-1">
+            <%= link_to company_event_page_path(params[:company], @event), class: 'btn btn-outline-dark btn-sm' do %>
+              <%= bootstrap_icon(' Ver página', 'bi-box-arrow-up-right') %>
+            <% end %>
+          </p>
+          <%= link_to_back %>
+        </div>
+      </div>
+    </nav>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <h6>Informações do evento</h6>
+
+          <div class="row">
+            <div class="col-md">
+              <b><%= bootstrap_icon('', 'bi-calendar-date') %> Data</b>
+              <p>
+                <%= I18n.l @event.date_start, format: :short %><br>
+              </p>
+            </div>
+
+            <div class="col-md">
+              <b><%= bootstrap_icon('', 'bi-clock') %> Horário</b>
+
+              <p>
+                <%= @event.time_start.strftime('%H:%m') %> -
+                <%= @event.time_end.strftime('%H:%m') %>
+              </p>
+            </div>
+
+            <div class="col-md">
+              <b><%= bootstrap_icon('', 'bi-geo-alt') %> Localização</b><br>
+
+              <%= @event.address.address_name %>
+            </div>
+
+            <div class="col-md">
+              <b><%= bootstrap_icon('', 'bi-people') %> Participantes</b><br>
+
+              <%= "#{@event.tickets.last.ticket_payments.count} de #{@event.tickets.last.quantity} participantes" %>
+            </div>
+          </div><hr>
+
+          <div class="row">
+            <div class="col">
+              <h6>Detalhes</h6>
+
+              <%= @event.description %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card mb-2">
+        <div class="card-body">
+          <h6>Estatisticas</h6>
+
+          <% @event.tickets.includes(:ticket_payments).each do |ticket| %>
+            <%= event_progress(ticket).html_safe %> <br>
+
+            <div class="d-flex justify-content-between" style="color: gray;">
+              <p>Receita total</p>
+              <b><%= humanized_money_with_symbol ticket.tickets_receipt %></b>
+            </div>
+
+            <div class="d-flex justify-content-between" style="color: gray;">
+              <p>Preço individual</p>
+              <b><%= humanized_money_with_symbol ticket.price %></b>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+
+      <div class="card mb-2">
+        <div class="card-body">
+          <h6>Organizador</h6>
+
+          <%= @event.company.name %>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h6>Ações rápidas</h6>
+
+          <div class="d-flex flex-column">
+            <button type="button" class="btn btn-outline-dark btn-sm my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <%= bootstrap_icon(' Financeiro', 'bi-cash') %>
+            </button>
+
+            <%= link_to '#', class: 'btn btn-outline-dark btn-sm' do %>
+              <%= bootstrap_icon(' Participantes', 'bi-people') %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render 'finances', event: @event %>

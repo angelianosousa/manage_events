@@ -1,0 +1,74 @@
+<%= content_for :page_header do %>
+  <div class="mb-3">
+    <h4 class="mb-0">Dashboard</h4>
+
+    <small>Visão geral do seu sistema</small>
+  </div>
+<% end %>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="bi bi-calendar-event"></i> Eventos
+        </h5>
+
+        <p class="card-text">
+          <div class="mt-5">
+            <p class="card-text mb-0">15</p>
+            <p style="font-size: 15px; color: gray;">8 ativos <span class="badge text-bg-primary">+3 este mês</span></p>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= bootstrap_icon(' Produtos', 'bi-box-seam') %>
+        </h5>
+
+        <p class="card-text">
+          <div class="mt-5">
+            <p class="card-text mb-0">145</p>
+            <p style="font-size: 15px; color: gray;">132 em estoques <span class="badge text-bg-danger">13 baixo</span></p>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="bi bi-cart"></i> Pedidos
+        </h5>
+
+        <p class="card-text">
+          <div class="mt-5">
+            <p class="card-text mb-0">89</p>
+            <p style="font-size: 15px; color: gray;">12 pendentes <span class="badge text-bg-secondary">77 completos</span></p>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="bi bi-piggy-bank"></i> Receitas
+        </h5>
+
+        <p class="card-text">
+          <div class="mt-5">
+            <p class="card-text mb-0">R$45.620,00</p>
+            <p style="font-size: 15px; color: gray;">R$8.940,00 este mês <span class="badge text-bg-success">+12,5%</span></p>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

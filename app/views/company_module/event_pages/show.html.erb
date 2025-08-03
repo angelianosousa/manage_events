@@ -1,0 +1,87 @@
+<%= content_for :event_title do %>
+  <%= @event&.name %>
+<% end %>
+
+<div class="container-fluid">
+  <header class="d-flex flex-wrap justify-content-center align-items-center py-3 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none"> 
+      <svg class="bi me-2" width="40" height="32" aria-hidden="true">
+        <use xlink:href="#bootstrap"></use>
+      </svg>
+      <span class="h4">Eventos</span>
+    </a>
+
+    <% if admin_signed_in? %>
+      <ul class="nav nav-pills">
+        <li class="nav-item"><%= link_to_edit_resource(' Editar', edit_company_event_path(@event.id), size: 'btn-md') %></li>
+        <li class="nav-item"><%= link_to_back('btn-md') %></li>
+      </ul>
+    <% end %>
+  </header>
+</div>
+
+<main>
+  <section class="text-center mb-5">
+    <div class="row py-lg-5 banner_event" style="background-image: url('<%= @event&.banner&.image&.attached? ? url_for(@event&.banner&.image) : 'https://mdbcdn.b-cdn.net/img/new/fluid/nature/015.webp' %>'); background-repeat: no-repeat; background-position: center center; background-size: cover; opacity: 0.7; width: 100%; height: 300px;">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="text-light"><%= @event.name %></h1>
+
+        <p class="lead text-light">
+          <%= @event.description %>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class='row'>
+      <div class='col-md-9'>
+        <div class='card p-0 m-0'>
+          <div class='card-body'>
+            <div class="row">
+              <div class='col-md'>
+                <div class="d-flex align-items-center">
+                  <%= bootstrap_icon('', 'bi-calendar-date', 'font-size: 3em;') %>
+
+                  <p class="ms-2">
+                    <b>Data</b> <br>
+                    <%= I18n.l @event.date_start, format: :long %> <br>
+                    <%= I18n.l @event.date_end, format: :long %>
+                  </p>
+                </div>
+              </div>
+
+              <div class='col-md'>
+                <div class="d-flex align-items-center">
+                  <%= bootstrap_icon('', 'bi-geo-alt', 'font-size: 3em;') %>
+                  <p class="ms-2">
+                    <b>Local</b><br>
+                    <%= @event.local_name %> <br>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='col-md-3'>
+        <div class='card'>
+          <div class='card-body'>
+            <div class='card-title'>Ingressos</div>
+            ...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="text-body-secondary py-5">
+  <div class="container">
+    <p class="float-end mb-1"> <a href="#">Back to top</a> </p>
+    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
+    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
+        href="../getting-started/introduction">getting started guide</a>.</p>
+  </div>
+</footer>
