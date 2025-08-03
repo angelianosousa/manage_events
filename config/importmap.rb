@@ -2,3 +2,4 @@
 
 pin "application"
 pin "bootstrap", to: "bootstrap.bundle.min.js"
+pin "jquery" # @3.7.1

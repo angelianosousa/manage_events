@@ -7,6 +7,7 @@ class CreateEvents < ActiveRecord::Migration[7.1]
       t.text :description
       t.string :category_name
       t.date :date_start
+      t.date :date_end
       t.time :time_start
       t.time :time_end
       t.integer :status, default: 0

@@ -19,7 +19,7 @@ class Ticket < ApplicationRecord
   has_many :ticket_payments, as: :paymentable, dependent: :destroy, class_name: 'Payment'
 
   # Validations
-  validates :price_cents, numericality: { greater_than: 0 }
+  validates :price_cents, numericality: { greater_than_or_equal_to: 0 }
   validates :quantity, numericality: { greater_than: 0 }
 
   def tickets_percentage

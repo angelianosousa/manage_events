@@ -28,7 +28,8 @@ end
   Event.find_or_create_by(company_id: company.id, name: Faker::Name.name) do |event|
     event.description   = Faker::Lorem.paragraph_by_chars
     event.category_name = Faker::Job.field
-    event.date_start    = Faker::Date.between(from: 1.months.ago, to: Date.today)
+    event.date_start    = Faker::Date.between(from: 2.months.ago, to: Date.today)
+    event.date_end      = Faker::Date.between(from: 1.months.ago, to: Date.today)
     event.time_start    = Faker::Time.between(from: DateTime.now - 1, to: DateTime.now, format: :short)
     event.time_end      = Faker::Time.between(from: DateTime.now - 1, to: DateTime.now, format: :short)
     event.build_address(place_name: Faker::Address.community, address_name: Faker::Address.full_address)

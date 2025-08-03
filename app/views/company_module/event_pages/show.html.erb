@@ -34,14 +34,17 @@
   </section>
 
   <div class="container">
-    <div class='row'>
-      <div class='col-md-9'>
+    <div class='row mb-3'>
+      <div class='col-md-8'>
         <div class='card p-0 m-0'>
           <div class='card-body'>
+
+            <h5>Informações do evento</h5>
+
             <div class="row">
-              <div class='col-md'>
+              <div class="col-md">
                 <div class="d-flex align-items-center">
-                  <%= bootstrap_icon('', 'bi-calendar-date', 'font-size: 3em;') %>
+                  <%= bootstrap_icon('', 'bi-calendar-date', 'font-size: 2em;') %>
 
                   <p class="ms-2">
                     <b>Data</b> <br>
@@ -51,25 +54,66 @@
                 </div>
               </div>
 
-              <div class='col-md'>
+              <div class="col-md">
                 <div class="d-flex align-items-center">
-                  <%= bootstrap_icon('', 'bi-geo-alt', 'font-size: 3em;') %>
+                  <%= bootstrap_icon('', 'bi-clock', 'font-size: 2em;') %>
+
+                  <p class="ms-2">
+                    <b>Horário</b><br>
+                    <%= @event.time_start.strftime('%H:%m') %> -
+                    <%= @event.time_end.strftime('%H:%m') %>
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md">
+                <div class="d-flex align-items-center">
+                  <%= bootstrap_icon('', 'bi-geo-alt', 'font-size: 2em;') %>
+                  
                   <p class="ms-2">
                     <b>Local</b><br>
                     <%= @event.local_name %> <br>
                   </p>
                 </div>
               </div>
+
             </div>
+
           </div>
         </div>
       </div>
 
-      <div class='col-md-3'>
+      <div class='col-md-4'>
         <div class='card'>
           <div class='card-body'>
-            <div class='card-title'>Ingressos</div>
-            ...
+            <h5 class='card-title'>Ingressos</h5>
+
+            <% @event.tickets.each do |ticket| %>
+              <div class="card" id="ticket_<%= ticket.id %>">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <h6 class="card-title"><%= ticket.name %></h6>
+
+                    <b><%= humanized_money_with_symbol ticket.price %></b>
+                  </div>
+
+                  <hr>
+                  <small><%= ticket.ticket_payments.count %> de <%= ticket.quantity %> disponíveis</small>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h5>Sobre o evento</h5>
+
+            <%= @event.description %>
           </div>
         </div>
       </div>
@@ -85,3 +129,10 @@
         href="../getting-started/introduction">getting started guide</a>.</p>
   </div>
 </footer>
+
+<script>
+  $('#ticket_<%= @event.tickets.last.id %>').click(function(){
+    // $(this).addClass('border border-dark');
+    console.log('clicou!!')
+  });
+</script>

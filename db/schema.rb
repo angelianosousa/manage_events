@@ -66,8 +66,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_29_183534) do
     t.text "description"
     t.string "category_name"
     t.date "date_start"
-    t.time "time_start"
     t.date "date_end"
+    t.time "time_start"
     t.time "time_end"
     t.integer "status", default: 0
     t.boolean "visible", default: false
