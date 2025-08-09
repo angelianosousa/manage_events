@@ -113,6 +113,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_29_183534) do
   create_table "tickets", force: :cascade do |t|
     t.bigint "event_id", null: false
     t.string "name"
+    t.string "description"
     t.integer "quantity", default: 1
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "BRL", null: false

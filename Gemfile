@@ -77,3 +77,7 @@ gem "rails-i18n", "~> 7.0"
 gem "image_processing", "~> 1.14"
 
 gem "image_magick", "~> 0.1.9"
+
+gem 'bootstrap', '~> 5.3' # Use the desired Bootstrap version
+
+gem "vanilla_nested", "~> 1.7"

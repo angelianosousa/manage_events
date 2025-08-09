@@ -1,9 +1,17 @@
 <%= content_for :page_header do %>
-  <div class="mb-3">
-    <h4 class="mb-0">Dashboard</h4>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
 
-    <small>Visão geral do seu sistema</small>
-  </div>
+      <div class="navbar-brand">
+        <h4 class="mb-0">
+          <%= bootstrap_icon(text: ' Dashboard', icon: 'bi-clipboard-data') %>
+        </h4>
+
+        <small>Visão geral do seu sistema</small>
+      </div>
+
+    </div>
+  </nav>
 <% end %>
 
 <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -11,7 +19,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">
-          <i class="bi bi-calendar-event"></i> Eventos
+          <%= bootstrap_icon(text: ' Eventos', icon: 'bi-calendar-event') %>
         </h5>
 
         <p class="card-text">
@@ -27,7 +35,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">
-          <%= bootstrap_icon(' Produtos', 'bi-box-seam') %>
+          <%= bootstrap_icon(text: ' Produtos', icon: 'bi-box-seam') %>
         </h5>
 
         <p class="card-text">
@@ -43,7 +51,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">
-          <i class="bi bi-cart"></i> Pedidos
+          <%= bootstrap_icon(text: ' Pedidos', icon: 'bi-cart') %>
         </h5>
 
         <p class="card-text">
@@ -59,7 +67,7 @@
     <div class="card h-100">
       <div class="card-body">
         <h5 class="card-title">
-          <i class="bi bi-piggy-bank"></i> Receitas
+          <%= bootstrap_icon(text: ' Receitas', icon: 'bi-piggy-bank') %>
         </h5>
 
         <p class="card-text">

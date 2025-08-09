@@ -34,17 +34,18 @@
   </section>
 
   <div class="container">
-    <div class='row mb-3'>
+    <div class='row'>
       <div class='col-md-8'>
-        <div class='card p-0 m-0'>
+
+        <div class='card p-0'>
           <div class='card-body'>
 
             <h5>Informações do evento</h5>
 
-            <div class="row">
-              <div class="col-md">
-                <div class="d-flex align-items-center">
-                  <%= bootstrap_icon('', 'bi-calendar-date', 'font-size: 2em;') %>
+            <div class="row g-2">
+              <div class="col-md-4 fs-6">
+                <div class="d-flex align-items-start">
+                  <%= bootstrap_icon(icon: 'bi-calendar-date', style: 'font-size: 2em;') %>
 
                   <p class="ms-2">
                     <b>Data</b> <br>
@@ -54,9 +55,9 @@
                 </div>
               </div>
 
-              <div class="col-md">
-                <div class="d-flex align-items-center">
-                  <%= bootstrap_icon('', 'bi-clock', 'font-size: 2em;') %>
+              <div class="col-md-3 fs-6">
+                <div class="d-flex align-items-start">
+                  <%= bootstrap_icon(icon: 'bi-clock', style: 'font-size: 2em;') %>
 
                   <p class="ms-2">
                     <b>Horário</b><br>
@@ -66,9 +67,9 @@
                 </div>
               </div>
 
-              <div class="col-md">
-                <div class="d-flex align-items-center">
-                  <%= bootstrap_icon('', 'bi-geo-alt', 'font-size: 2em;') %>
+              <div class="col-md-5 fs-6">
+                <div class="d-flex align-items-start">
+                  <%= bootstrap_icon(icon: 'bi-geo-alt', style: 'font-size: 2em;') %>
                   
                   <p class="ms-2">
                     <b>Local</b><br>
@@ -81,7 +82,47 @@
 
           </div>
         </div>
+
+        <div class="card my-4">
+          <div class="card-body">
+            <h5>Sobre o evento</h5>
+
+            <%= @event.description %>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5>Organizador do evento</h5>
+
+            <div class="d-flex align-items-start">
+              <%= image_tag 'placeholder.png', size: '65x65', class: 'img-fluid', style: 'border-radius: 50%;' %>
+
+              <p class="ms-3">
+                <b><%= @event.company.name %></b> <br>
+
+                <small>Organizamos os melhores eventos do país</small>
+              </p>
+            </div>
+
+            <div class="d-flex justify-content-start ms-2">
+              <%= link_to 'mailto:contato@techevents.com.br', class: 'text-dark', style: 'text-decoration: none;' do %>
+                <%= bootstrap_icon(icon: 'bi-envelope') %> contato@techevents.com.br
+              <% end %>
+
+              <%= link_to 'telto:+55 11 99999-9999', class: 'text-dark mx-2', style: 'text-decoration: none;' do %>
+                <%= bootstrap_icon(icon: 'bi-telephone') %> +55 11 99999-9999
+              <% end %>
+
+              <%= link_to 'https://techevents.com.br', target: '_blank', class: 'text-dark', style: 'text-decoration: none;' do %>
+                <%= bootstrap_icon(icon: 'bi-globe') %> https://techevents.com.br
+              <% end %>
+            </div>
+          </div>
+        </div>
+
       </div>
+
 
       <div class='col-md-4'>
         <div class='card'>
@@ -89,7 +130,7 @@
             <h5 class='card-title'>Ingressos</h5>
 
             <% @event.tickets.each do |ticket| %>
-              <div class="card" id="ticket_<%= ticket.id %>">
+              <div class="card btn p-0 my-3" id="ticket_<%= ticket.id %>">
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <h6 class="card-title"><%= ticket.name %></h6>
@@ -98,26 +139,36 @@
                   </div>
 
                   <hr>
-                  <small><%= ticket.ticket_payments.count %> de <%= ticket.quantity %> disponíveis</small>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <small><%= ticket.ticket_payments.count %> de <%= ticket.quantity %> disponíveis</small>
+
+                    <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="<%= ticket.ticket_payments.count %>" aria-valuemin="0" aria-valuemax="<%= ticket.quantity %>" style="height: 5px; width: 50px;">
+                      <div class="progress-bar bg-dark" style="width: <%= ticket.tickets_percentage[:total] %>%"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             <% end %>
+
+            <div class="form-group mt-4">
+              <%= link_to '#', class: 'btn btn-light btn-sm', id: 'decrease' do %>
+                <%= bootstrap_icon(icon: 'bi-dash') %>
+              <% end %>
+
+              <%= number_field_tag :payment_ticket, 1, class: 'fom-control', min: 1 %>
+
+              <%= link_to '#', class: 'btn btn-light btn-sm', id: 'increase' do %>
+                <%= bootstrap_icon(icon: 'bi-plus') %>
+              <% end %>
+            </div>
+
+            <%= link_to 'Confirmar', '#', class: 'btn btn-dark btn-round w-100 mt-3' %>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-body">
-            <h5>Sobre o evento</h5>
-
-            <%= @event.description %>
-          </div>
-        </div>
-      </div>
-    </div>
+    </div> 
+    
   </div>
 </main>
 
@@ -125,14 +176,27 @@
   <div class="container">
     <p class="float-end mb-1"> <a href="#">Back to top</a> </p>
     <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-        href="../getting-started/introduction">getting started guide</a>.</p>
+    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="../getting-started/introduction">getting started guide</a>.</p>
   </div>
 </footer>
 
 <script>
-  $('#ticket_<%= @event.tickets.last.id %>').click(function(){
-    // $(this).addClass('border border-dark');
-    console.log('clicou!!')
+  let btn = document.querySelector('#ticket_<%= @event.tickets.last.id %>');
+
+  let dash_button   = document.querySelector('#decrease');
+  let plus_button   = document.querySelector('#increase');
+  let payment_field = document.querySelector('#payment_ticket');
+
+  plus_button.addEventListener('click', function(){
+    payment_field.stepUp(1);
+  });
+
+  dash_button.addEventListener('click', function(){
+    payment_field.stepDown(1);
+  });
+
+  btn.addEventListener('click', function(){
+    console.log('clicou!')
+    btn.style.borderColor = 'black';
   });
 </script>

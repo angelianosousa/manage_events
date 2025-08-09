@@ -42,10 +42,10 @@
             <div class="card-text mb-3">
               <% ticket = event.tickets.last %>
 
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(' Inicio ', 'bi-calendar-date') %><%= I18n.l event.date_start, format: :short %></p>
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(' Fim ', 'bi-calendar-date') %><%= I18n.l event.date_end, format: :short %></p>
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(event.address.address_name, 'bi-geo-alt') %></p>
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(" #{ticket.ticket_payments.count} de #{ticket.quantity} participantes", 'bi-people') %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: ' Inicio ', icon: 'bi-calendar-date') %><%= I18n.l event.date_start, format: :short %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: ' Fim ', icon: 'bi-calendar-date') %><%= I18n.l event.date_end, format: :short %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: event.address.address_name, icon: 'bi-geo-alt') %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: " #{ticket.ticket_payments.count} de #{ticket.quantity} participantes", icon: 'bi-people') %></p>
             </div>
 
             <%= event_progress(ticket).html_safe %>

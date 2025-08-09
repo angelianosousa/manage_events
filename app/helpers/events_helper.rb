@@ -100,7 +100,7 @@ module EventsHelper
     class_name = "badge bg-#{color}-subtle border border-#{color}-subtle text-#{color}-emphasis"
 
     tag.span class: class_name do
-      bootstrap_icon('', visibility)
+      bootstrap_icon(icon: visibility)
     end
   end
 

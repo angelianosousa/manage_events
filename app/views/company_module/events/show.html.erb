@@ -16,7 +16,7 @@
         <div class="d-flex">
           <p class="text-right me-1">
             <%= link_to company_event_page_path(params[:company], @event), class: 'btn btn-outline-dark btn-sm' do %>
-              <%= bootstrap_icon(' Ver página', 'bi-box-arrow-up-right') %>
+              <%= bootstrap_icon(text: ' Ver página', icon: 'bi-box-arrow-up-right') %>
             <% end %>
           </p>
           <%= link_to_back %>
@@ -33,14 +33,14 @@
 
           <div class="row">
             <div class="col-md">
-              <b><%= bootstrap_icon('', 'bi-calendar-date') %> Data</b>
+              <b><%= bootstrap_icon(icon: 'bi-calendar-date') %> Data</b>
               <p>
                 <%= I18n.l @event.date_start, format: :short %><br>
               </p>
             </div>
 
             <div class="col-md">
-              <b><%= bootstrap_icon('', 'bi-clock') %> Horário</b>
+              <b><%= bootstrap_icon(icon: 'bi-clock') %> Horário</b>
 
               <p>
                 <%= @event.time_start.strftime('%H:%m') %> -
@@ -49,13 +49,13 @@
             </div>
 
             <div class="col-md">
-              <b><%= bootstrap_icon('', 'bi-geo-alt') %> Localização</b><br>
+              <b><%= bootstrap_icon(icon: 'bi-geo-alt') %> Localização</b><br>
 
               <%= @event.local_name %>
             </div>
 
             <div class="col-md">
-              <b><%= bootstrap_icon('', 'bi-people') %> Participantes</b><br>
+              <b><%= bootstrap_icon(icon: 'bi-people') %> Participantes</b><br>
 
               <%= "#{@event.tickets.last.ticket_payments.count} de #{@event.tickets.last.quantity} participantes" %>
             </div>
@@ -109,11 +109,11 @@
 
           <div class="d-flex flex-column">
             <button type="button" class="btn btn-outline-dark btn-sm my-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <%= bootstrap_icon(' Financeiro', 'bi-cash') %>
+              <%= bootstrap_icon(text: ' Financeiro', icon: 'bi-cash') %>
             </button>
 
             <%= link_to '#', class: 'btn btn-outline-dark btn-sm' do %>
-              <%= bootstrap_icon(' Participantes', 'bi-people') %>
+              <%= bootstrap_icon(text: ' Participantes', icon: 'bi-people') %>
             <% end %>
           </div>
         </div>

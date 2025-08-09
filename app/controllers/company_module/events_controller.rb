@@ -15,14 +15,12 @@ class CompanyModule::EventsController < CompaniesController
   def new
     @event = current_company.events.build
     @event.build_address
-    @event.tickets.build
     @event.build_banner
   end
 
   # GET /events/1/edit
   def edit
     @event.build_address unless @event.address.present?
-    @event.tickets.build unless @event.tickets.any?
     @event.build_banner  unless @event.banner.present?
   end
 
@@ -80,7 +78,7 @@ class CompanyModule::EventsController < CompaniesController
     params.require(:event).permit(
       :id, :name, :description, :date_start, :time_start, :time_end, :status, :category_name, :subs_number, :visible,
       address_attributes: %i[id place_name address_name],
-      tickets_attributes: %i[id name quantity price],
+      tickets_attributes: %i[id name description quantity price],
       banner_attributes: %i[id image]
     )
   end

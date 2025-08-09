@@ -2,17 +2,18 @@
 <html>
   <head>
     <title>ManageEvents</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application" %>
   </head>
 
-  <body>
+  <body id="body_gradient">
     <div style="position: absolute; top: 25%; left: 40%;">
-      <div class="d-flex align-items-center justify-content-center">
-        <%= bootstrap_icon('', 'bi-building-fill', 'font-size: 3em;') %>
+      <div class="d-flex align-items-center justify-content-center text-white">
+        <%= bootstrap_icon(icon: 'bi-building-fill', style: 'font-size: 3em;') %>
         
         <h5>Gerência de <br>Eventos</h5>
       </div>
