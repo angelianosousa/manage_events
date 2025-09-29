@@ -83,6 +83,7 @@ test:
 #
 production:
   <<: *default
-  database: manage_events_production
-  username: manage_events
-  password: <%= ENV["MANAGE_EVENTS_DATABASE_PASSWORD"] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV["DB_PASS"] %>
+  host: <%= ENV['DB_HOST'] %>
