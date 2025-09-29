@@ -4,6 +4,8 @@
 #
 #  id             :bigint           not null, primary key
 #  event_id       :bigint           not null
+#  name           :string
+#  description    :string
 #  quantity       :integer          default(1)
 #  price_cents    :integer          default(0), not null
 #  price_currency :string           default("BRL"), not null
@@ -16,7 +18,7 @@ class Ticket < ApplicationRecord
   monetize :price_cents
 
   # Associations
-  has_many :ticket_payments, as: :paymentable, dependent: :destroy, class_name: 'Payment'
+  has_many :payments, as: :paymentable, dependent: :destroy
 
   # Validations
   validates :price_cents, numericality: { greater_than_or_equal_to: 0 }
@@ -24,13 +26,21 @@ class Ticket < ApplicationRecord
 
   def tickets_percentage
     {
-      total: ticket_payments.count.to_f / quantity * 100,
-      paid: ticket_payments.paid.count.to_f / quantity * 100
+      total: tickets_sellout.to_f / quantity * 100,
+      paid: payments.paid.count.to_f / quantity * 100
     }
   end
 
+  def free_ticket?
+    price == Money.new(0)
+  end
+
+  def tickets_sellout
+    payments.sum(&:quantity)
+  end
+
   def tickets_receipt
-    ticket_payments.count * price
+    tickets_sellout * price
   end
 
 end

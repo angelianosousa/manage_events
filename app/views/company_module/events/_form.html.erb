@@ -1,165 +1,179 @@
 <%= form_with(model: [:company, event]) do |form| %>
-  <% if event.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-      <ul>
-        <% event.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render '/shared/error_messages', resource: @event %>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="card-title h6">
-        <%= bootstrap_icon(text: ' Informações básicas', icon: 'bi-clipboard') %>
-      </div>
-
-      <div class="row">
-        <div class="col-md">
-          <% if event.banner&.image&.attached? %>
-            <%= image_tag event.banner.image, size: '1280x280' %>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md">
-          <%= form.fields_for :banner do |banner_form| %>
-            <%= banner_form.label :image, class: 'form-label', for: 'event_banner_attributes_image' %>
-            <%= banner_form.file_field :image, class: 'form-control' %>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="row g-2 mt-1">
-        <div class="col-md">
-          <div class="form-group">
-            <%= form.label :name, style: "display: block" %>
-            <%= form.text_field :name, class: 'form-control form-control-sm' %>
-          </div>
-        </div>
-
-        <div class="col-md">
-          <div class="form-group">
-            <%= form.label :status, style: "display: block" %>
-            <%= form.select :status, options_for_select(Event.statuses.keys), {}, { class: 'form-select form-select-sm select2' } %>
-          </div>
-        </div>
-
-        <div class="col-md">
-          <div class="form-group">
-            <%= form.label :category_name, style: "display: block" %>
-            <%= form.select :category_name, options_for_select(Event.pluck(:category_name)), {}, { class: 'form-select form-select-sm select2' } %>
-          </div>
-        </div>
-      </div>
-      
-      <div class="form-group mt-3">
-        <%= form.label :description, style: "display: block" %>
-        <%= form.text_area :description, class: 'form-control form-control-sm mb-3', size: '10x7' %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row my-3">
-    <div class="col-md">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title h6">
-            <%= bootstrap_icon(text: ' Data e Horário', icon: 'bi-calendar') %>
-          </div>
-
-          <div class="row g-2 mb-2">
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :date_start, style: "display: block" %>
-                <%= form.date_field :date_start, class: 'form-control form-control-sm' %>
-              </div>
-            </div>
-          </div>
-
-          <div class="row g-2">
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :time_start, style: "display: block" %>
-                <%= form.time_field :time_start, class: 'form-control form-control-sm' %>
-              </div>
-            </div>
-
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :time_end, style: "display: block" %>
-                <%= form.time_field :time_end, class: 'form-control form-control-sm' %>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md">
-      <div class="card">
-        <div class="card-body">
-          <div class="card-title h6">
-            <%= bootstrap_icon(text: ' Localização', icon: 'bi-geo-alt') %>
-          </div>
-
-          <%= form.fields_for :address do |address_form| %>
-            <div class="row g-2">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <%= address_form.label :place_name, style: "display: block" %>
-                  <%= address_form.text_field :place_name, class: 'form-control form-control-sm' %>
-                </div>
-              </div>
-
-              <div class="col-md-12">
-                <div class="form-group">
-                  <%= address_form.label :address_name, style: "display: block" %>
-                  <%= address_form.text_field :address_name, class: 'form-control form-control-sm' %>
-                </div>
-              </div>
-            </div>
-          <% end %>
+  <div class="d-flex align-items-start">
+    <div class="card me-3">
+      <div class="card-body">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <button class="nav-link active" id="v-pills-general-info-tab" data-bs-toggle="pill" data-bs-target="#v-pills-general-info" type="button" role="tab" aria-controls="v-pills-general-info" aria-selected="true">Geral</button>
+          <button class="nav-link" id="v-pills-banner-tab" data-bs-toggle="pill" data-bs-target="#v-pills-banner" type="button" role="tab" aria-controls="v-pills-banner" aria-selected="false"><%= Photo.model_name.human %></button>
+          <button class="nav-link" id="v-pills-tickets-tab" data-bs-toggle="pill" data-bs-target="#v-pills-tickets" type="button" role="tab" aria-controls="v-pills-tickets" aria-selected="false"><%= Ticket.model_name.human %></button>
         </div>
       </div>
     </div>
     
-  </div>
+    <div class="tab-content w-100" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-general-info" role="tabpanel" aria-labelledby="v-pills-general-info-tab" tabindex="0">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title h6">
+              <%= bootstrap_icon(text: ' Informações básicas', icon: 'bi-clipboard') %>
+            </div>
 
-  <div class="card">
-    <div class="card-body">
+            <div class="row mt-1">
+              <div class="col-md">
+                <div class="form-group">
+                  <%= form.label :name, style: "display: block" %>
+                  <%= form.text_field :name, class: 'form-control form-control-sm' %>
+                </div>
+              </div>
 
-      <div class="d-flex justify-content-between">
-        <div class="card-title h6">
-          <%= bootstrap_icon(text: ' Ingressos', icon: 'bi-cash') %>
+              <div class="col-md">
+                <div class="form-group">
+                  <%= form.label :status, style: "display: block" %>
+                  <%= form.select :status, options_for_select(Event.statuses.keys), {}, { class: 'form-select form-select-sm select2' } %>
+                </div>
+              </div>
+
+              <div class="col-md">
+                <div class="form-group">
+                  <%= form.label :category_name, style: "display: block" %>
+                  <%= form.select :category_name, options_for_select(Event.pluck(:category_name)), {}, { class: 'form-select form-select-sm select2' } %>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group mt-3">
+              <%= form.label :description, style: "display: block" %>
+              <%= form.text_area :description, class: 'form-control form-control-sm mb-3', size: '10x7' %>
+            </div>
+          </div>
         </div>
-        
-        <%= link_to_add_nested(form, :tickets, '#tickets', link_classes: 'btn btn-success btn-sm') do %> <!-- adds a link to add more items -->
-          <%= bootstrap_icon(text: ' Adicionar ingresso', icon: 'bi-plus-circle') %>
-        <% end %>
+
+        <div class="row my-3">
+          <div class="col-md">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title h6">
+                  <%= bootstrap_icon(text: ' Data e Horário', icon: 'bi-calendar') %>
+                </div>
+
+                <div class="row g-2 mb-2">
+                  <div class="col-md">
+                    <div class="form-group">
+                      <%= form.label :date_start, style: "display: block" %>
+                      <%= form.date_field :date_start, class: 'form-control form-control-sm' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row g-2">
+                  <div class="col-md">
+                    <div class="form-group">
+                      <%= form.label :time_start, style: "display: block" %>
+                      <%= form.time_field :time_start, class: 'form-control form-control-sm' %>
+                    </div>
+                  </div>
+
+                  <div class="col-md">
+                    <div class="form-group">
+                      <%= form.label :time_end, style: "display: block" %>
+                      <%= form.time_field :time_end, class: 'form-control form-control-sm' %>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title h6">
+                  <%= bootstrap_icon(text: ' Localização', icon: 'bi-geo-alt') %>
+                </div>
+
+                <%= form.fields_for :address do |address_form| %>
+                  <div class="row g-2">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <%= address_form.label :place_name, style: "display: block" %>
+                        <%= address_form.text_field :place_name, class: 'form-control form-control-sm' %>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <%= address_form.label :address_name, style: "display: block" %>
+                        <%= address_form.text_field :address_name, class: 'form-control form-control-sm' %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+      
+      <div class="tab-pane fade" id="v-pills-banner" role="tabpanel" aria-labelledby="v-pills-banner-tab" tabindex="0">
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="figure" style='opacity: 0.7; background-position: center center;'>
+              <% image = @event.banner&.image&.attached? ? @event.banner.image : 'placeholder.png'%>
+
+              <%= image_tag image, class: 'figure-img img-fluid', style: 'width: 1320px; height: 300px;' %>
+            </div>
+            <br><br>
+
+            <%= form.fields_for :banner do |banner_form| %>
+              <%= banner_form.label :image, class: 'form-label', for: 'event_banner_attributes_image' %>
+              <%= banner_form.file_field :image, class: 'form-control' %>
+            <% end %>
+          </div>
+        </div>
       </div>
 
-      <div id='tickets'>
-        <%= form.fields_for :tickets do |ticket_form| %>
-          <%= render 'ticket_fields', form: ticket_form %>
-        <% end %>
+      <div class="tab-pane fade" id="v-pills-tickets" role="tabpanel" aria-labelledby="v-pills-tickets-tab" tabindex="0">
+        <div class="card">
+          <div class="card-body">
+
+            <div class="d-flex justify-content-between">
+              <div class="card-title h6">
+                <%= bootstrap_icon(text: ' Ingressos', icon: 'bi-cash') %>
+              </div>
+              
+              <%= link_to_add_nested(form, :tickets, '#tickets', link_classes: 'btn btn-success btn-sm') do %>
+                <%= bootstrap_icon(text: ' Adicionar ingresso', icon: 'bi-plus-circle') %>
+              <% end %>
+            </div>
+
+            <div id='tickets'>
+              <%= form.fields_for :tickets do |ticket_form| %>
+                <%= render 'ticket_fields', form: ticket_form %>
+              <% end %>
+            </div>
+
+            <div class="form-group mb-3">
+              <div class="form-check">
+                <%= form.label :visible, class: 'form-check-label', for: 'event_visible' %>
+                <%= form.check_box :visible, class: 'form-check-input' %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="form-group mb-3">
-        <div class="form-check">
-          <%= form.label :visible, class: 'form-check-label', for: 'event_visible' %>
-          <%= form.check_box :visible, class: 'form-check-input' %>
-        </div>
+      <div class="actions mt-3">
+        <%= form.submit 'Salvar', class: 'btn btn-dark' %>
+        <%= link_to 'Cancelar', company_events_path, class: 'btn btn-default' %>
       </div>
     </div>
+
   </div>
 
-  <div class="actions mt-3">
-    <%= form.submit 'Salvar', class: 'btn btn-dark' %>
-  </div>
 <% end %>

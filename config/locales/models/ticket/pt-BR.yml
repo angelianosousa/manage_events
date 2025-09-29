@@ -1,0 +1,14 @@
+---
+pt-BR:
+  activerecord:
+    attributes:
+      ticket:
+        event_id: Evento
+        name: Nome
+        description: Descrição
+        quantity: Quantidade
+        price: Valor do ingresso
+    models:
+      ticket:
+        one: Ingresso
+        other: Ingressos

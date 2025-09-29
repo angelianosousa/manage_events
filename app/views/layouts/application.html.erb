@@ -9,10 +9,12 @@
     <%= stylesheet_link_tag "application" %>
   </head>
 
-  <body id="body_background_system">
+  <body id="body_bg">
     <%= render 'layouts/navbar' %>
 
     <div class="container-fluid mb-5">
+      <%= render '/shared/notice_messages' %>
+
       <%= content_for(:page_header) || 'Sistema de Gerenciamento' %>
 
       <%= yield %>

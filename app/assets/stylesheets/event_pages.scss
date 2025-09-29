@@ -1,6 +1,7 @@
-.banner_event { 
+#banner_event { 
   background-color: rgba(187, 186, 186, 0.2);
-  background-repeat: no-repeat; 
-  background-position: center center; 
-  background-size: cover;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  width: 100%;
 }

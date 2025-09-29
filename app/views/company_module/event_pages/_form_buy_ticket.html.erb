@@ -1,0 +1,173 @@
+<div class='card'>
+  <%= form_tag company_buy_tickets_path, method: :post  do %>
+    <div class='card-body' id="choose_ticket">
+      <h5 class='card-title'>Ingressos</h5>
+
+      <% @event.tickets.each do |ticket| %>
+        <div class="card btn p-0 my-3 border tickets" id="ticket_<%= ticket.id %>" data-ticket-id="<%= ticket.id %>" data-ticket-name="<%= ticket.name %>" data-ticket-price="<%= ticket.price %>">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <h6 class="card-title"><%= ticket.name %></h6>
+
+              <b><%= ticket.free_ticket? ? 'Gratuito' : humanized_money_with_symbol(ticket.price) %></b>
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <small><%= (ticket.quantity - ticket.tickets_sellout) %> disponíveis</small>
+
+              <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="<%= ticket.tickets_sellout %>" aria-valuemin="0" aria-valuemax="<%= ticket.quantity %>" style="height: 5px; width: 50px;">
+                <div class="progress-bar bg-dark" style="width: <%= ticket.tickets_percentage[:total] %>"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="form-group mt-4 d-flex">
+        <%= link_to '-', '', class: 'btn btn-dark', id: 'minus_button' %>
+        <%= number_field_tag 'payment[ticket_quantity]', (params[:payment][:ticket_quantity] rescue 1), class: 'form-control ps-2 disabled', min: 1, style: 'width: 75px' %>
+        <%= link_to '+', '', class: 'btn btn-dark', id: 'plus_button' %>
+      </div>
+
+      <div class="card border-secondary mt-3">
+        <div class="card-body py-0">
+          <div class="card-text d-flex justify-content-between align-items-center total_payment pt-3">
+            <p>Total:</p>
+            <p><%= humanized_money_with_symbol Money.new(0) %></p>
+          </div>
+        </div>
+      </div>
+
+      <%= link_to 'Comprar ingresso >', '#', class: 'btn btn-dark btn-round w-100 mt-3 disabled', id: 'buy_ticket' %>
+    </div>
+
+    <div class="card-body" id="resume_purchase">
+      <h5>Finalizar inscrição</h5>
+
+      <div class="form-group mb-2">
+        <%= label_tag 'client[name]', 'Nome completo *', class: 'form-label' %>
+        <%= text_field_tag 'client[name]', (params[:client][:name] rescue nil), class: 'form-control form-control-sm', placeholder: 'Seu nome completo' %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= label_tag 'client[cpf]', 'CPF *', class: 'form-label' %>
+        <%= text_field_tag 'client[cpf]', (params[:client][:cpf] rescue nil), class: 'form-control form-control-sm cpf-mask', placeholder: '000.000.000-00' %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= label_tag 'client[email]', 'Email *', class: 'form-label' %>
+        <%= text_field_tag 'client[email]', (params[:client][:email] rescue nil), class: 'form-control form-control-sm', placeholder: 'seu@email.com' %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= label_tag 'client[phone]', 'Telefone *', class: 'form-label' %>
+        <%= text_field_tag 'client[phone]', (params[:client][:phone] rescue nil), class: 'form-control form-control-sm phone-mask', placeholder: '(00) 9 0000-0000' %>
+      </div>
+
+      <div class="form-group mb-2">
+        <%= label_tag 'payment[payment_method]', 'Meio de pagamento *', class: 'form-label' %>
+        <%= select_tag 'payment[payment_method]', options_for_select(payment_methods_for_select), class: 'form-select' %>
+
+      </div>
+
+      <%= hidden_field_tag 'payment[ticket_id]' %>
+
+      <div class="card my-3">
+        <div class="card-body">
+          <h6>Resumo da compra</h6>
+
+          <small class="d-flex justify-content-between py-0" id="ticket_choosed"></small>
+          <small class="d-flex justify-content-between py-0" id="ticket_buyed"></small>
+          <hr>
+          <small class="card-text d-flex justify-content-between total_payment"></small>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 d-md-block">
+        <%= link_to 'Voltar', '#', class: 'btn btn-light', id: 'back' %>
+        <%= submit_tag 'Pagar', class: 'btn btn-dark' %>
+      </div>
+    </div>
+
+  <% end %>
+</div>
+
+<script>
+  let sel_ticket_id   = null;
+  let sel_ticket_name = null;
+  let ticket_price    = null;
+  let total_payment   = null;
+  let ticket_quantity = $('#payment_ticket_quantity');
+
+  $('#resume_purchase').hide();
+
+  $('.phone-mask').mask('(00) 00000-0000');
+  $('.cpf-mask').mask('000.000.000-00');
+
+  $(document).ready(function(){
+    <% if @payment.present? && @payment.errors.present? %>
+      $('#ticket_<%= @payment.paymentable_id %>').trigger('click');
+      $('#buy_ticket').trigger('click');
+    <% end %>
+  });
+
+  $('#minus_button').on('click', function(e){
+    e.preventDefault();
+
+    ticket_quantity[0].stepDown(1);
+    updateTotalPayment();
+  });
+
+  $('#plus_button').on('click', function(e){
+    e.preventDefault();
+
+    ticket_quantity[0].stepUp(1);
+    updateTotalPayment();
+  });
+
+  <% @event.tickets.each do |ticket| %>
+    $('#ticket_<%= ticket.id %>').on('click', function(){
+      $('.tickets').removeClass('border-dark');
+      $(this).addClass('border-dark');
+
+      sel_ticket_id   = $(this).data('ticket-id');
+      sel_ticket_name = $(this).data('ticket-name');
+      ticket_price    = $(this).data('ticket-price');
+
+      $('#payment_ticket_id').val(sel_ticket_id);
+
+      updateTotalPayment();
+
+      $('#buy_ticket').removeClass('disabled');
+    });
+  <% end %>
+
+  $('#buy_ticket').on('click', function(e){
+    e.preventDefault();
+
+    $('#choose_ticket').hide();
+    $('#resume_purchase').show()
+
+    $('#ticket_choosed').html(`<p><b>Ingresso:</b></p><p>${sel_ticket_name}</p>`)
+    $('#ticket_buyed').html(`<p><b>Quantidade:</b></p><p>${ticket_quantity.val()}</p>`)
+    updateTotalPayment()
+  });
+
+  $('#back').on('click', function(e){
+    e.preventDefault();
+
+    $('#choose_ticket').show();
+    $('#resume_purchase').hide();
+  });
+
+  function updateTotalPayment(){
+    if (ticket_quantity.val() === null || ticket_price === null) return;
+
+    total_payment = parseFloat(ticket_quantity.val()) * parseFloat(ticket_price);
+
+    $('.total_payment').html()
+    $('.total_payment').html(`<p>Total:</p><p>${total_payment.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</p>`)
+  }
+</script>

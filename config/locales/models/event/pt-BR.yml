@@ -1,0 +1,20 @@
+---
+pt-BR:
+  activerecord:
+    attributes:
+      event:
+        company_id: Organizadora
+        name: Nome
+        description: Descrição
+        category_name: Categoria
+        date_start: Data inicio
+        time_start: Hora inicio
+        time_end: Hora fim
+        status: Status
+      event/status:
+        active: Ativo
+        canceled: Cancelado
+  models:
+    event:
+      one: Evento
+      other: Eventos

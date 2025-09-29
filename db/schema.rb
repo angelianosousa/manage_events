@@ -66,7 +66,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_29_183534) do
     t.text "description"
     t.string "category_name"
     t.date "date_start"
-    t.date "date_end"
     t.time "time_start"
     t.time "time_end"
     t.integer "status", default: 0
@@ -94,6 +93,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_29_183534) do
     t.string "paymentable_type"
     t.integer "price_cents", default: 0, null: false
     t.string "price_currency", default: "BRL", null: false
+    t.integer "quantity"
     t.date "due_date"
     t.integer "payment_method", default: 0
     t.integer "status", default: 0
@@ -132,6 +132,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_29_183534) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.bigint "company_id"
+    t.string "type", null: false
+    t.string "phone"
+    t.string "cpf"
     t.index ["company_id"], name: "index_user_accounts_on_company_id"
     t.index ["email"], name: "index_user_accounts_on_email", unique: true
     t.index ["reset_password_token"], name: "index_user_accounts_on_reset_password_token", unique: true

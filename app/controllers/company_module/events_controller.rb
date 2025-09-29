@@ -30,7 +30,7 @@ class CompanyModule::EventsController < CompaniesController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to company_event_path(@event.id), notice: "Event was successfully created." }
+        format.html { redirect_to company_event_path(@event.id), notice: I18n.t('controller.success', model: 'Evento') }
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -43,7 +43,7 @@ class CompanyModule::EventsController < CompaniesController
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to company_event_path(@event.id), notice: "Event was successfully updated." }
+        format.html { redirect_to company_event_path(@event.id), notice: I18n.t('controller.update', model: 'Evento') }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -57,7 +57,7 @@ class CompanyModule::EventsController < CompaniesController
     @event.destroy!
 
     respond_to do |format|
-      format.html { redirect_to company_events_path, status: :see_other, notice: "Event was successfully destroyed." }
+      format.html { redirect_to company_events_path, status: :see_other, notice: I18n.t('controller.destroy', model: 'Evento') }
       format.json { head :no_content }
     end
   end
@@ -78,7 +78,7 @@ class CompanyModule::EventsController < CompaniesController
     params.require(:event).permit(
       :id, :name, :description, :date_start, :time_start, :time_end, :status, :category_name, :subs_number, :visible,
       address_attributes: %i[id place_name address_name],
-      tickets_attributes: %i[id name description quantity price],
+      tickets_attributes: %i[id name description quantity price _destroy],
       banner_attributes: %i[id image]
     )
   end

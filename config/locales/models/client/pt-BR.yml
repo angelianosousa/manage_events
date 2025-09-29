@@ -1,0 +1,8 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      client:
+        one: Cliente
+        other: Clientes
+        

@@ -1,0 +1,11 @@
+<% if resource&.errors&.any? %>
+  <div class="alert alert-danger" role="alert">
+    <b>Ouve algum erro ao salvar o cadastro...</b>
+
+    <ul>
+      <% resource.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

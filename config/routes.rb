@@ -12,16 +12,15 @@ Rails.application.routes.draw do
   devise_for :admins
 
   scope ':company', as: :company, module: 'company_module' do
-    resources :home, only: :index
+    resources :dashboard, only: :index
     resources :events do
       post :event_toggle_visibility
     end
 
-    # scope ':event_name', as: :event do
-    #   resources :event_pages, only: :index
-    # end
     get ':event_name', to: 'event_pages#show', as: :event_page
+    post ':event_name/buy_tickets', to: 'event_pages#buy_tickets', as: :buy_tickets
+    get ':event_name/purchase_success', to: 'event_pages#purchase_success', as: :purchase_success
   end
 
-  root to: 'company_module/home#index'
+  root to: 'company_module/dashboard#index'
 end

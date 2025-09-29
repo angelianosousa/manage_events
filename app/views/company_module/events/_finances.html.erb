@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Financeiro</h1>
@@ -8,57 +8,90 @@
       </div>
 
       <div class="modal-body">
-        <% event.tickets.each do |ticket| %>
-          <h5>Ingresso <%= ticket.name %></h5>
+        <h5>Visão geral</h5>
 
-          <div class="card border-dark mb-4">
-            <div class="card-body">
-              <table class="table table-borderless">
-                <thead class="table-light">
-                  <tr>
-                    <th>Quantidade total</th>
-                    <th>Valor do ingresso</th>
-                  </tr>
-                </thead>
+        <div class="card border-dark mb-4">
+          <div class="card-body">
+            <table class="table table-borderless caption-top">
+              <% if event.tickets.count > 1 %>
+                <caption>
+                  Total do evento: <%= humanized_money_with_symbol event.total_receipt %>
+                </caption>
+              <% end %>
 
-                <tbody>
-                  <tr>
-                    <td><%= ticket.quantity %></td>
-                    <td><%= humanized_money_with_symbol ticket.price %></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              <thead class="table-light">
+                <tr>
+                  <th>Nº Ingressos</th>
+                  <th>Valor do ingresso</th>
+                  <th>Ingressos Vendidos</th>
+                  <th>Valor arrecadado</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% event.tickets.each do |ticket| %>
+                <tr>
+                  <td><%= ticket.quantity %></td>
+                  <td><%= humanized_money_with_symbol ticket.price %></td>
+                  <td><%= ticket.tickets_sellout %></td>
+                  <td><%= humanized_money_with_symbol ticket.tickets_receipt %></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
+        </div>
 
-          <h5>Pagamentos</h5>
+        <h5>Pagamentos / Ingressos</h5>
 
-          <div class="card">
-            <div class="card-body">
-              <table class="table">
-                <thead class="table-light">
-                  <tr>
-                    <th>Cliente</th>
-                    <th>Data de vencimento</th>
-                    <th>Meio de pagamento</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
+        <div class="accordion accordion-flush">
+          <% event.tickets.each do |ticket| %>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#<%= ticket.id %>" aria-expanded="true" aria-controls="collapseOne">
+                  # Ingresso - <%= ticket.name %>
+                </button>
+              </h2>
+              <div id="<%= ticket.id %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <% if ticket.payments.any? %>
+                  <div class="accordion-body">
+                    <table class="table table-sm">
+                      <thead class="table-light">
+                        <tr>
+                          <th>Cliente</th>
+                          <th>Data de vencimento</th>
+                          <th>Meio de pagamento</th>
+                          <th>Nº Ingressos</th>
+                          <th>Total</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
 
-                <tbody>
-                  <% ticket.ticket_payments.includes(:client).each do |payment| %>
-                    <tr>
-                      <td><%= payment.client.name %></td>
-                      <td><%= I18n.l payment.due_date, format: :short %></td>
-                      <td><%= badge_payment_method(payment.payment_method) %></td>
-                      <td><%= badge_payment_status(payment.status) %></td>
-                    </tr>
-                  <% end %>
-                </tbody>
-              </table>
+                      <tbody>
+                        <% ticket.payments.includes(:client).each do |payment| %>
+                          <tr>
+                            <td><%= "(#{payment.client.cpf_formatted}) #{payment.client.name}" %></td>
+                            <td><%= I18n.l payment.due_date, format: :short %></td>
+                            <td><%= badge_payment_method(payment.payment_method) %></td>
+                            <td><%= payment.quantity %></td>
+                            <td><%= humanized_money_with_symbol payment.total %></td>
+                            <td><%= badge_payment_status(payment.status) %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                <% else %>
+                  <div class="card text-bg-secondary my-3">
+                    <div class="card-body">
+                      <p>Sem ingresso vendido</p>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
 
       <div class="modal-footer">

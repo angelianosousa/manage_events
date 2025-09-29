@@ -1,10 +1,6 @@
 <div class="wrapper-div">
   
-  <div class="float-right">
-    <%= link_to_remove_nested(form, link_classes: 'btn btn-danger btn-sm', fields_wrapper_selector: '.wrapper-div') do %> <!-- adds a link to add more items -->
-      <%= bootstrap_icon(text: ' Remover', icon: 'bi-trash') %>
-    <% end %>
-  </div>
+  
 
   <div class="row g-2 mt-1">
     <div class="col-md-4">
@@ -30,14 +26,23 @@
         <%= form.text_field :price, class: 'form-control form-control-sm' %>
       </div>
     </div>
+  </div>
 
-    <div class="col-md-12">
+  <div class="row">
+    <div class="col-md-11">
       <div class="form-group">
         <%= form.label :description %>
         <%= form.text_field :description, class: 'form-control form-control-sm mb-3' %>
       </div>
     </div>
 
+    <div class="col-md">
+      <div class="text-end mt-4">
+        <%= link_to_remove_nested(form, link_classes: 'btn btn-danger btn-sm', fields_wrapper_selector: '.wrapper-div') do %> <!-- adds a link to add more items -->
+          <%= bootstrap_icon(icon: 'bi-trash') %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
 </div>

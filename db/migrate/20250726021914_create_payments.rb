@@ -6,6 +6,7 @@ class CreatePayments < ActiveRecord::Migration[7.1]
       t.integer :paymentable_id
       t.string :paymentable_type
       t.monetize :price
+      t.integer :quantity
       t.date :due_date
       t.integer :payment_method, default: 0
       t.integer :status, default: 0

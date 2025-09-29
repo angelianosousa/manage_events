@@ -152,6 +152,10 @@ pt-BR:
       create: Criar %{model}
       submit: Salvar %{model}
       update: Atualizar %{model}
+  controller:
+    create: '%{model} salvo com sucesso!' 
+    update: '%{model} atualizado com sucesso!'
+    destroy: '%{model} removido com sucesso!'
   number:
     currency:
       format:

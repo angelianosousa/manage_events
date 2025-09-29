@@ -15,7 +15,22 @@ module EventsHelper
     tag.span event.status, class: "badge bg-#{classe} rounded-pill}"
   end
 
-  def event_progress(ticket)
+  def event_progress(event)
+    tickets_sellout            = event.subscribers_sellout
+    percentage_tickets_sellout = (tickets_sellout.to_f / event.subscribers_expected.to_f) * 100
+    tickets_sell_receipt       = humanized_money_with_symbol(event.total_receipt)
+    sell_bar_color             = progress_bar_color(percentage_tickets_sellout)
+
+    <<~HEREDOC
+      <p style='display: inline; color: gray;'>#{bootstrap_icon(text: "#{event.tickets_sells_verbose} #{tickets_sell_receipt}", icon: 'bi bi-people')}</p>
+
+      <div class="progress mb-3" role="progressbar" aria-valuenow="#{percentage_tickets_sellout}" aria-valuemin="0" aria-valuemax="100" style="height: 12px;">
+        <div class="progress-bar bg-#{sell_bar_color}" style="width: #{percentage_tickets_sellout}%; height: 12px;">#{number_to_percentage(percentage_tickets_sellout, precision: 2)}</div>
+      </div>
+    HEREDOC
+  end
+
+  def ticket_progress(ticket)
     percentage = ticket.tickets_percentage
 
     sell_bar_color = progress_bar_color(percentage[:total])
@@ -45,7 +60,9 @@ module EventsHelper
   end
 
   def progress_bar_color(percentage)
-    if percentage <= 25
+    if percentage <= 0
+      'secondary'
+    elsif percentage <= 25
       'danger'
     elsif percentage <= 50
       'info'
@@ -90,7 +107,7 @@ module EventsHelper
              end
 
     tag.span class: "badge bg-#{classe}" do
-      status
+      Payment.human_attribute_name "status.#{status}"
     end
   end
 
@@ -104,4 +121,10 @@ module EventsHelper
     end
   end
 
+  def payment_methods_for_select
+    Payment.payment_methods.map do |key, value|
+      [Payment.human_attribute_name("payment_method.#{key}"), value]
+    end
+  end
+  
 end

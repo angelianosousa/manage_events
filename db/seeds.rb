@@ -12,26 +12,30 @@
 company = Company.find_or_create_by(name: 'Empresa XPTO')
 
 # Create Admin Demo
-Admin.find_or_initialize_by(company_id: company.id, name: 'Demo User', email: 'admin.demo@teste.com') do |admin|
+company.admins.find_or_initialize_by(company_id: company.id, name: 'Demo User', email: 'admin.demo@teste.com') do |admin|
   admin.password              = 'adminteste#321'
   admin.password_confirmation = 'adminteste#321'
   admin.save
 end
 
-cliente = Client.find_or_initialize_by(company_id: company.id, name: 'Demo User', email: 'client.demo@teste.com') do |client|
+cliente = company.clients.find_or_initialize_by(company_id: company.id, name: 'Demo User', email: 'client.demo@teste.com') do |client|
+  client.name                  = 'Client test'
+  client.email                 = 'clientteste@gmail.com'
+  client.cpf                   = CPF.generate
+  client.phone                 = Faker::PhoneNumber.phone_number
   client.password              = 'clientteste#321'
   client.password_confirmation = 'clientteste#321'
-  client.save
 end
 
+cliente.save
+
 5.times do |_t|
-  Event.find_or_create_by(company_id: company.id, name: Faker::Name.name) do |event|
+  company.events.find_or_create_by!(company_id: company.id, name: Faker::Name.name) do |event|
     event.description   = Faker::Lorem.paragraph_by_chars
     event.category_name = Faker::Job.field
     event.date_start    = Faker::Date.between(from: 2.months.ago, to: Date.today)
-    event.date_end      = Faker::Date.between(from: 1.months.ago, to: Date.today)
-    event.time_start    = Faker::Time.between(from: DateTime.now - 1, to: DateTime.now, format: :short)
-    event.time_end      = Faker::Time.between(from: DateTime.now - 1, to: DateTime.now, format: :short)
+    event.time_start    = Time.now.noon + 2.hours
+    event.time_end      = event.time_start + 6.hours
     event.build_address(place_name: Faker::Address.community, address_name: Faker::Address.full_address)
 
     ticket = event.tickets.build(
@@ -40,16 +44,18 @@ end
       price: rand(50..1000)
     )
 
-    payments = rand(50..200).times.map do |_t|
-      {
+    rand(50..80).times.map do |_t|
+      company.payments.build({
+        paymentable: ticket,
         company_id: company.id,
         user_account_id: cliente.id,
         due_date: Date.today + 10.days,
-        price: ticket.price
-      }
+        price: ticket.price,
+        quantity: 1
+      })
+
     end
 
-    ticket.ticket_payments.build(payments)
     event.save
   end
 end

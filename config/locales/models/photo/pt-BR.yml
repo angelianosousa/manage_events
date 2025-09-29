@@ -1,0 +1,10 @@
+---
+pt-BR:
+  activerecord:
+    attributes:
+      photo:
+        image: Imagem (1320x300)
+    models:
+      photo:
+        one: Banner
+        other: Banners

@@ -1,0 +1,20 @@
+---
+pt-BR:
+  activerecord:
+    attributes:
+      payment:
+        company_id: Organizadora
+        user_account_id: Cliente
+        due_date: Vencimento
+      payment/payment_method:
+        pix: PIX
+        credit: Crédito
+        debit: Débito
+      payment/status:
+        pending: Pendente
+        paid: Pago
+    models:
+      payment:
+        one: Pagamento
+        other: Pagamentos
+        

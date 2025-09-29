@@ -1,7 +1,7 @@
-<header class="p-3 border-bottom text-bg-light">
+<header class="px-3 py-2 border-bottom text-bg-light">
   <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
     <span class="badge text bg-dark p-2">
-      <%= bootstrap_icon(icon: 'bi-building-fill') %>
+      <%= bootstrap_icon(icon: 'bi-building-fill fs-4') %>
     </span>
 
     <div class="ms-3 me-1 mb-0 pb-0">
@@ -12,7 +12,7 @@
 
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
       <li class="mx-1">
-        <%= link_to company_home_index_path, class: "btn #{controller_name == 'home' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
+        <%= link_to company_dashboard_index_path, class: "btn #{controller_name == 'home' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
           <%= bootstrap_icon(text: ' Dashboard', icon: 'bi-clipboard-data') %>
         <% end %>
       </li>
@@ -22,18 +22,19 @@
           <%= bootstrap_icon(text: ' Eventos', icon: 'bi-calendar-event') %>
         <% end %>
       </li>
+      <!-- 
+        <li class="mx-1">
+          <%= link_to '#', class: "btn #{controller_name == 'products' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
+            <%= bootstrap_icon(text: ' Produtos', icon: 'bi-box-seam') %>
+          <% end %>
+        </li>
 
-      <li class="mx-1">
-        <%= link_to '#', class: "btn #{controller_name == 'products' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
-          <%= bootstrap_icon(text: ' Produtos', icon: 'bi-box-seam') %>
-        <% end %>
-      </li>
-
-      <li class="mx-1">
-        <%= link_to '#', class: "btn #{controller_name == 'orders' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
-          <%= bootstrap_icon(text: ' Pedidos', icon: 'bi-cart') %>
-        <% end %>
-      </li>
+        <li class="mx-1">
+          <%= link_to '#', class: "btn #{controller_name == 'orders' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
+            <%= bootstrap_icon(text: ' Pedidos', icon: 'bi-cart') %>
+          <% end %>
+        </li>
+      -->
     </ul>
     
     <div class="dropdown text-end">
@@ -50,9 +51,8 @@
       </a>
 
       <ul class="dropdown-menu text-small" style="">
-        <li><a class="dropdown-item" href="#">New project...</a></li>
-        <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <!-- <li><a class="dropdown-item" href="#">Configurações</a></li> -->
+        <li><a class="dropdown-item" href="#">Perfil</a></li>
         <li>
           <hr class="dropdown-divider">
         </li>

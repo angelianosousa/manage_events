@@ -12,12 +12,14 @@
 #  updated_at             :datetime         not null
 #  name                   :string
 #  company_id             :bigint
+#  type                   :string           not null
+#  phone                  :string
+#  cpf                    :string
 #
 class UserAccount < ApplicationRecord
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :registerable, :trackable and :omniauthable
-  devise :database_authenticatable,
-         :recoverable, :rememberable, :validatable
+  # :confirmable, :lockable, :timeoutable, :registerable, :trackable, :validatable and :omniauthable
+  devise :database_authenticatable
 
   belongs_to :company
 end

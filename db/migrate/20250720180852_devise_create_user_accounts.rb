@@ -36,6 +36,9 @@ class DeviseCreateUserAccounts < ActiveRecord::Migration[7.1]
       t.timestamps null: false
       t.string :name
       t.references :company, foreign_key: true
+      t.string :type, null: false
+      t.string :phone
+      t.string :cpf
     end
 
     add_index :user_accounts, :email,                unique: true

@@ -2,40 +2,40 @@
   <%= @event&.name %>
 <% end %>
 
-<div class="container-fluid">
-  <header class="d-flex flex-wrap justify-content-center align-items-center py-3 border-bottom">
-    <a href="/" class="d-flex align-items-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none"> 
-      <svg class="bi me-2" width="40" height="32" aria-hidden="true">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="h4">Eventos</span>
-    </a>
+<div class="container-fluid bg-light">
+  <header class="d-flex flex-wrap justify-content-center align-items-center border-bottom py-3">
+    <%= link_to company_event_page_path(params[:company], @event), class: 'd-flex align-items-center mb-md-0 me-md-auto text-decoration-none h4' do %>
+      <span><%= @event.name %></span>
+    <% end %>
 
     <% if admin_signed_in? %>
       <ul class="nav nav-pills">
-        <li class="nav-item"><%= link_to_edit_resource(' Editar', edit_company_event_path(@event.id), size: 'btn-md') %></li>
-        <li class="nav-item"><%= link_to_back('btn-md') %></li>
+        <li class="nav-item"><%= link_to_edit_resource(' Editar', edit_company_event_path(@event.id), size: 'btn-sm') %></li>
+
+        <li class="nav-item">
+          <%= link_to company_event_path(@event), class: 'btn btn-light btn-sm' do %>
+            <%= bootstrap_icon(text: ' Voltar', icon: 'bi-arrow-left-circle-fill') %>
+          <% end %>
+        </li>
       </ul>
     <% end %>
   </header>
 </div>
 
 <main>
-  <section class="text-center mb-5">
-    <div class="row py-lg-5 banner_event" style="background-image: url('<%= @event&.banner&.image&.attached? ? url_for(@event&.banner&.image) : 'https://mdbcdn.b-cdn.net/img/new/fluid/nature/015.webp' %>'); background-repeat: no-repeat; background-position: center center; background-size: cover; opacity: 0.7; width: 100%; height: 300px;">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="text-light"><%= @event.name %></h1>
+  <section class="container text-center my-3">
+    <div class="figure" style='opacity: 0.7; background-position: center center;'>
+      <% image = @event.banner&.image&.attached? ? @event.banner.image : 'placeholder.png'%>
 
-        <p class="lead text-light">
-          <%= @event.description %>
-        </p>
-      </div>
+      <%= image_tag image, class: 'figure-img img-fluid', style: 'width: 1320px; height: 300px;' %>
     </div>
   </section>
 
   <div class="container">
+    <%= render '/shared/error_messages', resource: @payment %>
+
     <div class='row'>
-      <div class='col-md-8'>
+      <div class='col-sm-8 col-md-8 mb-3'>
 
         <div class='card p-0'>
           <div class='card-body'>
@@ -50,12 +50,11 @@
                   <p class="ms-2">
                     <b>Data</b> <br>
                     <%= I18n.l @event.date_start, format: :long %> <br>
-                    <%= I18n.l @event.date_end, format: :long %>
                   </p>
                 </div>
               </div>
 
-              <div class="col-md-3 fs-6">
+              <div class="col-sm-3 col-md-3 fs-6">
                 <div class="d-flex align-items-start">
                   <%= bootstrap_icon(icon: 'bi-clock', style: 'font-size: 2em;') %>
 
@@ -67,7 +66,7 @@
                 </div>
               </div>
 
-              <div class="col-md-5 fs-6">
+              <div class="col-sm-5 col-md-5 fs-6">
                 <div class="d-flex align-items-start">
                   <%= bootstrap_icon(icon: 'bi-geo-alt', style: 'font-size: 2em;') %>
                   
@@ -105,67 +104,29 @@
               </p>
             </div>
 
-            <div class="d-flex justify-content-start ms-2">
-              <%= link_to 'mailto:contato@techevents.com.br', class: 'text-dark', style: 'text-decoration: none;' do %>
-                <%= bootstrap_icon(icon: 'bi-envelope') %> contato@techevents.com.br
-              <% end %>
-
-              <%= link_to 'telto:+55 11 99999-9999', class: 'text-dark mx-2', style: 'text-decoration: none;' do %>
-                <%= bootstrap_icon(icon: 'bi-telephone') %> +55 11 99999-9999
-              <% end %>
-
-              <%= link_to 'https://techevents.com.br', target: '_blank', class: 'text-dark', style: 'text-decoration: none;' do %>
-                <%= bootstrap_icon(icon: 'bi-globe') %> https://techevents.com.br
-              <% end %>
+            <div class="row">
+              <div class="col-sm-4 col-md-4">
+                <%= link_to 'mailto:contato@techevents.com.br', class: 'text-dark', style: 'text-decoration: none;' do %>
+                  <%= bootstrap_icon(icon: 'bi-envelope') %> contato@techevents.com.br
+                <% end %>
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <%= link_to 'telto:+55 11 99999-9999', class: 'text-dark', style: 'text-decoration: none;' do %>
+                  <%= bootstrap_icon(icon: 'bi-telephone') %> +55 11 99999-9999
+                <% end %>
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <%= link_to 'https://techevents.com.br', target: '_blank', class: 'text-dark', style: 'text-decoration: none;' do %>
+                  <%= bootstrap_icon(icon: 'bi-globe') %> https://techevents.com.br
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
 
-
-      <div class='col-md-4'>
-        <div class='card'>
-          <div class='card-body'>
-            <h5 class='card-title'>Ingressos</h5>
-
-            <% @event.tickets.each do |ticket| %>
-              <div class="card btn p-0 my-3" id="ticket_<%= ticket.id %>">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                    <h6 class="card-title"><%= ticket.name %></h6>
-
-                    <b><%= humanized_money_with_symbol ticket.price %></b>
-                  </div>
-
-                  <hr>
-
-                  <div class="d-flex justify-content-between align-items-center">
-                    <small><%= ticket.ticket_payments.count %> de <%= ticket.quantity %> disponíveis</small>
-
-                    <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="<%= ticket.ticket_payments.count %>" aria-valuemin="0" aria-valuemax="<%= ticket.quantity %>" style="height: 5px; width: 50px;">
-                      <div class="progress-bar bg-dark" style="width: <%= ticket.tickets_percentage[:total] %>%"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-
-            <div class="form-group mt-4">
-              <%= link_to '#', class: 'btn btn-light btn-sm', id: 'decrease' do %>
-                <%= bootstrap_icon(icon: 'bi-dash') %>
-              <% end %>
-
-              <%= number_field_tag :payment_ticket, 1, class: 'fom-control', min: 1 %>
-
-              <%= link_to '#', class: 'btn btn-light btn-sm', id: 'increase' do %>
-                <%= bootstrap_icon(icon: 'bi-plus') %>
-              <% end %>
-            </div>
-
-            <%= link_to 'Confirmar', '#', class: 'btn btn-dark btn-round w-100 mt-3' %>
-          </div>
-        </div>
+      <div class='col-sm-4 col-md-4'>
+        <%= render 'form_buy_ticket', event: @event %>
       </div>
     </div> 
     
@@ -180,23 +141,3 @@
   </div>
 </footer>
 
-<script>
-  let btn = document.querySelector('#ticket_<%= @event.tickets.last.id %>');
-
-  let dash_button   = document.querySelector('#decrease');
-  let plus_button   = document.querySelector('#increase');
-  let payment_field = document.querySelector('#payment_ticket');
-
-  plus_button.addEventListener('click', function(){
-    payment_field.stepUp(1);
-  });
-
-  dash_button.addEventListener('click', function(){
-    payment_field.stepDown(1);
-  });
-
-  btn.addEventListener('click', function(){
-    console.log('clicou!')
-    btn.style.borderColor = 'black';
-  });
-</script>

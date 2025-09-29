@@ -1,4 +1,5 @@
 class CompaniesController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern
 
@@ -9,6 +10,10 @@ class CompaniesController < ApplicationController
   end
 
   private
+
+  def record_not_found
+    render plain: 'Evento não encontrado', status: 404
+  end
 
   def default_url_options(_options = {})
     if admin_signed_in?

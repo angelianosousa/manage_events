@@ -12,6 +12,11 @@
 #  updated_at             :datetime         not null
 #  name                   :string
 #  company_id             :bigint
+#  type                   :string           not null
+#  phone                  :string
+#  cpf                    :string
 #
 class Admin < UserAccount
+  # From Devise module Validatable
+  devise :validatable
 end

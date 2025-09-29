@@ -15,11 +15,9 @@
   </nav>
 <% end %>
 
-<p style="color: green"><%= notice %></p>
-
-<%= render 'search_form' %>
-
 <% if @events.any? %>
+  <%= render 'search_form' %>
+
   <div class="row row-cols-1 row-cols-md-3 g-4">
     <% @events.each do |event| %>
 
@@ -43,17 +41,18 @@
               <% ticket = event.tickets.last %>
 
               <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: ' Inicio ', icon: 'bi-calendar-date') %><%= I18n.l event.date_start, format: :short %></p>
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: ' Fim ', icon: 'bi-calendar-date') %><%= I18n.l event.date_end, format: :short %></p>
               <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: event.address.address_name, icon: 'bi-geo-alt') %></p>
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: " #{ticket.ticket_payments.count} de #{ticket.quantity} participantes", icon: 'bi-people') %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: " #{event.subscribers_sellout} de #{event.subscribers_expected} participantes", icon: 'bi-people') %></p>
             </div>
-
-            <%= event_progress(ticket).html_safe %>
           </div>
 
           <div class="card-footer">
             <div class="d-flex justify-content-between align-items-center">
-              <b class='fs-6'><%= humanized_money_with_symbol ticket.price %></b>
+              <div class="d-flex flex-column">
+                <% event.tickets.each do |ticket| %>
+                  <small><%= ticket.name %>: <%= humanized_money_with_symbol ticket.price %></small>
+                <% end %>
+              </div>
 
               <div class="d-flex justify-content-right">
                 <%= link_to_show_resource('', company_event_path(event.id)) %>

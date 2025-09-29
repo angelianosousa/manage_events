@@ -5,11 +5,15 @@
 #  id            :bigint           not null, primary key
 #  company_id    :bigint           not null
 #  name          :string
+#  slug          :string
 #  description   :text
 #  category_name :string
-#  date_start    :datetime
-#  date_end      :datetime
-#  status        :integer
+#  date_start    :date
+#  date_end      :date
+#  time_start    :time
+#  time_end      :time
+#  status        :integer          default("active")
+#  visible       :boolean          default(FALSE)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #
@@ -18,7 +22,7 @@ class Event < ApplicationRecord
 
   friendly_id :name, use: :slugged
 
-  enum :status, { active: 0, finished: 1, canceled: 2 }
+  enum :status, { active: 0, canceled: 1 }
 
   # Associations
   belongs_to :company
@@ -31,6 +35,7 @@ class Event < ApplicationRecord
   # Validations
   validates :category_name, :date_start, :time_start, presence: true
   validates :time_end, comparison: { greater_than: :time_start }
+  validate :check_amount_of_tickets
 
   accepts_nested_attributes_for :address, allow_destroy: true
   accepts_nested_attributes_for :tickets, allow_destroy: true
@@ -51,6 +56,29 @@ class Event < ApplicationRecord
 
   def local_name
     address.address_name
+  end
+
+  def total_receipt
+    tickets.sum(&:tickets_receipt)
+  end
+
+  def subscribers_expected
+    tickets.sum(&:quantity)
+  end
+
+  def subscribers_sellout
+    tickets.sum(&:tickets_sellout)
+  end
+
+  def tickets_sells_verbose
+    "#{subscribers_sellout} / #{subscribers_expected}"
+  end
+  
+
+  def check_amount_of_tickets
+    return unless tickets.count { |t| !t.free_ticket? } > 3
+
+    errors.add :base, 'Evento pode ter no máximo 3 ingressos pagos'
   end
 
 end
