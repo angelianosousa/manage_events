@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:event_title) || 'Titulo do evento' %></title>
+    <title>ManageEvents</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,10 +11,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
   </head>
 
-  <body id="body_bg_event">
-    <%= render 'layouts/navbar' if company_admin_signed_in? %>
+  <body id="body_bg">
+    <%= render 'master_module/shared/navbar' %>
 
-    <%= yield %>
+    <div class="container mb-5">
+      <%= render '/shared/notice_messages' %>
+
+      <%= content_for(:page_header) || 'Painel Administrativo' %>
+
+      <%= yield %>
+    </div>
 
     <%= javascript_importmap_tags %>
   </body>

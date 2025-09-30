@@ -8,7 +8,7 @@
       <span><%= @event.name %></span>
     <% end %>
 
-    <% if admin_signed_in? %>
+    <% if company_admin_signed_in? %>
       <ul class="nav nav-pills">
         <li class="nav-item"><%= link_to_edit_resource(' Editar', edit_company_event_path(@event.id), size: 'btn-sm') %></li>
 

@@ -1,0 +1,16 @@
+---
+pt-BR:
+  activerecord:
+    attributes:
+      company:
+        name: Nome
+        slug: Apelido
+        email: E-mail
+        phone: Telefone
+        cellphone: Celular
+        site: Site
+        active: Ativo
+    models:
+      company:
+        one: Empresa
+        other: Empresas

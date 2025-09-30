@@ -1,6 +1,6 @@
 class CompanyModule::EventPagesController < CompaniesController
   layout 'event_page'
-  skip_before_action :authenticate_admin!
+  skip_before_action :authenticate_company_admin!
   before_action :set_event, except: :index
   before_action :event_not_found
 

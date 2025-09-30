@@ -1,0 +1,42 @@
+<%= content_for :page_header do %>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+
+      <div class="navbar-brand">
+        <h4 class="mb-0">
+          <%= bootstrap_icon(text: ' Painel Administrativo', icon: 'bi-clipboard-data') %>
+        </h4>
+
+        <small>Visão geral do seu sistema</small>
+      </div>
+
+      <%= link_to_new_resource(' Empresa', new_administracao_company_path, '') %>
+    </div>
+  </nav>
+<% end %>
+
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md fw-bold"><%= Company.human_attribute_name(:name) %></div>
+      <div class="col-md fw-bold"><%= Company.human_attribute_name(:email) %></div>
+      <div class="col-md fw-bold"><%= Company.human_attribute_name(:cellphone) %></div>
+      <div class="col-md fw-bold">Ações</div>
+    </div>
+
+    <% @companies.each do |company| %>
+      <div class="row">
+        <div class="col-md"><%= company.name %></div>
+        <div class="col-md"><%= company.email %></div>
+        <div class="col-md"><%= company.cellphone %></div>
+        <div class="col-md">
+          <div class="d-flex">
+            <%= link_to_edit_resource('', edit_administracao_company_path(company.id)) %>
+            <%= link_to_toggle_resource(company.active, administracao_company_toggle_company_active_path(company.id)) %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
