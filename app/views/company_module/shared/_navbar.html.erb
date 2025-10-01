@@ -12,7 +12,7 @@
 
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
       <li class="mx-1">
-        <%= link_to company_dashboard_index_path, class: "btn #{controller_name == 'home' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
+        <%= link_to company_dashboard_index_path(current_company), class: "btn #{controller_name == 'home' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
           <%= bootstrap_icon(text: ' Dashboard', icon: 'bi-clipboard-data') %>
         <% end %>
       </li>
@@ -42,22 +42,22 @@
       <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 
         <div class="d-inline-flex">
           <div>
-            <p class="me-3 mb-0"><%= current_admin.name %></p>
-            <p style="font-size: 12px;"><%= current_admin.email %></p>
+            <p class="me-3 mb-0"><%= current_company_admin.name %></p>
+            <p style="font-size: 12px;"><%= current_company_admin.email %></p>
           </div>
 
-          <img src="https://github.com/mdo.png" alt="mdo" width="40" height="40" class="rounded-circle"> 
+          <%= image_tag current_company.logo&.image&.attached? ? current_company.logo.image : 'https://github.com/mdo.png', size: '40x40', class: 'rounded-circle' %>
         </div>
       </a>
 
       <ul class="dropdown-menu text-small" style="">
         <!-- <li><a class="dropdown-item" href="#">Configurações</a></li> -->
-        <li><a class="dropdown-item" href="#">Perfil</a></li>
+        <li><%= link_to 'Perfil', edit_company_profile_path(current_company.id), class: 'dropdown-item' %></li>
         <li>
           <hr class="dropdown-divider">
         </li>
         <li>
-          <%= button_to 'Sair', destroy_admin_session_path, class: 'dropdown-item', method: :delete %>
+          <%= button_to 'Sair', destroy_company_admin_session_path, class: 'dropdown-item', method: :delete %>
         </li>
       </ul>
     </div>

@@ -1,6 +1,14 @@
 ---
 pt-BR:
   activerecord:
+    attributes:
+      admin:
+        name: Nome
+        email: E-mail
+        cpf: CPF
+        phone: Telefone
+        password: Senha
+        password_confirmation: Senha de confirmação
     models:
       admin:
         one: Admin

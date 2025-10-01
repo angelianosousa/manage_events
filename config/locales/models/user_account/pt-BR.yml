@@ -1,13 +1,6 @@
 ---
 pt-BR:
   activerecord:
-    attributes:
-      user_account:
-        name: Nome
-        email: E-mail
-        cpf: CPF
-        phone: Telefone
-        password: Senha
     models:
       user_account:
         one: Usuário

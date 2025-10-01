@@ -43,4 +43,13 @@ module ApplicationHelper
     end
   end
 
+  def link_to_toggle_resource(active, link)
+    content_tag :p, class: 'text-right' do
+      button_to link, class: "btn btn-#{active ? 'success' : 'outline-success'} btn-sm", method: :post do
+        bootstrap_icon(icon: 'bi-check-circle')
+      end
+    end
+  end
+  
+
 end

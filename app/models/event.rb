@@ -9,7 +9,6 @@
 #  description   :text
 #  category_name :string
 #  date_start    :date
-#  date_end      :date
 #  time_start    :time
 #  time_end      :time
 #  status        :integer          default("active")

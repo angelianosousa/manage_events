@@ -1,0 +1,46 @@
+<header class="px-3 py-2 border-bottom text-bg-light">
+  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    <span class="badge text bg-dark p-2">
+      <%= bootstrap_icon(icon: 'bi-building-fill fs-4') %>
+    </span>
+
+    <div class="ms-3 me-1 mb-0 pb-0">
+      <h5>Sistema de Gerenciamento</h5>
+
+      <p style="font-size: 12px; margin-bottom: 0px;">Eventos, Produtos e Pedidos</p>
+    </div>
+
+    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+      <li class="mx-1">
+        <%= link_to '#', class: "btn #{controller_name == 'home' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
+          <%= bootstrap_icon(text: ' Painel Admin', icon: 'bi-house-door-fill') %>
+        <% end %>
+      </li>
+    </ul>
+    
+    <div class="dropdown text-end">
+
+      <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 
+        <div class="d-inline-flex">
+          <div>
+            <p class="me-3 mb-0"><%= current_administracao_master.name %></p>
+            <p style="font-size: 12px;"><%= current_administracao_master.email %></p>
+          </div>
+
+          <img src="https://github.com/mdo.png" alt="mdo" width="40" height="40" class="rounded-circle"> 
+        </div>
+      </a>
+
+      <ul class="dropdown-menu text-small" style="">
+        <!-- <li><a class="dropdown-item" href="#">Configurações</a></li> -->
+        <li><a class="dropdown-item" href="#">Perfil</a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li>
+          <%= button_to 'Sair', destroy_administracao_master_session_path, class: 'dropdown-item', method: :delete %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
