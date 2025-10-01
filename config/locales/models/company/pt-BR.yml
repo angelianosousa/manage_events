@@ -1,0 +1,25 @@
+---
+pt-BR:
+  activerecord:
+    attributes:
+      company:
+        name: Nome
+        slug: Apelido
+        email: E-mail
+        phone: Telefone
+        cellphone: Celular
+        site: Site
+        active: Ativo
+      company/admin_base:
+        name: Nome
+        email: E-mail
+        cpf: CPF
+        phone: Telefone
+        password: Senha
+        password_confirmation: Senha de confirmação
+      company/logo:
+        image: Logo
+    models:
+      company:
+        one: Empresa
+        other: Empresas

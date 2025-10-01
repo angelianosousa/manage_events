@@ -82,15 +82,20 @@
   </div>
 -->
 
-<div class="card mt-5">
+<div class="card mt-3">
   <div class="card-body">
     <h5>Eventos em destaque</h5>
 
-    <% @events.each do |event| %>
-      <h6><%= event.name %></h6>
+    <% if @events.any? %>
+      <% @events.each do |event| %>
+        <h6><%= event.name %></h6>
 
-      <%= event_progress(event).html_safe %>
+        <%= event_progress(event).html_safe %>
+      <% end %>
+    <% else %>
+      <div class="text-left">Cadastre o primeiro evento...</div>
     <% end %>
+
   </div>
 </div>
 

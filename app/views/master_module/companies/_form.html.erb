@@ -1,0 +1,122 @@
+<div class="card">
+  <div class="card-body">
+
+    <%= form_with(model: [:administracao, company]) do |form| %>
+      <h5><%= bootstrap_icon(text: ' Informações da empresa', icon: 'bi-card-list') %></h5>
+      
+      <div class="row">
+        <div class="col-md">
+          <div class="form-group">
+            <%= form.label :name, style: 'display: block;' %>
+            <%= form.text_field :name, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="form-group">
+            <%= form.label :slug, style: 'display: block;' %>
+            <%= form.text_field :slug, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="form-group">
+            <%= form.label :email, style: 'display: block;' %>
+            <%= form.text_field :email, class: 'form-control' %>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md">
+          <div class="form-group">
+            <%= form.label :site, style: 'display: block;' %>
+            <%= form.text_field :site, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row my-3">
+        <div class="col-md">
+          <div class="form-group">
+            <%= form.label :phone, style: 'display: block;' %>
+            <%= form.text_field :phone, class: 'form-control' %>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="form-group">
+            <%= form.label :cellphone, style: 'display: block;' %>
+            <%= form.text_field :cellphone, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+
+      <h5><%= bootstrap_icon(text: ' Conta de acesso', icon: 'bi-person') %></h5>
+
+      <div class="row mt-3">
+        <div class="col-md">
+          <%= form.fields_for :admin_base do |admin_form| %>
+            <div class="row">
+              <div class="col-md">
+                <div class="form-group mb-2">
+                  <%= admin_form.label :name, style: 'display: block' %>
+                  <%= admin_form.text_field :name, class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col-md">
+                <div class="form-group mb-2">
+                  <%= admin_form.label :email, style: 'display: block' %>
+                  <%= admin_form.text_field :email, class: 'form-control' %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-2">
+              <%= admin_form.label :password, style: 'display: block' %>
+              <%= admin_form.password_field :password, class: 'form-control' %>
+            </div>
+
+            <div class="form-group mb-2">
+              <%= admin_form.label :password_confirmation, style: 'display: block' %>
+              <%= admin_form.password_field :password_confirmation, class: 'form-control' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="actions mt-3">
+        <%= form.submit 'Salvar', class: 'btn btn-dark' %>
+        <%= link_to 'Cancelar', administracao_companies_path, class: 'btn btn-light' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  let slug = $('#company_slug');
+  let name = $('#company_name');
+
+  name.on('keyup', function(e){
+    e.preventDefault();
+    
+    let text = $(this).val();
+
+    slug.val(slugfy(text));
+  });
+
+  function slugfy(text) {
+    console.log(text)
+    if (text == null) return;
+
+    return text
+      .normalize("NFD")                 // separa letras dos acentos
+      .replace(/[\u0300-\u036f]/g, "")  // remove os acentos
+      .replace(/[^a-zA-Z0-9\s]/g, "")   // remove caracteres especiais, deixando só letras, números e espaço
+      .trim()                           // remove espaços no início e fim
+      .replace(/\s+/g, "-")             // troca espaços por -
+      .toLowerCase();                   // converte para minúsculas
+  }
+</script>

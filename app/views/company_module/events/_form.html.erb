@@ -1,6 +1,6 @@
 <%= form_with(model: [:company, event]) do |form| %>
 
-  <%= render '/shared/error_messages', resource: @event %>
+  <%= render '/shared/error_messages', resource: event %>
 
   <div class="d-flex align-items-start">
     <div class="card me-3">
@@ -8,7 +8,7 @@
         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
           <button class="nav-link active" id="v-pills-general-info-tab" data-bs-toggle="pill" data-bs-target="#v-pills-general-info" type="button" role="tab" aria-controls="v-pills-general-info" aria-selected="true">Geral</button>
           <button class="nav-link" id="v-pills-banner-tab" data-bs-toggle="pill" data-bs-target="#v-pills-banner" type="button" role="tab" aria-controls="v-pills-banner" aria-selected="false"><%= Photo.model_name.human %></button>
-          <button class="nav-link" id="v-pills-tickets-tab" data-bs-toggle="pill" data-bs-target="#v-pills-tickets" type="button" role="tab" aria-controls="v-pills-tickets" aria-selected="false"><%= Ticket.model_name.human %></button>
+          <button class="nav-link" id="v-pills-tickets-tab" data-bs-toggle="pill" data-bs-target="#v-pills-tickets" type="button" role="tab" aria-controls="v-pills-tickets" aria-selected="false"><%= Ticket.model_name.human.pluralize %></button>
         </div>
       </div>
     </div>
@@ -158,12 +158,6 @@
               <% end %>
             </div>
 
-            <div class="form-group mb-3">
-              <div class="form-check">
-                <%= form.label :visible, class: 'form-check-label', for: 'event_visible' %>
-                <%= form.check_box :visible, class: 'form-check-input' %>
-              </div>
-            </div>
           </div>
         </div>
       </div>
