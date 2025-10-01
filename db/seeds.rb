@@ -69,3 +69,11 @@ if Rails.env.production?
     admin.save
   end
 end
+
+if Rails.env.production?
+  Master.find_or_initialize_by(name: 'Master User', email: 'master.demo@eventos.com') do |admin|
+    admin.password              = 'master#321'
+    admin.password_confirmation = 'master#321'
+    admin.save
+  end
+end
