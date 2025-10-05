@@ -11,7 +11,7 @@
     "build:js": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
     "watch:js": "yarn build:js --watch",
     "rails_db": "bin/rails db:migrate && db:seed",
-    "start": "yarn run rails_db && bin/dev"
+    "start": "yarn run rails_db"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
