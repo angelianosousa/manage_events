@@ -1,2 +1,0 @@
-module CompanyModule::ProfileHelper
-end

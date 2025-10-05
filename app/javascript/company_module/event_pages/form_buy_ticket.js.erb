@@ -1,0 +1,73 @@
+let sel_ticket_id   = null;
+let sel_ticket_name = null;
+let ticket_price    = null;
+let total_payment   = null;
+let ticket_quantity = $('#payment_ticket_quantity');
+
+$('#resume_purchase').hide();
+
+$(document).ready(function(){
+
+  <% if @payment.present? && @payment.errors.present? %>
+    $('#ticket_<%= @payment.paymentable_id %>').trigger('click');
+    $('#buy_ticket').trigger('click');
+  <% end %>
+});
+
+$('#minus_button').on('click', function(e){
+  e.preventDefault();
+
+  ticket_quantity[0].stepDown(1);
+  updateTotalPayment();
+});
+
+$('#plus_button').on('click', function(e){
+  e.preventDefault();
+
+  ticket_quantity[0].stepUp(1);
+  updateTotalPayment();
+});
+
+<% @event.tickets.each do |ticket| %>
+  $('#ticket_<%= ticket.id %>').on('click', function(){
+    $('.tickets').removeClass('border-dark');
+    $(this).addClass('border-dark');
+
+    sel_ticket_id   = $(this).data('ticket-id');
+    sel_ticket_name = $(this).data('ticket-name');
+    ticket_price    = $(this).data('ticket-price');
+
+    $('#payment_ticket_id').val(sel_ticket_id);
+
+    updateTotalPayment();
+
+    $('#buy_ticket').removeClass('disabled');
+  });
+<% end %>
+
+$('#buy_ticket').on('click', function(e){
+  e.preventDefault();
+
+  $('#choose_ticket').hide();
+  $('#resume_purchase').show()
+
+  $('#ticket_choosed').html(`<p><b>Ingresso:</b></p><p>${sel_ticket_name}</p>`)
+  $('#ticket_buyed').html(`<p><b>Quantidade:</b></p><p>${ticket_quantity.val()}</p>`)
+  updateTotalPayment()
+});
+
+$('#back').on('click', function(e){
+  e.preventDefault();
+
+  $('#choose_ticket').show();
+  $('#resume_purchase').hide();
+});
+
+function updateTotalPayment(){
+  if (ticket_quantity.val() === null || ticket_price === null) return;
+
+  total_payment = parseFloat(ticket_quantity.val()) * parseFloat(ticket_price);
+
+  $('.total_payment').html()
+  $('.total_payment').html(`<p>Total:</p><p>${total_payment.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</p>`)
+}
