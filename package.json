@@ -12,7 +12,7 @@
     "watch:js": "yarn build:js --watch",
     "rails_seed": "bin/rails db:seed",
     "rails_db": "bin/rails db:migrate",
-    "start": "yarn run rails_db && rails_seed"
+    "start": "yarn run rails_db && yarn run rails_seed"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
