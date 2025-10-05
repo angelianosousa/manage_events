@@ -10,8 +10,9 @@
     "watch:css": "yarn build:css --watch",
     "build:js": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
     "watch:js": "yarn build:js --watch",
-    "rails_db": "bin/rails db:migrate && db:seed",
-    "start": "yarn run rails_db"
+    "rails_seed": "bin/rails db:seed",
+    "rails_db": "bin/rails db:migrate",
+    "start": "yarn run rails_db && rails_seed"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
