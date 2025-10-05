@@ -27,7 +27,7 @@ class Company < ApplicationRecord
   has_one :logo, as: :photoable, class_name: 'Photo'
 
   # Validations
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   accepts_nested_attributes_for :admin_base, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :logo, allow_destroy: true
