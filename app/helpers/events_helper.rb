@@ -126,5 +126,4 @@ module EventsHelper
       [Payment.human_attribute_name("payment_method.#{key}"), value]
     end
   end
-  
 end

@@ -62,8 +62,8 @@
       </div>
 
       <div class="form-group mb-2">
-        <%= label_tag 'client[phone]', 'Telefone *', class: 'form-label' %>
-        <%= text_field_tag 'client[phone]', (params[:client][:phone] rescue nil), class: 'form-control form-control-sm phone-mask', placeholder: '(00) 9 0000-0000' %>
+        <%= label_tag 'client[phone]', 'Celular *', class: 'form-label' %>
+        <%= text_field_tag 'client[phone]', (params[:client][:phone] rescue nil), class: 'form-control form-control-sm cellphone-mask', placeholder: '(00) 9 0000-0000' %>
       </div>
 
       <div class="form-group mb-2">
@@ -102,9 +102,6 @@
   let ticket_quantity = $('#payment_ticket_quantity');
 
   $('#resume_purchase').hide();
-
-  $('.phone-mask').mask('(00) 00000-0000');
-  $('.cpf-mask').mask('000.000.000-00');
 
   $(document).ready(function(){
     <% if @payment.present? && @payment.errors.present? %>
