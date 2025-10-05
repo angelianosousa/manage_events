@@ -62,7 +62,7 @@ if Rails.env.development?
   end
 end
 
-# if Rails.env.production?
+if Rails.env.production?
   company = Company.find_or_create_by(name: 'Empresa Demo', email: 'empresa.demo@gmail.com')
   company.build_admin_base(name: 'Empresa Demo', email: 'empresa.demo@gmail.com') do |admin|
     admin.password              = 'admin#321'
@@ -75,4 +75,4 @@ end
     admin.password_confirmation = 'master#321'
     admin.save
   end
-# end
+end
