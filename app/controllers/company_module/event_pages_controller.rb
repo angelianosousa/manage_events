@@ -6,6 +6,7 @@ class CompanyModule::EventPagesController < CompaniesController
 
   def index
     @company = Company.find_by_slug(params[:company_id])
+
     @q = @company.events.includes(:tickets, :banner, :address).ransack(params[:q])
 
     @events = @q.result(distinct: true)

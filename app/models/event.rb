@@ -40,6 +40,11 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :tickets, allow_destroy: true
   accepts_nested_attributes_for :banner, allow_destroy: true
 
+  # Scopes
+  scope :by_categories, ->(categories) {
+    where(':categories = ANY(categories)', categories: categories)
+  }
+
   # Ransack
   def self.ransackable_attributes(_auth_object = nil)
     %w[name description categories status]
@@ -47,6 +52,10 @@ class Event < ApplicationRecord
 
   def self.ransackable_associations(_auth_object = nil)
     %w[]
+  end
+
+  def self.ransackable_scopes(auth_object = nil)
+    %i[by_categories]
   end
 
   def toggle_visible!

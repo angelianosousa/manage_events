@@ -3,13 +3,17 @@
     <div class='card-body' id="choose_ticket">
       <h5 class='card-title'>Ingressos</h5>
 
-      <% @event.tickets.each do |ticket| %>
+      <% @event.tickets.order(:price_cents).each do |ticket| %>
         <div class="card btn p-0 my-3 border tickets" id="ticket_<%= ticket.id %>" data-ticket-id="<%= ticket.id %>" data-ticket-name="<%= ticket.name %>" data-ticket-price="<%= ticket.price %>">
           <div class="card-body">
             <div class="d-flex justify-content-between">
               <h6 class="card-title"><%= ticket.name %></h6>
 
-              <b><%= ticket.free_ticket? ? 'Gratuito' : humanized_money_with_symbol(ticket.price) %></b>
+              <% if ticket.free_ticket? %>
+                <p class="fw-bold me-2 text-success">Gratuito</p>
+              <% else %>
+                <p class="fw-bold me-2"><%= humanized_money_with_symbol ticket.price %></p>
+              <% end %>
             </div>
 
             <hr>

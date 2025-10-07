@@ -71,7 +71,11 @@
 
               <div class="d-flex">
                 <% event.tickets.order(:price_cents).each do |ticket| %>
-                  <p class="fw-bold me-2"><%= humanized_money_with_symbol ticket.price %></p>
+                  <% if ticket.free_ticket? %>
+                    <p class="fw-bold me-2 text-success">Gratuito</p>
+                  <% else %>
+                    <p class="fw-bold me-2"><%= humanized_money_with_symbol ticket.price %></p>
+                  <% end %>
                 <% end %>
               </div>
 

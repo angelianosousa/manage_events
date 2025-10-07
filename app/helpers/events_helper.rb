@@ -127,13 +127,13 @@ module EventsHelper
     end
   end
 
-  def event_statuses
+  def event_statuses_for_select
     Event.statuses.map do |key, _value|
       [Event.human_attribute_name("status.#{key}"), key]
     end
   end
 
-  def event_category_list
-    Event.pluck(:categories).flatten.reject { |x| x.nil? || x == '' }.uniq
+  def event_category_list_for_select
+    Event.distinct.pluck('UNNEST(categories)').reject(&:empty?).sort
   end
 end

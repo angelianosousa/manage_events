@@ -1,7 +1,7 @@
 <%= search_form_for @q, url: company_all_events_path, html: { class: 'd-flex' } do |f| %>
   <%= f.text_field :name_or_description_cont, class: 'form-control form-control-sm me-2', placeholder: 'Buscar evento' %>
 
-  <%= f.select :categories_eq, options_for_select(event_category_list, selected: (params[:q][:categories_eq].to_a rescue [])),
+  <%= f.select :by_categories, options_for_select(event_category_list_for_select, selected: (params[:q][:by_categories] rescue [])),
                               { include_blank: 'Categorias' },
                               { class: 'form-select form-select-sm me-2' } %>
 

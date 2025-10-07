@@ -15,13 +15,13 @@
         </div>
 
         <div class="col-md">
-          <%= f.select :categories_eq, options_for_select(event_category_list, selected: (params[:q][:categories_eq] rescue nil)),
+          <%= f.select :by_categories, options_for_select(event_category_list_for_select, selected: (params[:q][:by_categories] rescue [])),
                                       { include_blank: 'Categorias' },
                                       { class: 'form-select form-select-sm' } %>
         </div>
 
         <div class="col-md">
-          <%= f.select :status_eq, options_for_select(event_statuses, selected: (params[:q][:status_eq] rescue nil)),
+          <%= f.select :status_eq, options_for_select(event_statuses_for_select, selected: (params[:q][:status_eq] rescue nil)),
                                { include_blank: 'Status' },
                                { class: 'form-select form-select-sm' } %>
         </div>
