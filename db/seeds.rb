@@ -9,6 +9,12 @@
 #   end
 
 if Rails.env.development?
+  Master.find_or_initialize_by(name: 'Master Dev', email: 'master.dev@eventos.com') do |admin|
+    admin.password              = 'master#321'
+    admin.password_confirmation = 'master#321'
+    admin.save
+  end
+
   # Create Company Demo
   company = Company.find_or_create_by(name: 'Empresa XPTO')
 
@@ -31,9 +37,9 @@ if Rails.env.development?
   cliente.save
 
   5.times do |_t|
-    company.events.find_or_create_by!(company_id: company.id, name: Faker::Name.name) do |event|
+    company.events.find_or_create_by!(name: Faker::Name.name) do |event|
       event.description   = Faker::Lorem.paragraph_by_chars
-      event.category_name = Faker::Job.field
+      event.categories      << Faker::Job.field 
       event.date_start    = Faker::Date.between(from: 2.months.ago, to: Date.today)
       event.time_start    = Time.now.noon + 2.hours
       event.time_end      = event.time_start + 6.hours
@@ -48,13 +54,11 @@ if Rails.env.development?
       rand(50..80).times.map do |_t|
         company.payments.build({
           paymentable: ticket,
-          company_id: company.id,
           user_account_id: cliente.id,
           due_date: Date.today + 10.days,
           price: ticket.price,
           quantity: 1
         })
-
       end
 
       event.save

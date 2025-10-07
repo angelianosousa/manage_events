@@ -122,8 +122,18 @@ module EventsHelper
   end
 
   def payment_methods_for_select
-    Payment.payment_methods.map do |key, value|
-      [Payment.human_attribute_name("payment_method.#{key}"), value]
+    Payment.payment_methods.map do |key, _value|
+      [Payment.human_attribute_name("payment_method.#{key}"), key]
     end
+  end
+
+  def event_statuses
+    Event.statuses.map do |key, _value|
+      [Event.human_attribute_name("status.#{key}"), key]
+    end
+  end
+
+  def event_category_list
+    Event.pluck(:categories).flatten.reject { |x| x.nil? || x == '' }.uniq
   end
 end

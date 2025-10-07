@@ -4,3 +4,21 @@
 #body_bg_event {
   background-color:rgba(192,192,192,0.25);
 }
+
+.banner-figure {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.banner-figure img {
+  display: block;
+  width: 100%;
+}
+
+.banner-figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.35); /* escurece a imagem */
+}

@@ -76,7 +76,7 @@ class CompanyModule::EventsController < CompaniesController
   # Only allow a list of trusted parameters through.
   def event_params
     params.require(:event).permit(
-      :id, :name, :description, :date_start, :time_start, :time_end, :status, :category_name, :subs_number, :visible,
+      :id, :name, :description, :date_start, :time_start, :time_end, :status, { categories: [] }, :subs_number, :visible,
       address_attributes: %i[id place_name address_name],
       tickets_attributes: %i[id name description quantity price _destroy],
       banner_attributes: %i[id image]

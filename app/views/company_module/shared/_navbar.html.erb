@@ -12,7 +12,7 @@
 
     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
       <li class="mx-1">
-        <%= link_to company_dashboard_index_path(current_company), class: "btn #{controller_name == 'home' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
+        <%= link_to company_dashboard_index_path(current_company), class: "btn #{controller_name == 'dashboard' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
           <%= bootstrap_icon(text: ' Dashboard', icon: 'bi-clipboard-data') %>
         <% end %>
       </li>

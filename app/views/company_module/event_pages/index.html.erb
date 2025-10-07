@@ -1,0 +1,97 @@
+<%= content_for :event_title do %>
+  <%= "#{@company.name} - Eventos" %>
+<% end %>
+
+<main>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a href="<%= company_all_events_path %>" class="navbar-brand">
+        <% image = @company.logo&.image&.attached? ? @company.logo.image : 'placeholder.png' %>
+
+        <%= image_tag image, class: 'me-2 rounded-circle', size: '40x32' %>
+
+        <span class="fs-4"><%= @company.name %></span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+          <li class="nav-item"></li>
+        </ul>
+        
+        <%= render 'search_form' %>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-3 mb-5">
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+      <% @events.each do |event| %>
+        <div class="col">
+          <div class="card h-100">
+            <div class="banner-figure">
+              <% image = event.banner&.image&.attached? ? event.banner.image : 'no-banner.jpeg' %>
+              <%= image_tag image, class: 'card-img-top', size: '300x300' %>
+
+              <div class="card-img-overlay">
+                <p class="text-light position-absolute" style="top: 85%; font-size: 14px;">
+                  <span class="me-2"
+                    ><%= bootstrap_icon(text: ' ', icon: 'bi-calendar-date') %><%= event.date_start.strftime('%d de %b') %>
+                  </span>
+
+                  <%= bootstrap_icon(text: ' ', icon: 'bi-clock') %><%= event.time_start.strftime('%H:%M') %>
+                </p>
+              </div>
+            </div>
+
+            <div class="card-body" style="font-size: 14px;">
+              <h5 class="card-title"><%= event.name %></h5>
+
+              <p class="text-secondary"><%= event.description %></p>
+
+              <p class="d-flex">
+                <% event.categories.each do |cat| %>
+                  <span class="badge text-bg-dark me-1"><%= cat %></span>
+                <% end %>
+              </p>
+              
+              <p class="text-secondary m-0">
+                <%= bootstrap_icon(icon: 'bi-geo-alt') %> <%= event.local_name %>
+              </p>
+
+              <p class="text-secondary m-0">
+                <%= bootstrap_icon(text: " #{event.subscribers_sellout} de #{event.subscribers_expected} inscritos", icon: 'bi-people') %>
+              </p>
+
+              <hr>
+
+              <div class="d-flex">
+                <% event.tickets.order(:price_cents).each do |ticket| %>
+                  <p class="fw-bold me-2"><%= humanized_money_with_symbol ticket.price %></p>
+                <% end %>
+              </div>
+
+              <%= link_to ' ', company_event_page_path(params[:company_id], event), class: 'stretched-link' %>
+            </div>
+
+          </div>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</main>
+
+<footer class="text-body-secondary">
+  <div class="container">
+    <p class="float-end mb-3"> 
+      <%= link_to '#', class: 'btn btn-secondary' do %>
+        <%= bootstrap_icon(icon: 'bi-chevron-up') %>
+      <% end %>
+    </p>
+  </div>
+</footer>

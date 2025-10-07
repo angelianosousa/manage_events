@@ -6,7 +6,7 @@ pt-BR:
         company_id: Organizadora
         name: Nome
         description: Descrição
-        category_name: Categoria
+        categories: Categoria
         date_start: Data inicio
         time_start: Hora inicio
         time_end: Hora fim

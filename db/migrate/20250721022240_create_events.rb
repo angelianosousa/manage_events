@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration[7.1]
       t.string :name
       t.string :slug
       t.text :description
-      t.string :category_name
+      t.string :categories, array: true, default: []
       t.date :date_start
       t.time :time_start
       t.time :time_end

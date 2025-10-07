@@ -32,14 +32,15 @@
               <div class="col-md">
                 <div class="form-group">
                   <%= form.label :status, style: "display: block" %>
-                  <%= form.select :status, options_for_select(Event.statuses.keys, selected: event.status), {}, { class: 'form-select form-select-sm select2' } %>
+                  <%= form.select :status, options_for_select(event_statuses, selected: event.status), {}, { class: 'form-select form-select-sm select2' } %>
                 </div>
               </div>
 
               <div class="col-md">
                 <div class="form-group">
-                  <%= form.label :category_name, style: "display: block" %>
-                  <%= form.select :category_name, options_for_select(Event.pluck(:category_name).map { |c| [c, c]}), {}, { class: 'form-select form-select-sm select2' } %>
+                  <%= form.label :categories, style: "display: block" %>
+                  <%= form.select :categories, options_for_select(event_category_list, selected: event.categories), 
+                                                  { multiple: true }, { class: 'form-select form-select-sm select2-multiple' } %>
                 </div>
               </div>
             </div>

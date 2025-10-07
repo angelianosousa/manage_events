@@ -7,7 +7,7 @@
 #  name          :string
 #  slug          :string
 #  description   :text
-#  category_name :string
+#  categories :string
 #  date_start    :date
 #  time_start    :time
 #  time_end      :time
@@ -32,7 +32,7 @@ class Event < ApplicationRecord
   has_many :tickets, dependent: :destroy
 
   # Validations
-  validates :category_name, :date_start, :time_start, presence: true
+  validates :categories, :date_start, :time_start, presence: true
   validates :time_end, comparison: { greater_than: :time_start }
   validate :check_amount_of_tickets
 
@@ -42,7 +42,7 @@ class Event < ApplicationRecord
 
   # Ransack
   def self.ransackable_attributes(_auth_object = nil)
-    %w[name description category_name status]
+    %w[name description categories status]
   end
 
   def self.ransackable_associations(_auth_object = nil)
@@ -72,7 +72,10 @@ class Event < ApplicationRecord
   def tickets_sells_verbose
     "#{subscribers_sellout} / #{subscribers_expected}"
   end
-  
+
+  def categories_list
+    categories.join(' ')
+  end
 
   def check_amount_of_tickets
     return unless tickets.count { |t| !t.free_ticket? } > 3

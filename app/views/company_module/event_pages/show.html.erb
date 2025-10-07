@@ -2,36 +2,54 @@
   <%= @event&.name %>
 <% end %>
 
-<div class="container-fluid bg-light">
-  <header class="d-flex flex-wrap justify-content-center align-items-center border-bottom py-3">
-    <%= link_to company_event_page_path(params[:company_id], @event), class: 'd-flex align-items-center mb-md-0 me-md-auto text-decoration-none h4' do %>
-      <span><%= @event.name %></span>
-    <% end %>
-
-    <% if company_admin_signed_in? %>
-      <ul class="nav nav-pills">
-        <li class="nav-item"><%= link_to_edit_resource(' Editar', edit_company_event_path(@event.id), size: 'btn-sm') %></li>
-
-        <li class="nav-item">
-          <%= link_to company_event_path(@event), class: 'btn btn-light btn-sm' do %>
-            <%= bootstrap_icon(text: ' Voltar', icon: 'bi-arrow-left-circle-fill') %>
-          <% end %>
-        </li>
-      </ul>
-    <% end %>
-  </header>
-</div>
-
 <main>
-  <section class="container text-center my-3">
-    <div class="figure" style='opacity: 0.7; background-position: center center;'>
-      <% image = @event.banner&.image&.attached? ? @event.banner.image : 'placeholder.png'%>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a href="<%= company_all_events_path %>" class="navbar-brand">
+        <% image = @event.company.logo&.image&.attached? ? @event.company.logo.image : 'placeholder.png' %>
 
-      <%= image_tag image, class: 'figure-img img-fluid', style: 'width: 1320px; height: 300px;' %>
+        <%= image_tag image, class: 'me-2 rounded-circle', size: '40x32' %>
+
+        <span class="fs-4"><%= @event.company.name %></span>
+      </a>
+
+      <% if company_admin_signed_in? %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      <% end %>
+
+      <div class="collapse navbar-collapse" id="navbarScroll">
+        <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll float-end" style="--bs-scroll-height: 100px;">
+          <li class="nav-item active">
+            <a href="#" class="nav-link"></a>
+          </li>
+
+          <% if company_admin_signed_in? %>
+            <li class="nav-item">
+              <%= link_to edit_company_event_path(@event), class: 'nav-link' do %>
+                <%= bootstrap_icon(text: ' Editar', icon: 'bi-pencil') %>
+              <% end %>
+            </li>
+
+            <li class="nav-item">
+              <%= link_to company_event_path(@event), class: 'nav-link' do %>
+                <%= bootstrap_icon(text: ' Ver evento', icon: 'bi-eye') %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </section>
+  </nav>
 
-  <div class="container">
+  <div class="container mt-3">
+    <div class="banner-figure mb-3">
+      <% image = @event.banner&.image&.attached? ? @event.banner.image : 'placeholder.png' %>
+
+      <%= image_tag image, class: 'img-fluid rounded', style: 'width: 1320px; height: 300px;' %>
+    </div>
+
     <%= render '/shared/error_messages', resource: @payment %>
 
     <div class='row'>
@@ -86,6 +104,12 @@
           <div class="card-body">
             <h5>Sobre o evento</h5>
 
+            <p class="d-flex">
+              <% @event.categories.each do |cat| %>
+                <span class="badge text-bg-dark me-1"><%= cat %></span>
+              <% end %>
+            </p>
+
             <%= @event.description %>
           </div>
         </div>
@@ -135,11 +159,13 @@
   </div>
 </main>
 
-<footer class="text-body-secondary py-5">
+<footer class="text-body-secondary">
   <div class="container">
-    <p class="float-end mb-1"> <a href="#">Back to top</a> </p>
-    <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-    <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="../getting-started/introduction">getting started guide</a>.</p>
+    <p class="float-end mb-3"> 
+      <%= link_to '#', class: 'btn btn-secondary' do %>
+        <%= bootstrap_icon(icon: 'bi-chevron-up') %>
+      <% end %>
+    </p>
   </div>
 </footer>
 

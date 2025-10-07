@@ -68,7 +68,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_29_220710) do
     t.string "name"
     t.string "slug"
     t.text "description"
-    t.string "category_name"
+    t.string "categories", default: [], array: true
     t.date "date_start"
     t.time "time_start"
     t.time "time_end"

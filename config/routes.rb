@@ -29,11 +29,13 @@ Rails.application.routes.draw do
 
     resources :profile, only: %i[edit update]
 
+    get '/', to: 'event_pages#index', as: :all_events
     get ':event_name', to: 'event_pages#show', as: :event_page
     post ':event_name/buy_tickets', to: 'event_pages#buy_tickets', as: :buy_tickets
     get ':event_name/purchase_success', to: 'event_pages#purchase_success', as: :purchase_success
+    get ':event_name/event_not_found', to: 'event_pages#event_not_found', as: :event_not_found
 
-    root 'company_module/dashboard#index'
+    root to: 'event_pages#index'
   end
 
 end
