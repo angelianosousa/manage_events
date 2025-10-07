@@ -1,93 +1,114 @@
-<%= form_with(model: company, url: company_profile_path, method: :patch) do |form| %>
-  <h5><%= bootstrap_icon(text: ' Informações gerais', icon: 'bi-card-list') %></h5>
-  
+<%= form_with(model: company, url: company_profile_path(company_id: params[:company_id]), method: :patch) do |form| %>
+  <%= form.hidden_field :id, value: company.id  %>
+
   <div class="row">
-    <div class="col-md">
-      <div class="form-group">
-        <%= form.label :name, style: 'display: block;' %>
-        <%= form.text_field :name, class: 'form-control' %>
+    <div class="col-3">
+      <div class="card text-center">
+        <div class="card-body">
+          <figure class="figure">
+            <% image = company.logo&.image&.attached? ? company.logo.image : 'placeholder.png' %>
+            <%= image_tag image, class: 'me-2 rounded-circle border-dark' %>
+          </figure>
+
+          <%= form.fields_for :logo do |logo_form| %>
+            <%= logo_form.label :image, Company.human_attribute_name('logo.image'), class: 'form-label', for: 'company_logo_attributes_image' %>
+            <%= logo_form.file_field :image, class: 'form-control stretched-link' %>
+          <% end %>
+        </div>
       </div>
     </div>
 
-    <div class="col-md">
-      <div class="form-group">
-        <%= form.label :email, style: 'display: block;' %>
-        <%= form.text_field :email, class: 'form-control' %>
-      </div>
-    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5><%= bootstrap_icon(text: ' Informações gerais', icon: 'bi-card-list') %></h5>
 
-  </div>
+          <div class="row">
+            <div class="col-md">
+              <div class="form-group">
+                <%= form.label :name, style: 'display: block;' %>
+                <%= form.text_field :name, class: 'form-control' %>
+              </div>
+            </div>
 
-  <div class="row mt-3">
-    <div class="col-md">
-      <div class="form-group">
-        <%= form.label :site, style: 'display: block;' %>
-        <%= form.text_field :site, class: 'form-control' %>
-      </div>
-    </div>
-  </div>
+            <div class="col-md">
+              <div class="form-group">
+                <%= form.label :email, style: 'display: block;' %>
+                <%= form.text_field :email, class: 'form-control' %>
+              </div>
+            </div>
 
-  <div class="row my-3">
-    <div class="col-md">
-      <div class="form-group">
-        <%= form.label :phone, style: 'display: block;' %>
-        <%= form.text_field :phone, class: 'form-control' %>
-      </div>
-    </div>
+          </div>
 
-    <div class="col-md">
-      <div class="form-group">
-        <%= form.label :cellphone, style: 'display: block;' %>
-        <%= form.text_field :cellphone, class: 'form-control' %>
-      </div>
-    </div>
-  </div>
-
-  <div class="row my-3">
-    <div class="col-md">
-      <%= form.fields_for :logo do |logo_form| %>
-        <%= logo_form.label :image, class: 'form-label', for: 'company_logo_attributes_image' %>
-        <%= logo_form.file_field :image, class: 'form-control' %>
-      <% end %>
-    </div>
-  </div>
-
-  <h5><%= bootstrap_icon(text: ' Conta de acesso', icon: 'bi-person') %></h5>
-
-  <div class="row mt-3">
-    <div class="col-md">
-      <%= form.fields_for :admin_base do |admin_form| %>
-        <div class="row">
-          <div class="col-md">
-            <div class="form-group mb-2">
-              <%= admin_form.label :name, style: 'display: block' %>
-              <%= admin_form.text_field :name, class: 'form-control' %>
+          <div class="row mt-3">
+            <div class="col-md">
+              <div class="form-group">
+                <%= form.label :site, style: 'display: block;' %>
+                <%= form.text_field :site, class: 'form-control' %>
+              </div>
             </div>
           </div>
 
-          <div class="col-md">
-            <div class="form-group mb-2">
-              <%= admin_form.label :email, style: 'display: block' %>
-              <%= admin_form.text_field :email, class: 'form-control' %>
+          <div class="row my-3">
+            <div class="col-md">
+              <div class="form-group">
+                <%= form.label :phone, style: 'display: block;' %>
+                <%= form.text_field :phone, class: 'form-control' %>
+              </div>
+            </div>
+
+            <div class="col-md">
+              <div class="form-group">
+                <%= form.label :cellphone, style: 'display: block;' %>
+                <%= form.text_field :cellphone, class: 'form-control' %>
+              </div>
+            </div>
+          </div>
+
+          <h5><%= bootstrap_icon(text: ' Conta de acesso', icon: 'bi-person') %></h5>
+
+          <div class="row mt-3">
+            <div class="col-md">
+              <%= form.fields_for :admin_base do |admin_form| %>
+                <%= admin_form.hidden_field :id, value: company.id %>
+
+                <div class="row">
+                  <div class="col-md">
+                    <div class="form-group mb-2">
+                      <%= admin_form.label :name, style: 'display: block' %>
+                      <%= admin_form.text_field :name, class: 'form-control' %>
+                    </div>
+                  </div>
+
+                  <div class="col-md">
+                    <div class="form-group mb-2">
+                      <%= admin_form.label :email, style: 'display: block' %>
+                      <%= admin_form.text_field :email, class: 'form-control' %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group mb-2">
+                  <%= admin_form.label :password, style: 'display: block' %>
+                  <%= admin_form.password_field :password, class: 'form-control' %>
+                </div>
+
+                <div class="form-group mb-2">
+                  <%= admin_form.label :password_confirmation, style: 'display: block' %>
+                  <%= admin_form.password_field :password_confirmation, class: 'form-control' %>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="form-group mb-2">
-          <%= admin_form.label :password, style: 'display: block' %>
-          <%= admin_form.password_field :password, class: 'form-control' %>
-        </div>
-
-        <div class="form-group mb-2">
-          <%= admin_form.label :password_confirmation, style: 'display: block' %>
-          <%= admin_form.password_field :password_confirmation, class: 'form-control' %>
-        </div>
-      <% end %>
+      <div class="actions mt-3">
+        <%= form.submit 'Salvar', class: 'btn btn-dark' %>
+        <%= link_to 'Cancelar', company_root_path, class: 'btn btn-light' %>
+      </div>
     </div>
   </div>
-
-  <div class="actions mt-3">
-    <%= form.submit 'Salvar', class: 'btn btn-dark' %>
-    <%= link_to 'Cancelar', company_root_path, class: 'btn btn-light' %>
-  </div>
+  
+  
 <% end %>

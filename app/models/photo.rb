@@ -10,6 +10,7 @@
 #
 class Photo < ApplicationRecord
   belongs_to :photoable, polymorphic: true
+
   has_one_attached :image do |attachable|
     attachable.variant :banner, resize_to_limit: [1320, 400]
   end

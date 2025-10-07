@@ -1,0 +1,106 @@
+<div class="tab-pane fade show active" id="v-pills-event-info" role="tabpanel" aria-labelledby="v-pills-event-info-tab" tabindex="0">
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title h6">
+        <%= bootstrap_icon(text: ' Informações básicas', icon: 'bi-clipboard') %>
+      </div>
+
+      <div class="row mt-1">
+        <div class="col-md">
+          <div class="form-group">
+            <%= f.label :name, style: "display: block" %>
+            <%= f.text_field :name, class: 'form-control form-control-sm' %>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="form-group">
+            <%= f.label :status, style: "display: block" %>
+            <%= f.select :status, options_for_select(event_statuses_for_select, selected: event.status), {}, { class: 'form-select form-select-sm select2' } %>
+          </div>
+        </div>
+
+        <div class="col-md">
+          <div class="form-group">
+            <%= f.label :categories, style: "display: block" %>
+            <%= f.select :categories, options_for_select(event_category_list_for_select, selected: event.categories), 
+                                            { multiple: true }, { class: 'form-select form-select-sm select2-multiple' } %>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group mt-3">
+        <%= f.label :description, style: "display: block" %>
+        <%= f.text_area :description, class: 'form-control form-control-sm mb-3', size: '10x7' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-3">
+    <div class="col-md">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title h6">
+            <%= bootstrap_icon(text: ' Data e Horário', icon: 'bi-calendar') %>
+          </div>
+
+          <div class="row g-2 mb-2">
+            <div class="col-md">
+              <div class="form-group">
+                <%= f.label :date_start, style: "display: block" %>
+                <%= f.date_field :date_start, class: 'form-control form-control-sm' %>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-2">
+            <div class="col-md">
+              <div class="form-group">
+                <%= f.label :time_start, style: "display: block" %>
+                <%= f.time_field :time_start, class: 'form-control form-control-sm' %>
+              </div>
+            </div>
+
+            <div class="col-md">
+              <div class="form-group">
+                <%= f.label :time_end, style: "display: block" %>
+                <%= f.time_field :time_end, class: 'form-control form-control-sm' %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title h6">
+            <%= bootstrap_icon(text: ' Localização', icon: 'bi-geo-alt') %>
+          </div>
+
+          <%= f.fields_for :address do |address_form| %>
+            <div class="row g-2">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <%= address_form.label :place_name, style: "display: block" %>
+                  <%= address_form.text_field :place_name, class: 'form-control form-control-sm' %>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="form-group">
+                  <%= address_form.label :address_name, style: "display: block" %>
+                  <%= address_form.text_field :address_name, class: 'form-control form-control-sm' %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="tab-pane fade" id="v-pills-banner" role="tabpanel" aria-labelledby="v-pills-banner-tab" tabindex="0">
+  
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="figure">
+        <% image = event.banner&.image&.attached? ? event.banner.image : 'placeholder.png'%>
+
+        <%= image_tag image, class: 'figure-img img-fluid', style: 'width: 1320px; height: 300px;' %>
+      </div>
+      <br><br>
+
+      <%= f.fields_for :banner do |banner_form| %>
+        <%= banner_form.label :image, Event.human_attribute_name('banner.image'), class: 'form-label', for: 'event_banner_attributes_image' %>
+        <%= banner_form.file_field :image, class: 'form-control stretched-link' %>
+      <% end %>
+    </div>
+  </div>
+
+</div>

@@ -12,7 +12,7 @@ module EventsHelper
                'secondary'
              end
 
-    tag.span event.status, class: "badge bg-#{classe} rounded-pill}"
+    tag.span Event.human_attribute_name("status.#{event.status}"), class: "badge bg-#{classe} rounded-pill}"
   end
 
   def event_progress(event)

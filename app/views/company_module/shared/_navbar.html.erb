@@ -1,65 +1,72 @@
-<header class="px-3 py-2 border-bottom text-bg-light">
-  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-    <span class="badge text bg-dark p-2">
-      <%= bootstrap_icon(icon: 'bi-building-fill fs-4') %>
-    </span>
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom py-1">
+  <div class="container-fluid">
+    <%= link_to company_dashboard_index_path(current_company), class: 'navbar-brand' do %>
+      <div class="d-flex align-items-center">
+        <span class="badge bg-dark me-3 p-2">
+          <%= bootstrap_icon(icon: 'bi-building-fill fs-2') %>
+        </span>
 
-    <div class="ms-3 me-1 mb-0 pb-0">
-      <h5>Sistema de Gerenciamento</h5>
+        <h6 class="pt-1">Gerenciando <br>Eventos</h6>
+      </div>
+    <% end %>
 
-      <p style="font-size: 12px; margin-bottom: 0px;">Eventos, Produtos e Pedidos</p>
-    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-      <li class="mx-1">
-        <%= link_to company_dashboard_index_path(current_company), class: "btn #{controller_name == 'dashboard' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
-          <%= bootstrap_icon(text: ' Dashboard', icon: 'bi-clipboard-data') %>
-        <% end %>
-      </li>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to company_dashboard_index_path(current_company), class: "btn #{controller_name == 'dashboard' ? 'btn-dark' : 'btn-light'} btn-sm btn-round me-2" do %>
+            <%= bootstrap_icon(text: ' Dashboard', icon: 'bi-clipboard-data') %>
+          <% end %>
+        </li>
 
-      <li class="mx-1">
-        <%= link_to company_events_path, class: "btn #{controller_name == 'events' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
-          <%= bootstrap_icon(text: ' Eventos', icon: 'bi-calendar-event') %>
-        <% end %>
-      </li>
-      <!-- 
-        <li class="mx-1">
+        <li class="nav-item">
+          <%= link_to company_events_path, class: "btn #{controller_name == 'events' ? 'btn-dark' : 'btn-light'} btn-sm btn-round me-2" do %>
+            <%= bootstrap_icon(text: ' Eventos', icon: 'bi-calendar-event') %>
+          <% end %>
+        </li>
+
+        <!-- 
+        <li class="nav-item">
           <%= link_to '#', class: "btn #{controller_name == 'products' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
             <%= bootstrap_icon(text: ' Produtos', icon: 'bi-box-seam') %>
           <% end %>
         </li>
 
-        <li class="mx-1">
+        <li class="nav-item">
           <%= link_to '#', class: "btn #{controller_name == 'orders' ? 'btn-dark' : 'btn-light'} btn-sm btn-round" do %>
             <%= bootstrap_icon(text: ' Pedidos', icon: 'bi-cart') %>
           <% end %>
         </li>
       -->
-    </ul>
-    
-    <div class="dropdown text-end">
-
-      <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 
-        <div class="d-inline-flex">
-          <div>
-            <p class="me-3 mb-0"><%= current_company_admin.name %></p>
-            <p style="font-size: 12px;"><%= current_company_admin.email %></p>
-          </div>
-
-          <%= image_tag current_company.logo&.image&.attached? ? current_company.logo.image : 'https://github.com/mdo.png', size: '40x40', class: 'rounded-circle' %>
-        </div>
-      </a>
-
-      <ul class="dropdown-menu text-small" style="">
-        <!-- <li><a class="dropdown-item" href="#">Configurações</a></li> -->
-        <li><%= link_to 'Perfil', edit_company_profile_path(current_company.id), class: 'dropdown-item' %></li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-        <li>
-          <%= button_to 'Sair', destroy_company_admin_session_path, class: 'dropdown-item', method: :delete %>
-        </li>
       </ul>
+
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"> 
+          <div class="d-inline-flex">
+            <div>
+              <p class="me-3 mb-0"><%= current_company_admin.name %></p>
+              <p style="font-size: 12px;"><%= current_company_admin.email %></p>
+            </div>
+
+            <%= image_tag current_company.logo&.image&.attached? ? current_company.logo.image : 'https://github.com/mdo.png', size: '40x40', class: 'rounded-circle' %>
+          </div>
+        </a>
+
+        <ul class="dropdown-menu text-small" style="">
+          <!-- <li><a class="dropdown-item" href="#">Configurações</a></li> -->
+          <li><%= link_to 'Perfil', edit_company_profile_path(current_company.id), class: 'dropdown-item' %></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li>
+            <%= button_to 'Sair', destroy_company_admin_session_path, class: 'dropdown-item', method: :delete %>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</header>
+
+</nav>

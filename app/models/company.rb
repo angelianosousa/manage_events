@@ -29,6 +29,6 @@ class Company < ApplicationRecord
   # Validations
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
-  accepts_nested_attributes_for :admin_base, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :admin_base, reject_if: :all_blank, allow_destroy: true, update_only: true
   accepts_nested_attributes_for :logo, allow_destroy: true
 end

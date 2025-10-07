@@ -3,7 +3,7 @@ class CompanyModule::EventsController < CompaniesController
 
   # GET /events or /events.json
   def index
-    @q = current_company.events.ransack(params[:q])
+    @q = current_company.events.includes(:tickets, :address).ransack(params[:q])
 
     @events = @q.result(distinct: true).includes(:tickets, :address)
   end
@@ -79,7 +79,8 @@ class CompanyModule::EventsController < CompaniesController
       :id, :name, :description, :date_start, :time_start, :time_end, :status, { categories: [] }, :subs_number, :visible,
       address_attributes: %i[id place_name address_name],
       tickets_attributes: %i[id name description quantity price _destroy],
-      banner_attributes: %i[id image]
+      banner_attributes: %i[id image],
+      card_img_attributes: %i[id image]
     )
   end
 end

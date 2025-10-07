@@ -18,7 +18,7 @@ pt-BR:
         password: Senha
         password_confirmation: Senha de confirmação
       company/logo:
-        image: Logo
+        image: Logo (150x150)
     models:
       company:
         one: Empresa

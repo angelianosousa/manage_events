@@ -1,0 +1,23 @@
+<div class="tab-pane fade" id="v-pills-tickets" role="tabpanel" aria-labelledby="v-pills-tickets-tab" tabindex="0">
+  <div class="card">
+    <div class="card-body">
+
+      <div class="d-flex justify-content-between">
+        <div class="card-title h6">
+          <%= bootstrap_icon(text: ' Ingressos', icon: 'bi-cash') %>
+        </div>
+        
+        <%= link_to_add_nested(f, :tickets, '#tickets', link_classes: 'btn btn-success btn-sm') do %>
+          <%= bootstrap_icon(text: ' Adicionar ingresso', icon: 'bi-plus-circle') %>
+        <% end %>
+      </div>
+
+      <div id='tickets'>
+        <%= f.fields_for :tickets do |ticket_form| %>
+          <%= render 'ticket_fields', form: ticket_form %>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>

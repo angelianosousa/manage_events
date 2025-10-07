@@ -54,7 +54,7 @@ class Event < ApplicationRecord
     %w[]
   end
 
-  def self.ransackable_scopes(auth_object = nil)
+  def self.ransackable_scopes(_auth_object = nil)
     %i[by_categories]
   end
 
@@ -75,7 +75,7 @@ class Event < ApplicationRecord
   end
 
   def subscribers_sellout
-    tickets.sum(&:tickets_sellout)
+    tickets.joins(:payments).sum(&:tickets_sellout)
   end
 
   def tickets_sells_verbose
