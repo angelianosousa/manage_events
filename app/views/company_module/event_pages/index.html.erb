@@ -33,12 +33,12 @@
       <% @events.each do |event| %>
         <div class="col">
           <div class="card h-100">
-            <div class="banner-figure">
+            <div>
               <% image = event.banner&.image&.attached? ? event.banner.image : 'no-banner.jpeg' %>
               <%= image_tag image, class: 'card-img-top', size: '300x300' %>
 
               <div class="card-img-overlay">
-                <p class="text-light position-absolute bg-dark py-1 px-2 rounded-3" style="top: 85%; font-size: 14px;">
+                <p class="text-light position-absolute bg-dark py-1 px-2 rounded-3" style="top: 39%; font-size: 14px;">
                   <span class="me-2"
                     ><%= bootstrap_icon(text: ' ', icon: 'bi-calendar-date') %><%= event.date_start.strftime('%d de %b') %>
                   </span>

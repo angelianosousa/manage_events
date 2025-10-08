@@ -2,7 +2,6 @@ class CompanyModule::ProfileController < CompaniesController
   before_action :set_company
 
   def edit
-    # byebug
     @company.build_logo unless @company.logo.present?
   end
 

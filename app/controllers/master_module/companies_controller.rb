@@ -26,6 +26,7 @@ class MasterModule::CompaniesController < MastersController
   end
 
   def update
+    byebug
     if @company.update(company_params)
       redirect_to administracao_companies_path, notice: I18n.t('controller.update', model: 'Empresa')
     else
@@ -42,11 +43,7 @@ class MasterModule::CompaniesController < MastersController
   private
 
   def set_company
-    if params[:company_id].present?
-      @company = Company.find params[:company_id]
-    else
-      @company = Company.find params[:id]
-    end
+    @company = Company.friendly.find(params[:id])
   end
 
   def company_params
