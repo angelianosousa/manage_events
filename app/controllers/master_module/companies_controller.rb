@@ -26,7 +26,6 @@ class MasterModule::CompaniesController < MastersController
   end
 
   def update
-    byebug
     if @company.update(company_params)
       redirect_to administracao_companies_path, notice: I18n.t('controller.update', model: 'Empresa')
     else
@@ -43,12 +42,17 @@ class MasterModule::CompaniesController < MastersController
   private
 
   def set_company
-    @company = Company.friendly.find(params[:id])
+    @company = if params[:company_id].present?
+                 Company.friendly.find(params[:company_id])
+               else
+                Company.friendly.find(params[:id])
+               end
   end
 
   def company_params
     params.require(:company).permit(
-      :name, :email, :site, :phone, :cellphone, :active, admin_base_attributes: %i[name email password password_confirmation]
+      :id, :name, :email, :site, :phone, :cellphone, :active, :slug,
+      admin_base_attributes: %i[id name email password password_confirmation]
     )
   end
 

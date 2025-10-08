@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
 
-    <%= form_with(model: company, url: [:administracao, company]) do |form| %>
+    <%= form_with(model: [:administracao, company]) do |form| %>
       <h5><%= bootstrap_icon(text: ' Informações da empresa', icon: 'bi-card-list') %></h5>
       
       <div class="row">
