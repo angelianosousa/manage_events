@@ -21,7 +21,9 @@ class MasterModule::CompaniesController < MastersController
     end
   end
 
-  def edit; end
+  def edit
+    @company.build_admin_base unless @company.admin_base.present?
+  end
 
   def update
     if @company.update(company_params)
