@@ -44,7 +44,7 @@
   </nav>
 
   <div class="container my-3">
-    <div class="mb-3">
+    <div class="banner-figure mb-3">
       <% image = @event.banner&.image&.attached? ? @event.banner.image : 'placeholder.png' %>
 
       <%= image_tag image, class: 'img-fluid rounded', style: 'width: 1320px; height: 300px;' %>
