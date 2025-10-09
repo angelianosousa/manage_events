@@ -5,7 +5,6 @@ import "bootstrap";
 import select2 from "select2";
 import 'vanilla-nested';
 import 'jquery-mask-plugin';
-require("@rails/activestorage").start()
 
 select2($);
 
