@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       post :toggle_company_active
     end
 
-    root 'master_module/companies#index'
+    root to: 'master_module/companies#index'
   end
 
   scope ':company_id', as: :company, module: 'company_module' do
