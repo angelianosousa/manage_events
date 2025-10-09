@@ -11,7 +11,7 @@
 
       <%= f.fields_for :banner do |banner_form| %>
         <%= banner_form.label :image, Event.human_attribute_name('banner.image'), class: 'form-label', for: 'event_banner_attributes_image' %>
-        <%= banner_form.file_field :image, class: 'form-control stretched-link' %>
+        <%= banner_form.file_field :image, class: 'form-control stretched-link', direct_upload: true %>
       <% end %>
     </div>
   </div>

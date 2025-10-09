@@ -11,6 +11,12 @@ gem 'cpf_cnpj', '~> 1.0'
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem 'cssbundling-rails', '~> 1.4.3'
 
+# Cloudinary Ruby on Rails SDK (https://cloudinary.com/documentation/rails_integration#cloudinary_yml_file_configuration)
+gem 'cloudinary', '~> 2.4'
+
+# Shim to load environment variables from .env into ENV in development.
+gem 'dotenv', '~> 3.1'
+
 # Devise is a flexible authentication solution for Rails based on Warden. It
 gem 'devise', '~> 4.9'
 
