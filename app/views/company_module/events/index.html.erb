@@ -28,7 +28,11 @@
               <h5 class="card-title mb-0"><%= event.name %></h5>
 
               <div class="d-flex justify-content-between">
-                <small class="mt-0"><span class="badge text-bg-secondary"><%= event.categories_list %></span></small>
+                <small class="mt-0">
+                  <% event.categories.each do |cat| %>
+                    <span class="badge text-bg-secondary me-1"><%= cat %></span>
+                  <% end %>
+                </small>
                 
                 <span>
                   <%= event_visibility(event) %>

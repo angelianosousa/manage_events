@@ -16,6 +16,9 @@ pt-BR:
         canceled: Cancelado
       event/banner:
         image: Banner do site (1320x300)
+      event/address:
+        place_name: Nome
+        address_name: Endereço
   models:
     event:
       one: Evento

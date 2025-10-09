@@ -85,14 +85,14 @@
             <div class="row g-2">
               <div class="col-md-12">
                 <div class="form-group">
-                  <%= address_form.label :place_name, style: "display: block" %>
+                  <%= address_form.label :place_name, Event.human_attribute_name('address.place_name') , style: "display: block" %>
                   <%= address_form.text_field :place_name, class: 'form-control form-control-sm' %>
                 </div>
               </div>
 
               <div class="col-md-12">
                 <div class="form-group">
-                  <%= address_form.label :address_name, style: "display: block" %>
+                  <%= address_form.label :address_name, Event.human_attribute_name('address.address_name'), style: "display: block" %>
                   <%= address_form.text_field :address_name, class: 'form-control form-control-sm' %>
                 </div>
               </div>
