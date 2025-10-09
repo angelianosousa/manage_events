@@ -7,7 +7,7 @@
         <div class="card-body">
           <figure class="figure">
             <% image = company.logo&.image&.attached? ? company.logo.image : 'placeholder.png' %>
-            <%= image_tag image, class: 'me-2 rounded-circle border-dark' %>
+            <%= image_tag image, class: 'me-2 rounded-circle border-dark', size: '150x150' %>
           </figure>
 
           <%= form.fields_for :logo do |logo_form| %>
