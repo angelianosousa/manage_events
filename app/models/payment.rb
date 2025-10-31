@@ -15,10 +15,12 @@
 #  status           :integer          default("pending")
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
+#  source_id        :string
+#  link             :string
 #
 class Payment < ApplicationRecord
-  enum :payment_method, { pix: 0, credit: 1, debit: 2 }
-  enum :status, { pending: 0, paid: 1 }
+  has_secure_token :token_pay, length: 36
+  enum :status, { pending: 0, paid: 1, cancelled: 2, expired: 3 }
 
   monetize :price_cents
 
@@ -27,11 +29,31 @@ class Payment < ApplicationRecord
   belongs_to :ticket, foreign_key: :paymentable_id
   belongs_to :client, class_name: 'Client', foreign_key: :user_account_id
 
+  validates :source_id, presence: true, uniqueness: { scope: :company_id }
+
   accepts_nested_attributes_for :client, reject_if: :all_blank
 
   scope :tickets, -> { where(paymentable_type: 'Ticket') }
 
   def total
     price * quantity
+  end
+
+  def confirm_sub!
+    SubsMailer.with(payment: @payment).subs_confirm.deliver_later
+  end
+
+  def confirm_sub_success!
+    SubsMailer.with(payment: @payment).subs_success.deliver_later
+    update(paided_at: DateTime.now, status: :paid)
+  end
+
+  def cancel_sub!
+    SubsMailer.with(payment: @payment).subs_cancel.deliver_later
+    update(cancelled_at: DateTime.now, status: :cancelled)
+  end
+
+  def expire_sub!
+    update(expireed_at: DateTime.now, status: :expired)
   end
 end

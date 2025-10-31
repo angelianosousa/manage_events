@@ -1,0 +1,54 @@
+<b>Endereço da cobrança</b>
+
+<div class="input-loading mb-2">
+  <%= label_tag 'address[zip_code]', 'CEP', class: 'form-label' %>
+  <%= text_field_tag 'address[zip_code]', (params[:address][:zip_code] rescue nil), class: 'form-control form-control-sm cep-mask', placeholder: 'Digite o CEP' %>
+  
+  <%= image_tag 'loading.gif', alt: 'Carregando', width: '24', id: 'loading', style: 'display: none; margin-top: 5px;' %>
+</div>
+
+<small id="zip_not_found" style="color: red;">
+  CEP não encontrado...
+</small>
+
+<div class="row">
+  <div class="col-sm-8 col-md-8">
+    <div class="form-group mb-2">
+      <%= label_tag 'address[street]', 'Endereço *', class: 'form-label' %>
+      <%= text_field_tag 'address[street]', (params[:address][:street] rescue nil), class: 'form-control form-control-sm' %>
+    </div>
+  </div>
+
+  <div class="col-sm-4 col-md-4">
+    <div class="form-group mb-2">
+      <%= label_tag 'address[number]', 'Nº *', class: 'form-label' %>
+      <%= text_field_tag 'address[number]', (params[:address][:number] rescue nil), class: 'form-control form-control-sm' %>
+    </div>
+  </div>
+</div>
+
+<div class="form-group mb-2">
+  <%= label_tag 'address[neighborhood]', 'Bairro *', class: 'form-label' %>
+  <%= text_field_tag 'address[neighborhood]', (params[:address][:neighborhood] rescue nil), class: 'form-control form-control-sm' %>
+</div>
+
+<div class="row">
+  <div class="col-sm col-md">
+    <div class="form-group mb-2">
+      <%= label_tag 'address[city]', 'Cidade *', class: 'form-label' %>
+      <%= text_field_tag 'address[city]', (params[:address][:city] rescue nil), class: 'form-control form-control-sm' %>
+    </div>
+  </div>
+
+  <div class="col-sm col-md">
+    <div class="form-group mb-2">
+      <%= label_tag 'address[state]', 'Estado (UF) *', class: 'form-label' %>
+      <%= select_tag 'address[state]', options_for_select(Address::STATE_UF, (params[:address][:state] rescue nil)), class: 'form-select form-select-sm' %>
+    </div>
+  </div>
+</div>
+
+<div class="form-group mb-2">
+  <%= label_tag 'address[complement]', 'Complemento', class: 'form-label' %>
+  <%= text_field_tag 'address[complement]', (params[:address][:complement] rescue nil), class: 'form-control form-control-sm', placeholder: 'Casa / Apto.' %>
+</div>

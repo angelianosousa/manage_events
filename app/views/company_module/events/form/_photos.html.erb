@@ -7,13 +7,29 @@
 
         <%= image_tag image, class: 'figure-img img-fluid', style: 'width: 1320px; height: 300px;' %>
       </div>
-      <br><br>
-
+      
       <%= f.fields_for :banner do |banner_form| %>
-        <%= banner_form.label :image, Event.human_attribute_name('banner.image'), class: 'form-label', for: 'event_banner_attributes_image' %>
-        <%= banner_form.file_field :image, class: 'form-control stretched-link', direct_upload: true %>
+        <div class="d-inline-block">
+          <%= banner_form.label :image, class: 'btn btn-light', for: 'event_banner_attributes_image' do %>
+            <%= bootstrap_icon(icon: 'bi-cloud-upload') %> Escolher arquivo (1320x300)
+          <% end %>
+
+          <span id="file-name">
+            Nenhum arquivo selecionado
+          </span>
+        </div>
+
+        <%= banner_form.file_field :image, style: 'display: none;' %>
       <% end %>
     </div>
   </div>
 
 </div>
+
+<script>
+  $('#event_banner_attributes_image').on('change', function(e) {
+    const file = e.target.files[0]
+
+    $('#file-name').html(file ? `<%= bootstrap_icon(icon: 'bi-file-check') %>  ${file.name}` : 'Nenhum arquivo selecionado')
+  });
+</script>

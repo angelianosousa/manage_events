@@ -21,7 +21,7 @@ class CompanyModule::ProfileController < CompaniesController
 
   def company_params
     params.require(:company).permit(
-      :name, :email, :site, :phone, :cellphone, :active,
+      :name, :email, :site, :phone, :cellphone, :active, :asaas_api_key, :asaas_webhook_token,
       admin_base_attributes: %i[id name email password password_confirmation],
       logo_attributes: %i[id image]
     )

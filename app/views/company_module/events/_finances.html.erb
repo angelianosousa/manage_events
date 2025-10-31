@@ -21,19 +21,21 @@
 
               <thead class="table-light">
                 <tr>
-                  <th>Nº Ingressos</th>
-                  <th>Valor do ingresso</th>
-                  <th>Ingressos Vendidos</th>
+                  <th>Ingresso</th>
+                  <th>Quantidade</th>
+                  <th>Valor</th>
+                  <th>Vendidos</th>
                   <th>Valor arrecadado</th>
                 </tr>
               </thead>
 
               <tbody>
-                <% event.tickets.each do |ticket| %>
+                <% event.tickets.order(:price_cents).each do |ticket| %>
                 <tr>
+                  <td><%= ticket.name %></td>
                   <td><%= ticket.quantity %></td>
                   <td><%= humanized_money_with_symbol ticket.price %></td>
-                  <td><%= ticket.tickets_sellout %></td>
+                  <td><%= ticket.tickets_sold %></td>
                   <td><%= humanized_money_with_symbol ticket.tickets_receipt %></td>
                 </tr>
                 <% end %>
@@ -45,50 +47,15 @@
         <h5>Pagamentos / Ingressos</h5>
 
         <div class="accordion accordion-flush">
-          <% event.tickets.each do |ticket| %>
+          <% event.tickets.order(:price_cents).each do |ticket| %>
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#<%= ticket.id %>" aria-expanded="true" aria-controls="collapseOne">
                   # Ingresso - <%= ticket.name %>
                 </button>
               </h2>
-              <div id="<%= ticket.id %>" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <% if ticket.payments.any? %>
-                  <div class="accordion-body">
-                    <table class="table table-sm">
-                      <thead class="table-light">
-                        <tr>
-                          <th>Cliente</th>
-                          <th>Data de vencimento</th>
-                          <th>Meio de pagamento</th>
-                          <th>Nº Ingressos</th>
-                          <th>Total</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
 
-                      <tbody>
-                        <% ticket.payments.includes(:client).each do |payment| %>
-                          <tr>
-                            <td><%= "(#{payment.client.cpf_formatted}) #{payment.client.name}" %></td>
-                            <td><%= I18n.l payment.due_date, format: :short %></td>
-                            <td><%= badge_payment_method(payment.payment_method) %></td>
-                            <td><%= payment.quantity %></td>
-                            <td><%= humanized_money_with_symbol payment.total %></td>
-                            <td><%= badge_payment_status(payment.status) %></td>
-                          </tr>
-                        <% end %>
-                      </tbody>
-                    </table>
-                  </div>
-                <% else %>
-                  <div class="card text-bg-secondary my-3">
-                    <div class="card-body">
-                      <p>Sem ingresso vendido</p>
-                    </div>
-                  </div>
-                <% end %>
-              </div>
+              <%= render 'tickets_info', ticket: ticket %>
             </div>
           <% end %>
         </div>

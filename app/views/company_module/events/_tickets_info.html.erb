@@ -1,0 +1,41 @@
+<div id="<%= ticket.id %>" class="accordion-collapse collapse">
+  <% if ticket.payments.any? %>
+    <div class="accordion-body">
+      <table class="table table-sm">
+        <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Cliente</th>
+            <th>Nº Ingressos</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% ticket.payments.includes(:client).each do |payment| %>
+            <tr>
+              <td><%= payment.id %></td>
+              <td><%= "(#{payment.client.cpf_formatted}) #{payment.client.name}" %></td>
+              <td><%= payment.quantity %></td>
+              <td><%= humanized_money_with_symbol payment.total %></td>
+              <td><%= badge_payment_status(payment.status) %></td>
+              <td>
+                <% if !payment.cancelled? %>
+                  <%#= button_to 'Cancelar', company_event_cancel_payment_path(ticket.event, ticket, payment), method: :post %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <div class="card text-bg-secondary my-3">
+      <div class="card-body">
+        <p>Sem ingresso vendido</p>
+      </div>
+    </div>
+  <% end %>
+</div>

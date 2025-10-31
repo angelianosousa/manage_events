@@ -21,6 +21,13 @@ class Client < UserAccount
   validates :name, :phone, presence: true
   validates :email, uniqueness: true, format: Devise.email_regexp
   validate :cpf_validation
+  has_one :address, as: :addressable
+
+  accepts_nested_attributes_for :address, reject_if: :all_blank, allow_destroy: true
+
+  def phone=(value)
+    super(value.gsub(/\D/, ''))
+  end
 
   def cpf=(value)
     super(value.gsub(/\D/, ''))
@@ -31,6 +38,8 @@ class Client < UserAccount
 
     CPF.new(cpf).formatted
   end
+
+  private
 
   def cpf_validation
     return unless cpf.blank?

@@ -45,8 +45,8 @@
               <% ticket = event.tickets.last %>
 
               <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: ' Inicio ', icon: 'bi-calendar-date') %><%= I18n.l event.date_start, format: :short %></p>
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: event.address.address_name, icon: 'bi-geo-alt') %></p>
-              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: " #{event.subscribers_sellout} de #{event.subscribers_expected} participantes", icon: 'bi-people') %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: event.full_event_address, icon: 'bi-geo-alt') %></p>
+              <p style='font-size: 15px; margin-bottom: 0px; color: gray;'><%= bootstrap_icon(text: " #{event.subscribers_sellout_sum} de #{event.subscribers_expected} participantes", icon: 'bi-people') %></p>
             </div>
           </div>
 

@@ -82,20 +82,58 @@
           </div>
 
           <%= f.fields_for :address do |address_form| %>
-            <div class="row g-2">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <%= address_form.label :place_name, Event.human_attribute_name('address.place_name') , style: "display: block" %>
-                  <%= address_form.text_field :place_name, class: 'form-control form-control-sm' %>
+
+            <div class="input-loading mb-2">
+              <%= address_form.label :zip_code, 'CEP', class: 'form-label' %>
+              <%= address_form.text_field :zip_code, class: 'form-control form-control-sm cep-mask', placeholder: 'Digite o CEP' %>
+              
+              <%= image_tag 'loading.gif', alt: 'Carregando', width: '24', id: 'loading', style: 'display: none; margin-top: 5px;' %>
+            </div>
+
+            <small id="zip_not_found" style="color: red;">
+              CEP não encontrado...
+            </small>
+
+            <div class="row">
+              <div class="col-sm-8 col-md-8">
+                <div class="form-group mb-2">
+                  <%= address_form.label :street, 'Endereço *', class: 'form-label' %>
+                  <%= address_form.text_field :street, class: 'form-control form-control-sm' %>
                 </div>
               </div>
 
-              <div class="col-md-12">
-                <div class="form-group">
-                  <%= address_form.label :address_name, Event.human_attribute_name('address.address_name'), style: "display: block" %>
-                  <%= address_form.text_field :address_name, class: 'form-control form-control-sm' %>
+              <div class="col-sm-4 col-md-4">
+                <div class="form-group mb-2">
+                  <%= address_form.label :number, 'Nº', class: 'form-label' %>
+                  <%= address_form.text_field :number, class: 'form-control form-control-sm' %>
                 </div>
               </div>
+            </div>
+
+            <div class="form-group mb-2">
+              <%= address_form.label :neighborhood, 'Bairro *', class: 'form-label' %>
+              <%= address_form.text_field :neighborhood, class: 'form-control form-control-sm' %>
+            </div>
+
+            <div class="row">
+              <div class="col-sm col-md">
+                <div class="form-group mb-2">
+                  <%= address_form.label :city, 'Cidade *', class: 'form-label' %>
+                  <%= address_form.text_field :city, class: 'form-control form-control-sm' %>
+                </div>
+              </div>
+
+              <div class="col-sm col-md">
+                <div class="form-group mb-2">
+                  <%= address_form.label :state, 'Estado (UF) *', class: 'form-label' %>
+                  <%= address_form.select :state, options_for_select(Address::STATE_UF, selected: @event.address.state), {}, { class: 'form-select form-select-sm' } %>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group mb-2">
+              <%= address_form.label :complement, 'Complemento', class: 'form-label' %>
+              <%= address_form.text_field :complement, class: 'form-control form-control-sm', placeholder: 'Casa / Apto.' %>
             </div>
           <% end %>
         </div>
@@ -104,3 +142,40 @@
     
   </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $('#zip_not_found').hide();
+
+    let debounce_timeout;
+
+    $('#event_address_attributes_zip_code').on('input', function() {
+      clearTimeout(debounce_timeout);
+
+      let code = $(this).val().replace(/\D/g, '');
+
+      debounce_timeout = setTimeout(function() {
+        if (code.length == 8) {
+          $('#loading').fadeIn(200);
+
+          $.get(`https://viacep.com.br/ws/${code}/json`, function(resp) {
+            if (!resp.erro) {
+              $('#zip_not_found').hide();
+              $('#event_address_attributes_street').val(resp.logradouro)
+              $('#event_address_attributes_neighborhood').val(resp.bairro)
+              $('#event_address_attributes_city').val(resp.localidade)
+              $('#event_address_attributes_state').val(resp.uf)
+              $('#event_address_attributes_complement').val(resp.complemento)
+            } else {
+              $('#zip_not_found').show();
+            }
+          }).fail(function() {
+            alert('Erro ao consultar CEP');
+          }).always(function() {
+           $('#loading').fadeOut(200);
+          });
+        }
+      });
+    });
+  });
+</script>

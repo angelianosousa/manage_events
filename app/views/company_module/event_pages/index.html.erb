@@ -60,11 +60,11 @@
               </p>
               
               <p class="text-secondary m-0">
-                <%= bootstrap_icon(icon: 'bi-geo-alt') %> <%= event.local_name %>
+                <%= bootstrap_icon(icon: 'bi-geo-alt') %> <%= event.full_event_address %>
               </p>
 
               <p class="text-secondary m-0">
-                <%= bootstrap_icon(text: " #{event.subscribers_sellout} de #{event.subscribers_expected} inscritos", icon: 'bi-people') %>
+                <%= bootstrap_icon(text: " #{event.subscribers_sellout_sum} de #{event.subscribers_expected} inscritos", icon: 'bi-people') %>
               </p>
 
               <hr>
