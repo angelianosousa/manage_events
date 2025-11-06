@@ -3,7 +3,8 @@ pt-BR:
   activerecord:
     attributes:
       photo:
-        image: Imagem (1320x300)
+        image: Imagem
+        image_event: Imagem do evento (Recomendado 1320x300)
     models:
       photo:
         one: Imagem

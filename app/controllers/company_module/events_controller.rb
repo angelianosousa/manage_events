@@ -91,7 +91,7 @@ class CompanyModule::EventsController < CompaniesController
   def event_params
     params.require(:event).permit(
       :id, :name, :description, :date_start, :time_start, :time_end, :status, { categories: [] }, :subs_number, :visible,
-      address_attributes: %i[id street number city state zip_code complement],
+      address_attributes: %i[id street neighborhood number city state zip_code complement],
       tickets_attributes: %i[id name description quantity price _destroy],
       banner_attributes: %i[id image],
       card_img_attributes: %i[id image]

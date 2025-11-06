@@ -21,21 +21,3 @@
   position: absolute;
   inset: 0;
 }
-
-.input-loading {
-  position: relative;
-}
-
-.input-loading input {
-  padding-right: 32px; /* espaço pro gif à direita */
-}
-
-.input-loading .spinner {
-  position: absolute;
-  right: 8px;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  transform: translateY(-50%);
-  display: none;
-}
