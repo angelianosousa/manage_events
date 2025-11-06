@@ -2,18 +2,96 @@
   
   <div class="card mb-3">
     <div class="card-body">
-      <div class="figure">
-        <% image = event.banner&.image&.attached? ? event.banner.image : 'placeholder.png'%>
-
-        <%= image_tag image, class: 'figure-img img-fluid', style: 'width: 1320px; height: 300px;' %>
-      </div>
-      <br><br>
-
       <%= f.fields_for :banner do |banner_form| %>
-        <%= banner_form.label :image, Event.human_attribute_name('banner.image'), class: 'form-label', for: 'event_banner_attributes_image' %>
-        <%= banner_form.file_field :image, class: 'form-control stretched-link', direct_upload: true %>
+
+        <%= bootstrap_icon icon: 'bi-image-fill' %>
+        <%= banner_form.label :image_event %>
+
+        <div id="uploadArea" class="border border-3 border-secondary rounded-3 text-center bg-light mt-3">
+          <%= bootstrap_icon icon: 'bi-image fs-2' %>
+
+          <p class="mb-2 text-muted">
+            Arraste e solte a imagem aqui<br>
+            ou <a href="#" class="text-dark text-decoration-none fw-semibold" id="selectFile">clique para selecionar</a>
+          </p>
+
+          <%= banner_form.file_field :image, class: "d-none", accept: "image/*" %>
+
+          <div id="previewContainer" class="mt-3">
+            <img id="previewImage" class="img-fluid rounded shadow-sm d-none" alt="Preview da imagem" style="max-height: 200px;">
+          </div>
+        </div>
       <% end %>
+
     </div>
   </div>
-
 </div>
+
+<script>
+  $(document).ready(function() {
+    const $uploadArea   = $("#uploadArea");
+    const $fileInput    = $("#event_banner_attributes_image");
+    const $selectFile   = $("#selectFile");
+    const $previewImage = $("#previewImage");
+
+    // Clicar no link => abre o seletor de arquivos
+    $selectFile.on("click", function(e) {
+      e.preventDefault();
+      $fileInput.trigger("click");
+    });
+
+    // Evento drag & drop
+    $uploadArea.on("dragover", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $uploadArea.addClass("dragover");
+    });
+
+    $uploadArea.on("dragleave", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $uploadArea.removeClass("dragover");
+    });
+
+    // Quando o arquivo é solto
+    $uploadArea.on("drop", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      $uploadArea.removeClass("dragover");
+
+      const file = e.originalEvent.dataTransfer.files[0];
+
+      // Coloca o arquivo dentro do input (necessário para enviar no form)
+      if (file) {
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        $fileInput[0].files = dataTransfer.files;
+
+        handleFile(file);
+      }
+    });
+
+    // Quando seleciona via clique
+    $fileInput.on("change", function() {
+      const file = this.files[0];
+
+      if (file) handleFile(file);
+    });
+
+    // Função para exibir preview
+    function handleFile(file) {
+      if (!file.type.match(/^image\//)) {
+        alert("Por favor, selecione uma imagem válida.");
+        return;
+      }
+
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        $previewImage.attr("src", e.target.result);
+        $previewImage.removeClass("d-none");
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>

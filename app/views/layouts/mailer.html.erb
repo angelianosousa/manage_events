@@ -1,13 +1,26 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <style>
-      /* Email styles need to be inline */
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   </head>
 
   <body>
-    <%= yield %>
+    <table role="document" align="center" width="600" style="width: 600px; font-size: 14px; border-collapse: collapse; border: 0; border-spacing: 0; margin: 0px auto; display: block;">
+      <tbody>
+        <tr>
+          <td><%= yield :header_mail %></td>
+        </tr>
+        <tr>
+          <td><%= yield %></td>
+        </tr>
+        <tr>
+          <td><%= yield :footer_mail %></td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>

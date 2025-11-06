@@ -21,12 +21,12 @@ class Ticket < ApplicationRecord
   has_many :payments, as: :paymentable, dependent: :destroy
 
   # Validations
-  validates :price_cents, numericality: { greater_than_or_equal_to: 0 }
+  validates :price_cents, numericality: { greater_than_or_equal_to: 5 }
   validates :quantity, numericality: { greater_than: 0 }
 
   def tickets_percentage
     {
-      total: tickets_sellout.to_f / quantity * 100,
+      total: tickets_sold.to_f / quantity * 100,
       paid: payments.paid.count.to_f / quantity * 100
     }
   end
@@ -35,12 +35,27 @@ class Ticket < ApplicationRecord
     price == Money.new(0)
   end
 
-  def tickets_sellout
-    payments.sum(&:quantity)
+  def tickets_sold
+    payments.where(status: %i[pending paid]).sum(&:quantity)
   end
 
   def tickets_receipt
-    tickets_sellout * price
+    tickets_sold * price
   end
 
+  def tickets_paid
+    payments.paid.count
+  end
+
+  def tickets_unpaid
+    payments.pending.count
+  end
+
+  def sold_out?
+    tickets_sold == quantity
+  end
+
+  def remaining
+    quantity - tickets_sold
+  end
 end

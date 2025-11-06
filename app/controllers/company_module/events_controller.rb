@@ -1,5 +1,5 @@
 class CompanyModule::EventsController < CompaniesController
-  before_action :set_event, only: %i[show edit update destroy event_toggle_visibility]
+  before_action :set_event, only: %i[show edit update destroy event_toggle_visibility cancel_payment]
 
   # GET /events or /events.json
   def index
@@ -66,6 +66,20 @@ class CompanyModule::EventsController < CompaniesController
     @event.toggle_visible!
   end
 
+  def cancel_payment
+    @event = current_company.events.friendly.find(params[:event_id])
+
+    @ticket = @event&.tickets&.find_by(id: params[:ticket_id])
+
+    @payment = @ticket&.payments&.find_by(id: params[:payment_id])
+
+    @payment.cancelled! if @payment.present?
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -77,7 +91,7 @@ class CompanyModule::EventsController < CompaniesController
   def event_params
     params.require(:event).permit(
       :id, :name, :description, :date_start, :time_start, :time_end, :status, { categories: [] }, :subs_number, :visible,
-      address_attributes: %i[id place_name address_name],
+      address_attributes: %i[id street neighborhood number city state zip_code complement],
       tickets_attributes: %i[id name description quantity price _destroy],
       banner_attributes: %i[id image],
       card_img_attributes: %i[id image]

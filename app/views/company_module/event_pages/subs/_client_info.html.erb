@@ -1,0 +1,27 @@
+<b>Informações do inscrito</b>
+
+<div class="form-group mb-2">
+  <%= label_tag 'client[name]', 'Nome completo *', class: 'form-label' %>
+  <%= text_field_tag 'client[name]', (params[:client][:name] rescue nil), class: 'form-control form-control-sm', placeholder: 'Seu nome completo' %>
+</div>
+
+<div class="form-group mb-2">
+  <%= label_tag 'client[cpf]', 'CPF *', class: 'form-label' %>
+  <%= text_field_tag 'client[cpf]', (params[:client][:cpf] rescue nil), class: 'form-control form-control-sm cpf-mask', placeholder: '000.000.000-00' %>
+</div>
+
+<div class="row">
+  <div class="col-sm col-md">
+    <div class="form-group mb-2">
+      <%= label_tag 'client[email]', 'Email *', class: 'form-label' %>
+      <%= text_field_tag 'client[email]', (params[:client][:email] rescue nil), class: 'form-control form-control-sm', placeholder: 'seu@email.com' %>
+    </div>
+  </div>
+
+  <div class="col-sm col-md">
+    <div class="form-group mb-2">
+      <%= label_tag 'client[phone]', 'Celular *', class: 'form-label' %>
+      <%= text_field_tag 'client[phone]', (params[:client][:phone] rescue nil), class: 'form-control form-control-sm cellphone-mask', placeholder: '(00) 9 0000-0000' %>
+    </div>
+  </div>
+</div>

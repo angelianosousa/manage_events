@@ -6,15 +6,15 @@
   <div class="card">
     <div class="card-body text-center" style="width: 400px;">
       <div style="font-size: 70px;">
-        <%= bootstrap_icon(icon: 'bi-check-circle', class_name: 'text-success') %>
+        <%= bootstrap_icon(icon: 'bi-exclamation-triangle-fill', class_name: 'text-danger') %>
       </div>
 
-      <b>Inscrição Realizada!!</b>
+      <b>Pagamento Expirado!!</b>
       
-      <p class="py-2 text-body-secondary text-wrap">Sua inscrição foi confirmada. Você receberá um email com os detalhes e link para pagamento conforme a opção escolhida.</p>
+      <p class="py-2 text-body-secondary text-wrap">Faça uma nova inscrição ou entre em contato com o suporte.</p>
 
       <div class="d-grid gap-2">
-        <%= link_to 'Voltar ao evento', company_event_page_path(@event, company_id: params[:company_id]), class: 'btn btn-dark' %>
+        <%= link_to 'Ver página do evento', company_event_page_path(@event, company_id: params[:company_id]), class: 'btn btn-dark' %>
         <%= link_to 'Ver outros eventos', company_all_events_path(company_id: params[:company_id]), class: 'btn btn-light' %>
       </div>
     </div>

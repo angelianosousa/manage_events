@@ -19,9 +19,13 @@
             <hr>
 
             <div class="d-flex justify-content-between align-items-center">
-              <small><%= (ticket.quantity - ticket.tickets_sellout) %> disponíveis</small>
+              <% if ticket.sold_out? %>
+                <span class="badge text-bg-secondary">Esgotado</span>
+              <% else %>
+                <small><%= (ticket.remaining) %> disponíveis</small>
+              <% end %>
 
-              <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="<%= ticket.tickets_sellout %>" aria-valuemin="0" aria-valuemax="<%= ticket.quantity %>" style="height: 5px; width: 50px;">
+              <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="<%= ticket.tickets_sold %>" aria-valuemin="0" aria-valuemax="<%= ticket.quantity %>" style="height: 5px; width: 50px;">
                 <div class="progress-bar bg-dark" style="width: <%= ticket.tickets_percentage[:total] %>"></div>
               </div>
             </div>
@@ -31,7 +35,7 @@
 
       <div class="form-group mt-4 d-flex">
         <%= link_to '-', '', class: 'btn btn-dark', id: 'minus_button' %>
-        <%= number_field_tag 'payment[ticket_quantity]', (params[:payment][:ticket_quantity] rescue 1), class: 'form-control ps-2 disabled', min: 1, style: 'width: 75px' %>
+        <%= number_field_tag 'payment[ticket_quantity]', (params[:payment][:ticket_quantity] rescue 1), class: 'form-control ps-2', min: 1, style: 'width: 75px' %>
         <%= link_to '+', '', class: 'btn btn-dark', id: 'plus_button' %>
       </div>
 
@@ -44,37 +48,15 @@
         </div>
       </div>
 
-      <%= link_to 'Comprar ingresso >', '#', class: 'btn btn-dark btn-round w-100 mt-3 disabled', id: 'buy_ticket' %>
+      <%= link_to 'Continuar >', '#', class: 'btn btn-dark btn-round w-100 mt-3 disabled', id: 'buy_ticket' %>
     </div>
 
     <div class="card-body" id="resume_purchase">
       <h5>Finalizar inscrição</h5>
 
-      <div class="form-group mb-2">
-        <%= label_tag 'client[name]', 'Nome completo *', class: 'form-label' %>
-        <%= text_field_tag 'client[name]', (params[:client][:name] rescue nil), class: 'form-control form-control-sm', placeholder: 'Seu nome completo' %>
-      </div>
+      <%= render 'company_module/event_pages/subs/client_info' %><br>
 
-      <div class="form-group mb-2">
-        <%= label_tag 'client[cpf]', 'CPF *', class: 'form-label' %>
-        <%= text_field_tag 'client[cpf]', (params[:client][:cpf] rescue nil), class: 'form-control form-control-sm cpf-mask', placeholder: '000.000.000-00' %>
-      </div>
-
-      <div class="form-group mb-2">
-        <%= label_tag 'client[email]', 'Email *', class: 'form-label' %>
-        <%= text_field_tag 'client[email]', (params[:client][:email] rescue nil), class: 'form-control form-control-sm', placeholder: 'seu@email.com' %>
-      </div>
-
-      <div class="form-group mb-2">
-        <%= label_tag 'client[phone]', 'Celular *', class: 'form-label' %>
-        <%= text_field_tag 'client[phone]', (params[:client][:phone] rescue nil), class: 'form-control form-control-sm cellphone-mask', placeholder: '(00) 9 0000-0000' %>
-      </div>
-
-      <div class="form-group mb-2">
-        <%= label_tag 'payment[payment_method]', 'Meio de pagamento *', class: 'form-label' %>
-        <%= select_tag 'payment[payment_method]', options_for_select(payment_methods_for_select), class: 'form-select' %>
-
-      </div>
+      <%= render 'company_module/event_pages/subs/address_event' %>
 
       <%= hidden_field_tag 'payment[ticket_id]' %>
 
@@ -82,8 +64,8 @@
         <div class="card-body">
           <h6>Resumo da compra</h6>
 
-          <small class="d-flex justify-content-between py-0" id="ticket_choosed"></small>
-          <small class="d-flex justify-content-between py-0" id="ticket_buyed"></small>
+          <small class="d-flex justify-content-between" style="height: 24px" id="ticket_choosed"></small>
+          <small class="d-flex justify-content-between" style="height: 24px" id="ticket_buyed"></small>
           <hr>
           <small class="card-text d-flex justify-content-between total_payment"></small>
         </div>
@@ -91,7 +73,8 @@
 
       <div class="d-grid gap-2 d-md-block">
         <%= link_to 'Voltar', '#', class: 'btn btn-light', id: 'back' %>
-        <%= submit_tag 'Pagar', class: 'btn btn-dark' %>
+        
+        <%= submit_tag 'Registrar Inscrição', class: 'btn btn-dark', id: 'confirm_sub' %>
       </div>
     </div>
 
@@ -106,6 +89,7 @@
   let ticket_quantity = $('#payment_ticket_quantity');
 
   $('#resume_purchase').hide();
+  $('#zip_not_found').hide();
 
   $(document).ready(function(){
     <% if @payment.present? && @payment.errors.present? %>
@@ -129,19 +113,25 @@
   });
 
   <% @event.tickets.each do |ticket| %>
-    $('#ticket_<%= ticket.id %>').on('click', function(){
-      $('.tickets').removeClass('border-dark');
-      $(this).addClass('border-dark');
+    $('#ticket_<%= ticket.id %>').on('click', function(e){
+      
+      if (<%= ticket.sold_out? %>) {
+        e.preventDefault()
+      } else {
+        $('.tickets').removeClass('border-dark');
+        $(this).addClass('border-dark');
 
-      sel_ticket_id   = $(this).data('ticket-id');
-      sel_ticket_name = $(this).data('ticket-name');
-      ticket_price    = $(this).data('ticket-price');
+        sel_ticket_id   = $(this).data('ticket-id');
+        sel_ticket_name = $(this).data('ticket-name');
+        ticket_price    = $(this).data('ticket-price');
 
-      $('#payment_ticket_id').val(sel_ticket_id);
+        $('#payment_ticket_id').val(sel_ticket_id);
 
-      updateTotalPayment();
+        updateTotalPayment();
 
-      $('#buy_ticket').removeClass('disabled');
+        $('#buy_ticket').removeClass('disabled');
+      }
+
     });
   <% end %>
 
@@ -151,8 +141,8 @@
     $('#choose_ticket').hide();
     $('#resume_purchase').show()
 
-    $('#ticket_choosed').html(`<p><b>Ingresso:</b></p><p>${sel_ticket_name}</p>`)
-    $('#ticket_buyed').html(`<p><b>Quantidade:</b></p><p>${ticket_quantity.val()}</p>`)
+    $('#ticket_choosed').html(`<p>Ingresso:</p><p>${sel_ticket_name}</p>`)
+    $('#ticket_buyed').html(`<p>Quantidade:</p><p>${ticket_quantity.val()}</p>`)
     updateTotalPayment()
   });
 
@@ -171,4 +161,40 @@
     $('.total_payment').html()
     $('.total_payment').html(`<p>Total:</p><p>${total_payment.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}</p>`)
   }
+
+  let debounce_timeout;
+
+  $('#address_zip_code').on('input', function() {
+    clearTimeout(debounce_timeout);
+
+    let code = $(this).val().replace(/\D/g, '');
+
+    debounce_timeout = setTimeout(function() {
+      if (code.length == 8) {
+         $('#loading').fadeIn(200);
+
+        $.get(`https://viacep.com.br/ws/${code}/json`, function(resp) {
+          if (!resp.erro) {
+            $('#address_street').val(resp.logradouro);
+            $('#address_neighborhood').val(resp.bairro);
+            $('#address_city').val(resp.localidade);
+            $('#address_state').val(resp.uf);
+            $('#address_complement').val(resp.complemento);
+            $('#zip_not_found').hide();
+          } else {
+            $('#address_street').val('');
+            $('#address_neighborhood').val('');
+            $('#address_city').val('');
+            $('#address_state').val('');
+            $('#address_complement').val('');
+            $('#zip_not_found').show();
+          }
+        }).fail(function() {
+          alert('Erro ao consultar CEP');
+        }).always(function() {
+          $('#loading').fadeOut(200);
+        });
+      }
+    }, 1000);
+  });
 </script>

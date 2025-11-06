@@ -1,0 +1,44 @@
+<%= content_for :event_title do %>
+  <%= "#{@event.company.name} - Eventos" %>
+<% end %>
+
+<div style="position: absolute; top: 30%; left: 40%;'">
+  <div class="card">
+    <div class="card-body text-center" style="width: 400px;">
+      <div style="font-size: 70px;">
+        <%= bootstrap_icon(icon: 'bi-check-circle', class_name: 'text-success') %>
+      </div>
+
+      <b>Inscrição Realizada!!</b>
+      
+      <p class="py-2 text-body-secondary text-wrap">Sua inscrição foi registrada. Você receberá um email com os detalhes da inscrição.</p>
+
+      <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 7px;">
+        <div class="progress-bar bg-success" id="bar-progress" style="width: 100%;"></div>
+      </div>
+
+      <small>Você será redirecionado para o checkout de Pagamento</small>
+    </div>
+  </div>
+</div>
+
+<script>
+  const redirectUrl = '<%= @payment.link %>'; // altere o destino aqui
+  const totalTime   = 5000; // 5 segundos
+  const interval    = 100; // atualização a cada 100ms
+  const progressBar = document.querySelector('#bar-progress');
+
+  let elapsed = 0;
+
+  const timer = setInterval(() => {
+    elapsed += interval;
+    const progress = Math.max(0, 100 - (elapsed / totalTime) * 120);
+
+    progressBar.style.width = progress + "%";
+
+    if (elapsed >= totalTime) {
+      clearInterval(timer);
+      window.location.href = redirectUrl;
+    }
+  }, interval);
+</script>

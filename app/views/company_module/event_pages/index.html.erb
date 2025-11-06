@@ -39,11 +39,14 @@
 
               <div class="card-img-overlay">
                 <p class="text-light position-absolute bg-dark py-1 px-2 rounded-3" style="top: 85%; font-size: 14px;">
-                  <span class="me-2"
-                    ><%= bootstrap_icon(text: ' ', icon: 'bi-calendar-date') %><%= event.date_start.strftime('%d de %b') %>
+                  <span class="me-2">
+                    <%= bootstrap_icon(icon: 'bi-calendar-event') %>
+                    <%= I18n.l event.date_start, format: :short %>
                   </span>
 
-                  <%= bootstrap_icon(text: ' ', icon: 'bi-clock') %><%= event.time_start.strftime('%H:%M') %>
+                  <%= bootstrap_icon(text: ' ', icon: 'bi-clock') %>
+                  <%= I18n.l event.time_start, format: :only_hour %> -
+                  <%= I18n.l event.time_end, format: :only_hour %>
                 </p>
               </div>
             </div>
@@ -60,11 +63,11 @@
               </p>
               
               <p class="text-secondary m-0">
-                <%= bootstrap_icon(icon: 'bi-geo-alt') %> <%= event.local_name %>
+                <%= bootstrap_icon(icon: 'bi-geo-alt') %> <%= event.full_event_address %>
               </p>
 
               <p class="text-secondary m-0">
-                <%= bootstrap_icon(text: " #{event.subscribers_sellout} de #{event.subscribers_expected} inscritos", icon: 'bi-people') %>
+                <%= bootstrap_icon(text: " #{event.subscribers_sellout_sum} de #{event.subscribers_expected} inscritos", icon: 'bi-people') %>
               </p>
 
               <hr>

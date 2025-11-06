@@ -24,7 +24,7 @@
 
         <li class="nav-item">
           <%= link_to company_events_path, class: "btn #{controller_name == 'events' ? 'btn-dark' : 'btn-light'} btn-sm btn-round me-2" do %>
-            <%= bootstrap_icon(text: ' Eventos', icon: 'bi-calendar-event') %>
+            <%= bootstrap_icon(text: ' Eventos', icon: 'bi-calendar3') %>
           <% end %>
         </li>
 
@@ -57,12 +57,18 @@
 
         <ul class="dropdown-menu text-small" style="">
           <!-- <li><a class="dropdown-item" href="#">Configurações</a></li> -->
-          <li><%= link_to 'Perfil', edit_company_profile_path(current_company.id), class: 'dropdown-item' %></li>
+          <li>
+            <%= link_to edit_company_profile_path(current_company.id), class: 'dropdown-item' do %>
+              <%= bootstrap_icon icon: 'bi-person-fill' %> Perfil
+            <% end %>
+          </li>
           <li>
             <hr class="dropdown-divider">
           </li>
           <li>
-            <%= button_to 'Sair', destroy_company_admin_session_path, class: 'dropdown-item', method: :delete %>
+            <%= button_to destroy_company_admin_session_path, class: 'dropdown-item', method: :delete do %>
+              <%= bootstrap_icon icon: 'bi-arrow-bar-left' %> Sair
+            <% end %>
           </li>
         </ul>
       </div>

@@ -1,0 +1,23 @@
+<%= content_for :event_title do %>
+  <%= "#{@event.company.name} - Eventos" %>
+<% end %>
+
+<div style="position: absolute; top: 30%; left: 40%;'">
+  <div class="card">
+    <div class="card-body text-center" style="width: 400px;">
+      <div style="font-size: 70px;">
+        <%= bootstrap_icon(icon: 'bi-check-circle', class_name: 'text-success') %>
+      </div>
+
+      <b>Pagamento Cancelado!!</b>
+      
+      <p>Evento: <%= @event.name %></p>
+      <p class="py-2 text-body-secondary text-wrap">Cancelamento de inscrição realizado com sucesso!</p>
+
+      <div class="d-grid gap-2">
+        <%= link_to 'Ver página do evento', company_event_page_path(@event, company_id: params[:company_id]), class: 'btn btn-dark' %>
+        <%= link_to 'Ver outros eventos', company_all_events_path(company_id: params[:company_id]), class: 'btn btn-light' %>
+      </div>
+    </div>
+  </div>
+</div>

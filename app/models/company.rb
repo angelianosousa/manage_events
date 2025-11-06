@@ -14,6 +14,8 @@
 #  cellphone  :string
 #
 class Company < ApplicationRecord
+  has_secure_token :asaas_webhook_token, length: 36
+
   extend FriendlyId
 
   friendly_id :name, use: :slugged

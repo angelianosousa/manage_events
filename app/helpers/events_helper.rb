@@ -16,16 +16,16 @@ module EventsHelper
   end
 
   def event_progress(event)
-    tickets_sellout            = event.subscribers_sellout
-    percentage_tickets_sellout = (tickets_sellout.to_f / event.subscribers_expected.to_f) * 100
+    tickets_sold            = event.subscribers_sellout_sum
+    percentage_tickets_sold = (tickets_sold.to_f / event.subscribers_expected.to_f) * 100
     tickets_sell_receipt       = humanized_money_with_symbol(event.total_receipt)
-    sell_bar_color             = progress_bar_color(percentage_tickets_sellout)
+    sell_bar_color             = progress_bar_color(percentage_tickets_sold)
 
     <<~HEREDOC
       <p style='display: inline; color: gray;'>#{bootstrap_icon(text: "#{event.tickets_sells_verbose} #{tickets_sell_receipt}", icon: 'bi bi-people')}</p>
 
-      <div class="progress mb-3" role="progressbar" aria-valuenow="#{percentage_tickets_sellout}" aria-valuemin="0" aria-valuemax="100" style="height: 12px;">
-        <div class="progress-bar bg-#{sell_bar_color}" style="width: #{percentage_tickets_sellout}%; height: 12px;">#{number_to_percentage(percentage_tickets_sellout, precision: 2)}</div>
+      <div class="progress mb-3" role="progressbar" aria-valuenow="#{percentage_tickets_sold}" aria-valuemin="0" aria-valuemax="100" style="height: 12px;">
+        <div class="progress-bar bg-#{sell_bar_color}" style="width: #{percentage_tickets_sold}%; height: 12px;">#{number_to_percentage(percentage_tickets_sold, precision: 2)}</div>
       </div>
     HEREDOC
   end
@@ -75,33 +75,16 @@ module EventsHelper
     end
   end
 
-  def badge_payment_method(method)
-    classe = case method
-             when 'pix'
-               'info'
-             when 'cash'
-               'success'
-             when 'credit'
-               'primary'
-             when 'debit'
-               'warning'
-             else
-               ''
-             end
-
-    tag.span class: "badge bg-#{classe}-subtle border border-#{classe}-subtle text-#{classe}-emphasis rounded-pill" do
-      method
-    end
-  end
-
   def badge_payment_status(status)
     classe = case status
              when 'pending'
-              'danger'
+              'warning'
              when 'paid'
               'success'
-             when 'overdue'
-              'warning'
+             when 'cancelled'
+              'danger'
+             when 'expired'
+              'dark'
              else
               'warning'
              end

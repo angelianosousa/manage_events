@@ -6,3 +6,59 @@
 #body_bg {
   background-color:rgba(192,192,192,0.25);
 }
+
+#uploadArea.dragover {
+  border-color: var(--bs-blue);
+  background-color: var(--bs-light);
+}
+
+.nav-pills {
+  --bs-nav-pills-border-radius: var(--bs-border-radius);
+  --bs-nav-pills-link-active-color: var(--bs-light);
+  --bs-nav-link-color: var(--bs-black);
+  --bs-nav-pills-link-active-bg: var(--bs-black);
+}
+
+.nav-link, .nav-link:hover {
+  display: block;
+  padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: var(--bs-nav-link-font-weight);
+  color: var(--bs-nav-link-color);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  transition: color 0.15s 
+  ease-in-out, background-color 0.15s 
+  ease-in-out, border-color 0.15s 
+  ease-in-out;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: var(--bs-nav-pills-link-active-color);
+  background-color: var(--bs-nav-pills-link-active-bg);
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: var(--bs-gray);
+  color: #fff;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: inline-block;
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 0;
+  padding-left: 20px;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+  background-color: var(--bs-gray);
+  color: white;
+}

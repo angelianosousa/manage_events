@@ -89,3 +89,8 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+gem "faraday", "~> 2.14"
+gem "json", "~> 2.15"
+
+gem "rspec-rails", "~> 7.1"

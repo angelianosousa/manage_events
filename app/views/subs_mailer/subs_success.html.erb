@@ -1,0 +1,112 @@
+<table role="presentation" align="center" style="width: 96%; width: 600px;">
+  <% content_for :header_mail do %>
+    <table class='text-white text-center' style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); height: 150px; width: 100%;" align="center">
+      <tr>
+        <td>
+          <h3 class="text-center">Pagamento Confirmado!</h3>
+          
+          <i class="bi bi-check-circle-fill" style="font-size: 40px;"></i>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+  <tr>
+    <td>
+      <table style="width: 600px; margin-top: 20px;">
+        <tr>
+          <td>
+            <div style="text-align: center; margin: 20px 0px;">
+              <h5>Olá <%= @client.name %></h5>
+
+              <p>Ótimas notícias! Seu pagamento foi processado com sucesso e sua vaga no evento está garantida.</p>
+            </div>
+
+            <div class="alert alert-success" style="padding: 20px; margin-bottom: 20px;">
+              <h4 class="text-success" style="font-weight: bold; text-align: center;">Comprovante de Pagamento</h4>
+
+              <table align='center' style="text-align: center;">
+                <tbody>
+                  <tr class="text-secondary">
+                    <td style="padding-right: 60px;"><b>Nº Transação:</b></td>
+                    <td>#<%= "#{@event.id}.#{@payment.id}.#{@client.id}" %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 60px;"><b>Data Pagamento:</b></td>
+                    <td><%= I18n.l @event.date_start, format: :short %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 60px;"><b>Ingresso:</b></td>
+                    <td><%= @payment.ticket.name %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 60px;"><b>Valor do ingresso:</b></td>
+                    <td><%= humanized_money_with_symbol @payment.ticket.price %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 60px;"><b>Quantidade:</b></td>
+                    <td><%= @payment.quantity %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 60px;"><b>Valor total:</b></td>
+                    <td><%= @payment.quantity %> x <%= humanized_money_with_symbol @payment.ticket.price %> = <%= humanized_money_with_symbol @payment.price %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="bg-body-secondary" style="padding: 20px;" style="text-align: center;">
+              <h4 class="text-success" style="font-weight: bold; text-align: center;">Detalhes do Evento</h4>
+
+              <table align='center' valign="top" style="text-align: center;">
+                <tbody>
+                  <tr class="text-secondary">
+                    <td style="padding-right: 30px;"><b>Evento:</b></td>
+                    <td><%= I18n.l @event.date_start, format: :short %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 30px;"><b>Horário:</b></td>
+                    <td><%= @event.time_start.strftime('%H:%m') %> - <%= @event.time_end.strftime('%H:%m') %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 30px;"><b>Local:</b></td>
+                    <td style="width: 300px;"><%= @event.full_event_address %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+              <div class="alert alert-warning" role="alert" style="border-left: 5px solid;">
+                <i class="bi bi-exclamation-triangle-fill" style="font-size: 15px;"></i>
+
+                <b>Importante:</b> Guarde este e-mail como comprovante. Apresente-o no dia do evento junto com um documento de identificação.
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <% content_for :footer_mail do %>
+    <table class="text-center bg-body-secondary" style="height: 120px; width: 100%;">
+      <tr>
+        <td>
+          <p>Dúvidas ? Entre em contato conosco em <%= ENV.fetch('DEFAULT_MAIL', 'geventos@gmail.com')%></p>
+
+          <small>© <%= Date.today.year %> GEventos. Todos os direitos reservados.</small><br>
+          
+          <small>Esse é um email automatico, não responda</small>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</table>

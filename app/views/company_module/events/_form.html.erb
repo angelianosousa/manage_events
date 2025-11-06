@@ -1,4 +1,4 @@
-<%= form_with(model: [:company, event]) do |form| %>
+<%= form_with(model: [:company, event], local: true, html: { multipart: true }) do |form| %>
 
   <%= render '/shared/error_messages', resource: event %>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_29_220710) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_20_220756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,12 +43,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_29_220710) do
   end
 
   create_table "addresses", force: :cascade do |t|
-    t.string "place_name"
-    t.string "address_name"
     t.string "addressable_id"
     t.string "addressable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "street"
+    t.string "number"
+    t.string "neighborhood"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "complement"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -61,6 +66,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_29_220710) do
     t.string "site"
     t.string "phone"
     t.string "cellphone"
+    t.string "asaas_api_key"
+    t.string "asaas_webhook_token", null: false
+    t.index ["asaas_webhook_token"], name: "index_companies_on_asaas_webhook_token", unique: true
   end
 
   create_table "events", force: :cascade do |t|
@@ -99,11 +107,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_29_220710) do
     t.string "price_currency", default: "BRL", null: false
     t.integer "quantity"
     t.date "due_date"
-    t.integer "payment_method", default: 0
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source_id"
+    t.string "link"
+    t.string "token_pay", null: false
     t.index ["company_id"], name: "index_payments_on_company_id"
+    t.index ["token_pay"], name: "index_payments_on_token_pay", unique: true
     t.index ["user_account_id"], name: "index_payments_on_user_account_id"
   end
 

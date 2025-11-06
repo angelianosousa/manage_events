@@ -2,19 +2,19 @@
 #
 # Table name: events
 #
-#  id            :bigint           not null, primary key
-#  company_id    :bigint           not null
-#  name          :string
-#  slug          :string
-#  description   :text
-#  categories :string
-#  date_start    :date
-#  time_start    :time
-#  time_end      :time
-#  status        :integer          default("active")
-#  visible       :boolean          default(FALSE)
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id          :bigint           not null, primary key
+#  company_id  :bigint           not null
+#  name        :string
+#  slug        :string
+#  description :text
+#  categories  :string           default([]), is an Array
+#  date_start  :date
+#  time_start  :time
+#  time_end    :time
+#  status      :integer          default("active")
+#  visible     :boolean          default(FALSE)
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
 #
 class Event < ApplicationRecord
   extend FriendlyId
@@ -26,7 +26,7 @@ class Event < ApplicationRecord
   # Associations
   belongs_to :company
 
-  has_one :address, as: :addressable
+  has_one :address, class_name: 'Address', as: :addressable
   has_one :banner, as: :photoable, class_name: 'Photo'
 
   has_many :tickets, dependent: :destroy
@@ -34,6 +34,7 @@ class Event < ApplicationRecord
   # Validations
   validates :categories, :date_start, :time_start, presence: true
   validates :time_end, comparison: { greater_than: :time_start }
+  validates :name, length: { maximum: 30 }
   validate :check_amount_of_tickets
 
   accepts_nested_attributes_for :address, allow_destroy: true
@@ -62,8 +63,8 @@ class Event < ApplicationRecord
     update(visible: !visible)
   end
 
-  def local_name
-    address.address_name
+  def full_event_address
+    address.full_info
   end
 
   def total_receipt
@@ -74,12 +75,12 @@ class Event < ApplicationRecord
     tickets.sum(&:quantity)
   end
 
-  def subscribers_sellout
-    tickets.joins(:payments).sum(&:tickets_sellout)
+  def subscribers_sellout_sum
+    tickets.joins(:payments).sum(&:tickets_sold)
   end
 
   def tickets_sells_verbose
-    "#{subscribers_sellout} / #{subscribers_expected}"
+    "#{subscribers_sellout_sum} / #{subscribers_expected}"
   end
 
   def categories_list

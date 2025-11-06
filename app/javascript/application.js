@@ -22,3 +22,4 @@ $('.select2-multiple').select2({
 $('.phone-mask').mask('(00) 0000-0000');
 $('.cellphone-mask').mask('(00) 9 0000-0000');
 $('.cpf-mask').mask('000.000.000-00');
+$('.cep-mask').mask('00000-000');

@@ -1,103 +1,151 @@
 <%= form_with(model: company, url: company_profile_path(company_id: params[:company_id]), method: :patch) do |form| %>
   <%= form.hidden_field :id, value: company.id  %>
 
-  <div class="row">
-    <div class="col-3">
-      <div class="card text-center">
-        <div class="card-body">
-          <figure class="figure">
-            <% image = company.logo&.image&.attached? ? company.logo.image : 'placeholder.png' %>
-            <%= image_tag image, class: 'me-2 rounded-circle border-dark', size: '150x150' %>
-          </figure>
+  <h5>Configurações da empresa</h5>
+  <small class="text-secondary">Gerencie as preferências da sua empresa</small><br><br>
 
-          <%= form.fields_for :logo do |logo_form| %>
-            <%= logo_form.label :image, Company.human_attribute_name('logo.image'), class: 'form-label', for: 'company_logo_attributes_image' %>
-            <%= logo_form.file_field :image, class: 'form-control stretched-link' %>
-          <% end %>
+  <div class="d-flex align-items-start">
+    <div class="card me-3" style="width: 500px;">
+      <div class="card-body">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+          <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Geral</button>
+          <button class="nav-link" id="v-erp-tab" data-bs-toggle="pill" data-bs-target="#v-erp" type="button" role="tab" aria-controls="v-erp" aria-selected="false">Integrações</button>
         </div>
       </div>
     </div>
 
-    <div class="col">
-      <div class="card">
-        <div class="card-body">
-          <h5><%= bootstrap_icon(text: ' Informações gerais', icon: 'bi-card-list') %></h5>
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+          
+        <div class="card" style="width: 1000px;">
+          <div class="card-body">
+            <h5><%= bootstrap_icon(text: ' Informações gerais', icon: 'bi-card-list') %></h5>
 
-          <div class="row">
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :name, style: 'display: block;' %>
-                <%= form.text_field :name, class: 'form-control' %>
-              </div>
-            </div>
+            <figure class="figure">
+              <% image = company.logo&.image&.attached? ? company.logo.image : 'placeholder.png' %>
 
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :email, style: 'display: block;' %>
-                <%= form.text_field :email, class: 'form-control' %>
+              <%= image_tag image, class: 'me-2 rounded-circle border-dark', size: '40x40' %>
+            </figure>
+
+            <%= form.fields_for :logo do |logo_form| %>
+              <div class="d-inline-block">
+                <%= logo_form.label :image, class: 'btn btn-light', for: 'company_logo_attributes_image' do %>
+                  <%= bootstrap_icon(icon: 'bi-cloud-upload') %> Logo da empresa (40x40)
+                <% end %>
+
+                <span id="file-name">Nenhum arquivo selecionado</span>
               </div>
+
+              <%= logo_form.file_field :image, style: 'display: none;' %>
+            <% end %>
+
+            <div class="form-group">
+              <%= form.label :name, style: 'display: block;' %>
+              <%= form.text_field :name, class: 'form-control' %>
             </div>
 
           </div>
+        </div>
 
-          <div class="row mt-3">
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :site, style: 'display: block;' %>
-                <%= form.text_field :site, class: 'form-control' %>
+        <div class="card my-3">
+          <div class="card-body">
+            <h5><%= bootstrap_icon(text: ' Contato', icon: 'bi-message') %></h5>
+
+            <div class="row mt-3">
+              <div class="col-md">
+                <div class="form-group">
+                  <%= form.label :site, style: 'display: block;' %>
+                  <%= form.text_field :site, class: 'form-control' %>
+                </div>
+              </div>              
+            </div>
+
+            <div class="row my-3">
+              <div class="col-md">
+                <div class="form-group">
+                  <%= form.label :email, style: 'display: block;' %>
+                  <%= form.text_field :email, class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col-md">
+                <div class="form-group">
+                  <%= form.label :phone, style: 'display: block;' %>
+                  <%= form.text_field :phone, class: 'form-control' %>
+                </div>
+              </div>
+
+              <div class="col-md">
+                <div class="form-group">
+                  <%= form.label :cellphone, style: 'display: block;' %>
+                  <%= form.text_field :cellphone, class: 'form-control' %>
+                </div>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="row my-3">
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :phone, style: 'display: block;' %>
-                <%= form.text_field :phone, class: 'form-control' %>
-              </div>
-            </div>
+        <div class="card">
+          <div class="card-body">
+            <h5><%= bootstrap_icon(text: ' Conta de acesso', icon: 'bi-person') %></h5>
 
-            <div class="col-md">
-              <div class="form-group">
-                <%= form.label :cellphone, style: 'display: block;' %>
-                <%= form.text_field :cellphone, class: 'form-control' %>
-              </div>
-            </div>
-          </div>
+            <div class="row mt-3">
+              <div class="col-md">
+                <%= form.fields_for :admin_base do |admin_form| %>
+                  <%= admin_form.hidden_field :id, value: company.id %>
 
-          <h5><%= bootstrap_icon(text: ' Conta de acesso', icon: 'bi-person') %></h5>
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-group mb-2">
+                        <%= admin_form.label :name, style: 'display: block' %>
+                        <%= admin_form.text_field :name, class: 'form-control' %>
+                      </div>
+                    </div>
 
-          <div class="row mt-3">
-            <div class="col-md">
-              <%= form.fields_for :admin_base do |admin_form| %>
-                <%= admin_form.hidden_field :id, value: company.id %>
-
-                <div class="row">
-                  <div class="col-md">
-                    <div class="form-group mb-2">
-                      <%= admin_form.label :name, style: 'display: block' %>
-                      <%= admin_form.text_field :name, class: 'form-control' %>
+                    <div class="col-md">
+                      <div class="form-group mb-2">
+                        <%= admin_form.label :email, style: 'display: block' %>
+                        <%= admin_form.text_field :email, class: 'form-control' %>
+                      </div>
                     </div>
                   </div>
 
-                  <div class="col-md">
-                    <div class="form-group mb-2">
-                      <%= admin_form.label :email, style: 'display: block' %>
-                      <%= admin_form.text_field :email, class: 'form-control' %>
-                    </div>
+                  <div class="form-group mb-2">
+                    <%= admin_form.label :password, style: 'display: block' %>
+                    <%= admin_form.password_field :password, class: 'form-control' %>
                   </div>
-                </div>
 
-                <div class="form-group mb-2">
-                  <%= admin_form.label :password, style: 'display: block' %>
-                  <%= admin_form.password_field :password, class: 'form-control' %>
-                </div>
+                  <div class="form-group mb-2">
+                    <%= admin_form.label :password_confirmation, style: 'display: block' %>
+                    <%= admin_form.password_field :password_confirmation, class: 'form-control' %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                <div class="form-group mb-2">
-                  <%= admin_form.label :password_confirmation, style: 'display: block' %>
-                  <%= admin_form.password_field :password_confirmation, class: 'form-control' %>
-                </div>
-              <% end %>
+      </div>
+
+      <div class="tab-pane fade" id="v-erp" role="tabpanel" aria-labelledby="v-erp-tab" tabindex="0">
+        <div class="card" style="width: 1000px;">
+          <div class="card-body">
+            <h5><%= bootstrap_icon(text: ' Asaas ERP', icon: 'bi-gear-wide-connected') %></h5>
+
+            <%= form.label :asaas_api_key, style: 'display: block;' %>
+
+            <div class="input-group">
+              <span class="input-group-text"><%= bootstrap_icon(icon: 'bi-key') %></span>
+              <%= form.password_field :asaas_api_key, value: company.asaas_api_key , class: 'form-control' %>
+              <span class="input-group-text" id="pass-field-api-key"><%= bootstrap_icon(icon: 'bi-eye-slash') %></span>
+            </div>
+
+            <%= form.label :asaas_webhook_token, class: 'mt-2', style: 'display: block;' %>
+
+            <div class="input-group">
+              <span class="input-group-text"><%= bootstrap_icon(icon: 'bi-key') %></span>
+              <%= form.password_field :asaas_webhook_token, value: company.asaas_webhook_token, class: 'form-control', disabled: true %>
+              <span class="input-group-text" id="pass-field-webhook-token"><%= bootstrap_icon(icon: 'bi-eye-slash') %></span>
             </div>
           </div>
         </div>
@@ -110,5 +158,36 @@
     </div>
   </div>
   
-  
 <% end %>
+
+<script>
+  $('#company_logo_attributes_image').on('change', function(e) {
+    const file = e.target.files[0]
+
+    $('#file-name').html(file ? `<%= bootstrap_icon(icon: 'bi-file-check') %>  ${file.name}` : 'Nenhum arquivo selecionado')
+  });
+
+  $('#pass-field-api-key').on('click', function() {
+    let btn = $('#company_asaas_api_key')[0];
+
+    if (btn.type == 'password') {
+      btn.type = 'text';
+      $(this).html('<i class="bi bi-eye"></i>')
+    } else {
+      btn.type = 'password';
+      $(this).html('<i class="bi bi-eye-slash"></i>')
+    }
+  });
+
+  $('#pass-field-webhook-token').on('click', function() {
+    let btn = $('#company_asaas_webhook_token')[0];
+
+    if (btn.type == 'password') {
+      btn.type = 'text';
+      $(this).html('<i class="bi bi-eye"></i>')
+    } else {
+      btn.type = 'password';
+      $(this).html('<i class="bi bi-eye-slash"></i>')
+    }
+  });
+</script>

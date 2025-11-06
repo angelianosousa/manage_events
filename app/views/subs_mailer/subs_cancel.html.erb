@@ -1,0 +1,93 @@
+<table role="presentation" align="center" style="width: 96%; width: 600px;">
+  <% content_for :header_mail do %>
+    <table class='text-white text-center bg-danger' style="height: 150px; width: 100%;" align="center">
+      <tr>
+        <td>
+          <h3 class="text-center">Inscrição Cancelada!</h3>
+          
+          <i class="bi bi-check-circle-fill" style="font-size: 40px;"></i>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+  <tr>
+    <td>
+      <table style="width: 600px; margin-top: 20px;">
+        <tr>
+          <td>
+            <div style="text-align: center;">
+              <h5>Olá <%= @client.name %></h5>
+
+              <p>Confirmamos o cancelamento da sua inscrição no evento.<br>Lamentamos que você não possa participar desta vez.</p>
+            </div>
+
+            <div class="alert alert-danger" style="padding: 20px;">
+              <h4 class="text-danger" style="font-weight: bold; text-align: center;">Detalhes do Cancelamento</h4>
+
+              <table align='center' valign="top">
+                <tbody>
+                  <tr class="text-secondary">
+                    <td style="padding-right: 85px;"><b>Nº Inscrição:</b></td>
+                    <td>#<%= "#{@event.id}.#{@payment.id}.#{@client.id}" %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 85px;"><b>Data Cancelamento</b></td>
+                    <td><%#= "#{@event.id}.#{@payment.id}.#{@client.id}" %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 85px;"><b>Evento:</b></td>
+                    <td><%= @event.name %></td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 85px;"><b>Data do evento:</b></td>
+                    <td>
+                      <%= I18n.l @event.date_start, format: :short %> -
+                      <%= @event.time_start.strftime('%H:%m') %> às <%= @event.time_end.strftime('%H:%m') %>
+                    </td>
+                  </tr>
+
+                  <tr class="text-secondary">
+                    <td style="padding-right: 85px;"><b>Ingresso:</b></td>
+                    <td><%= @payment.ticket.name %> - <%= humanized_money_with_symbol @payment.ticket.price %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+              <div class="alert alert-primary text-primary" role="alert" style="border-left: 5px solid;">
+                <h4>Interessado em outros eventos?</h4>
+
+                Temos outros eventos incríveis acontecendo em breve. Confira nossa programação completa e encontre o evento perfeito para você!
+              </div>
+            </div>
+            
+            <div class="text-center" style="margin-top: 20px; margin-bottom: 20px;">
+              <%= link_to 'Ver Outros Eventos', @url_all_events, class: 'btn btn-primary', target: "_blank" %> <br> <br>
+
+              <small>Sentiremos sua falta! Esperamos vê-lo(a) em um próximo evento.</small>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <% content_for :footer_mail do %>
+    <table class="text-center bg-body-secondary" style="height: 120px; width: 100%;">
+      <tr>
+        <td>
+          <p>Dúvidas sobre o cancelamento ? Contate-nos em <%= ENV.fetch('DEFAULT_MAIL', 'geventos@gmail.com')%></p>
+
+          <small>© <%= Date.today.year %> GEventos. Todos os direitos reservados.</small><br>
+          
+          <small>Esse é um email automatico, não responda</small>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</table>
