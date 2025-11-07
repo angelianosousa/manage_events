@@ -10,7 +10,7 @@ class AsaasGateway < ApplicationService
     @access_token = @company.asaas_api_key
 
     # Conexão Faraday configurada
-    @conn = Faraday.new(url: "#{@base_url}/checkouts") do |faraday|
+    @conn = Faraday::Connection.new(url: "#{@base_url}/checkouts") do |faraday|
       faraday.request :json # envia payload como JSON
       faraday.response :json, content_type: /\bjson$/ # parse automático do JSON
       faraday.response :logger, Rails.logger, bodies: true if Rails.env.development?

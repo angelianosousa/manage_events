@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_20_220756) do
+ActiveRecord::Schema[7.1].define(version: 2025_11_07_202415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -113,6 +113,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_20_220756) do
     t.string "source_id"
     t.string "link"
     t.string "token_pay", null: false
+    t.datetime "cancelled_at"
+    t.datetime "expired_at"
+    t.datetime "paided_at"
     t.index ["company_id"], name: "index_payments_on_company_id"
     t.index ["token_pay"], name: "index_payments_on_token_pay", unique: true
     t.index ["user_account_id"], name: "index_payments_on_user_account_id"

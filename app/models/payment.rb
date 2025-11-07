@@ -40,16 +40,16 @@ class Payment < ApplicationRecord
   end
 
   def confirm_sub!
-    SubsMailer.with(payment: @payment).subs_confirm.deliver_later
+    SubsMailer.with(payment: self).subs_confirm.deliver_later
   end
 
   def confirm_sub_success!
-    SubsMailer.with(payment: @payment).subs_success.deliver_later
+    SubsMailer.with(payment: self).subs_success.deliver_later
     update(paided_at: DateTime.now, status: :paid)
   end
 
   def cancel_sub!
-    SubsMailer.with(payment: @payment).subs_cancel.deliver_later
+    SubsMailer.with(payment: self).subs_cancel.deliver_later
     update(cancelled_at: DateTime.now, status: :cancelled)
   end
 
