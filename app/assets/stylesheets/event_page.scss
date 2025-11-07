@@ -5,7 +5,24 @@
   background-color:rgba(192,192,192,0.25);
 }
 
-.banner {
+.card-event-figure {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.card-event-figure img {
+  display: block;
+  width: 100%;
+}
+
+.card-event-figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.banner-event img {
   background-position: center;
   background-size: cover;
   width: 1320px;
@@ -13,7 +30,7 @@
 }
 
 @media (max-width: 768px) {
-  .banner {
-    height: 180px; /* reduz para mobile */
+  .banner-event {
+    height: 220px; /* reduz para mobile */
   }
 }

@@ -33,7 +33,7 @@
       <% @events.each do |event| %>
         <div class="col">
           <div class="card h-100">
-            <div class="banner-figure">
+            <div class="card-event-figure">
               <% image = event.banner&.image&.attached? ? event.banner.image : 'no-banner.jpeg' %>
               <%= image_tag image, class: 'card-img-top', size: '300x300' %>
 

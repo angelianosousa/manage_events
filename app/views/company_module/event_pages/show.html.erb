@@ -46,8 +46,8 @@
   <div class="container my-3">
     <% image = @event.banner&.image&.attached? ? @event.banner.image : 'placeholder.png' %>
 
-    <div class="banner mb-3">
-      <%= image_tag image, class: 'img-fluid rounded', style: 'width: 1320px; height: 400px;' %>
+    <div class="banner-event mb-3">
+      <%= image_tag image, class: 'img-fluid rounded' %>
     </div>
   </div>
 
