@@ -1,15 +1,13 @@
 class AsaasGateway < ApplicationService
   include Rails.application.routes.url_helpers
-  Rails.application.routes.default_url_options[:host] = ENV['SITE_DOMAIN']
+  Rails.application.routes.default_url_options[:host] = ENV.fetch('SITE_DOMAIN', 'https://example.asaas.com')
 
   def initialize(payment)
     @payment      = payment
     @company      = @payment.company
     @client       = @payment.client
     @base_url     = ENV['ASAAS_BASE_URL']
-    # @access_token = '$aact_hmlg_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OjkwMzc3NTFjLTZmNjgtNDlhMS1hOTdjLWRlNTNmZmI2ZTAzYzo6JGFhY2hfZTNkOWYxZTItMzA2Mi00MWFkLWJiY2ItODJiZDU4NjllZTFj'
     @access_token = @company.asaas_api_key
-    # @payment.generate_token_pay
 
     # Conexão Faraday configurada
     @conn = Faraday.new(url: "#{@base_url}/checkouts") do |faraday|
