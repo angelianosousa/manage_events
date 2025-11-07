@@ -21,23 +21,26 @@
           <div class="card-body">
             <h5><%= bootstrap_icon(text: ' Informações gerais', icon: 'bi-card-list') %></h5>
 
-            <figure class="figure">
-              <% image = company.logo&.image&.attached? ? company.logo.image : 'placeholder.png' %>
+            <div class="d-flex">
+              <figure class="figure">
+                <% image = company.logo&.image&.attached? ? company.logo.image : 'placeholder.png' %>
 
-              <%= image_tag image, class: 'me-2 rounded-circle border-dark', size: '40x40' %>
-            </figure>
+                <%= image_tag image, class: 'me-2 rounded-circle border-dark', size: '60x60' %>
+              </figure>
 
-            <%= form.fields_for :logo do |logo_form| %>
-              <div class="d-inline-block">
-                <%= logo_form.label :image, class: 'btn btn-light', for: 'company_logo_attributes_image' do %>
-                  <%= bootstrap_icon(icon: 'bi-cloud-upload') %> Logo da empresa (40x40)
-                <% end %>
+              <%= form.fields_for :logo do |logo_form| %>
+                <div class="d-inline-block">
+                  <%= logo_form.label :image, class: 'btn btn-light btn-sm', for: 'company_logo_attributes_image' do %>
+                    <%= bootstrap_icon(icon: 'bi-cloud-upload') %> <%= Photo.human_attribute_name(:image_logo) %>
+                  <% end %><br>
 
-                <span id="file-name">Nenhum arquivo selecionado</span>
-              </div>
+                  <small id="file-name">Nenhum arquivo selecionado</small>
+                </div>
 
-              <%= logo_form.file_field :image, style: 'display: none;' %>
-            <% end %>
+                <%= logo_form.file_field :image, style: 'display: none;' %>
+              <% end %>
+            </div>
+
 
             <div class="form-group">
               <%= form.label :name, style: 'display: block;' %>

@@ -4,7 +4,8 @@ pt-BR:
     attributes:
       photo:
         image: Imagem
-        image_event: Imagem do evento (Recomendado 1320x300)
+        image_event: Imagem do evento (Recomendado 1320x400)
+        image_logo: Logo da empresa (Recomendado 50x50)
     models:
       photo:
         one: Imagem
