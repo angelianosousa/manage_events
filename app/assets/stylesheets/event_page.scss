@@ -5,19 +5,15 @@
   background-color:rgba(192,192,192,0.25);
 }
 
-.banner-figure {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
+.banner {
+  background-position: center;
+  background-size: cover;
+  width: 1320px;
+  height: 400px; /* desktop */
 }
 
-.banner-figure img {
-  display: block;
-  width: 100%;
-}
-
-.banner-figure::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+@media (max-width: 768px) {
+  .banner {
+    height: 180px; /* reduz para mobile */
+  }
 }
