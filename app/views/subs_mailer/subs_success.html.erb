@@ -1,11 +1,11 @@
 <table role="presentation" align="center" style="width: 96%; width: 600px;">
   <% content_for :header_mail do %>
-    <table class='text-white text-center' style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); height: 150px; width: 100%;" align="center">
+    <table style="text-align: center; background: linear-gradient(135deg, #10b981 0%, #059669 100%); height: 150px; width: 100%; color: #fff;" align="center">
       <tr>
         <td>
-          <h3 class="text-center">Pagamento Confirmado!</h3>
+          <h3 style="text-align: center;">Pagamento Confirmado!</h3>
           
-          <i class="bi bi-check-circle-fill" style="font-size: 40px;"></i>
+          <%= image_tag 'icon_check.png', alt: "check-icon-img", style:"width: 40px;" %>
         </td>
       </tr>
     </table>
@@ -22,8 +22,8 @@
               <p>Ótimas notícias! Seu pagamento foi processado com sucesso e sua vaga no evento está garantida.</p>
             </div>
 
-            <div class="alert alert-success" style="padding: 20px; margin-bottom: 20px;">
-              <h4 class="text-success" style="font-weight: bold; text-align: center;">Comprovante de Pagamento</h4>
+            <div style="padding: 20px; margin-bottom: 20px; background-color: #d1e7dd; border: 1px solid #a3cfbb;">
+              <p style="font-size: 24px; font-weight: bold; text-align: center; color: rgba(25,135,84)">Comprovante de Pagamento</p>
 
               <table align='center' style="text-align: center;">
                 <tbody>
@@ -60,8 +60,8 @@
               </table>
             </div>
 
-            <div class="bg-body-secondary" style="padding: 20px;" style="text-align: center;">
-              <h4 class="text-success" style="font-weight: bold; text-align: center;">Detalhes do Evento</h4>
+            <div style="padding: 20px; text-align: center; background-color: rgba(233, 236, 239)">
+              <h4 style="font-size: 24px; font-weight: bold; text-align: center; color: rgba(25,135,84)">Detalhes do Evento</h4>
 
               <table align='center' valign="top" style="text-align: center;">
                 <tbody>
@@ -84,7 +84,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 20px;">
-              <div class="alert alert-warning" role="alert" style="border-left: 5px solid;">
+              <div style="padding: 15px; border-left: 5px solid; background-color: #fff3cd; color: #664d03;">
                 <i class="bi bi-exclamation-triangle-fill" style="font-size: 15px;"></i>
 
                 <b>Importante:</b> Guarde este e-mail como comprovante. Apresente-o no dia do evento junto com um documento de identificação.
@@ -97,7 +97,7 @@
   </tr>
 
   <% content_for :footer_mail do %>
-    <table class="text-center bg-body-secondary" style="height: 120px; width: 100%;">
+    <table style="text-align: center; height: 120px; width: 100%; margin-top: 20px; background-color: rgba(233, 236, 239)">
       <tr>
         <td>
           <p>Dúvidas ? Entre em contato conosco em <%= ENV.fetch('DEFAULT_MAIL', 'geventos@gmail.com')%></p>

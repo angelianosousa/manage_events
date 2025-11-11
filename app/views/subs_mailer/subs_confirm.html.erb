@@ -1,11 +1,11 @@
 <table role="presentation" align="center" style="width: 96%; width: 600px;">
   <% content_for :header_mail do %>
-    <table class='text-white text-center' style="background-color: #031633; height: 150px; width: 100%;" align="center">
+    <table style="text-align: center; color: #fff; background-color: #031633; height: 150px; width: 100%;" align="center">
       <tr>
         <td>
-          <h3 class="text-center">Inscrição Registrada!</h3>
+          <h2 style="text-align: center; color: #fff;">Inscrição Registrada!</h2>
           
-          <i class="bi bi-check-circle-fill" style="font-size: 40px;"></i>
+          <%= image_tag 'icon_check.png', alt: "check-icon-img", style:"width: 40px;" %>
         </td>
       </tr>
     </table>
@@ -17,19 +17,19 @@
         <tr>
           <td>
             <div style="text-align: center;">
-              <h5>Olá <%= @client.name %></h5>
+              <h3>Olá <%= @client.name %></h3>
 
               <p>Sua inscrição para o evento foi registrada com sucesso! Estamos muito felizes em tê-lo(a) conosco</p>
             </div>
 
-            <div class="bg-body-secondary" style="padding: 20px;">
+            <div style="padding: 20px; background-color: rgba(233, 236, 239);">
               <h4 style="color: #031633; font-weight: bold; text-align: center;">Detalhes do Evento</h4>
 
               <table align='center' valign="top">
                 <tbody>
                   <tr class="text-secondary">
                     <td style="padding-right: 85px;"><b>Evento:</b></td>
-                    <td><%= I18n.l @event.date_start, format: :short %></td>
+                    <td><%= @event.name %></td>
                   </tr>
 
                   <tr class="text-secondary">
@@ -49,19 +49,20 @@
             </div>
 
             <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-              <h5>Próximos passos</h5>
+              <h3>Próximos passos</h3>
 
               <p>
                 Aguarde a confirmação do pagamento para finalizar sua inscrição. <br>
                 Você receberá um novo e-mail assim que o pagamento for processado.
               </p>
-            </div>
 
-            <div class="text-center" style="margin-top: 20px;">
-              <a href="<%= @payment.link %>" class="btn btn-outline-dark" target="_blank">CONFIRME SUA INSCRIÇÃO</a><br><br>
+              <a href="<%= @payment.link %>" target="_blank"
+              style="display: block; border: 1px solid black; border-radius: 10px; padding: 10px 3px; text-decoration: none; color: black; margin: 30px 150px;"
+              >CONFIRME SUA INSCRIÇÃO</a>
 
               <small>Se já realizou o pagamento desconside</small>
             </div>
+
           </td>
         </tr>
       </table>
@@ -69,7 +70,7 @@
   </tr>
 
   <% content_for :footer_mail do %>
-    <table class="text-center bg-body-secondary" style="height: 120px; width: 100%; margin-top: 20px;">
+    <table style="text-align: center; height: 120px; width: 100%; margin-top: 20px; background-color: rgba(233, 236, 239)">
       <tr>
         <td>
           <p>Dúvidas ? Entre em contato conosco em <%= ENV.fetch('DEFAULT_MAIL', 'geventos@gmail.com')%></p>
