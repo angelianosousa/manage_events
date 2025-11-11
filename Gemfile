@@ -77,6 +77,7 @@ group :development, :test do
   gem 'faker', '~> 3.5'
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
+  gem "rspec-rails", "~> 7.1"
 end
 
 group :development do
@@ -92,5 +93,3 @@ end
 
 gem "faraday", "~> 2.14"
 gem "json", "~> 2.15"
-
-gem "rspec-rails", "~> 7.1"
