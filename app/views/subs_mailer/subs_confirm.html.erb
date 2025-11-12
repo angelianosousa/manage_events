@@ -3,7 +3,7 @@
     <table class='text-white text-center' style="background-color: #031633; height: 150px; width: 100%;" align="center">
       <tr>
         <td>
-          <h3 class="text-center">Inscrição Registrada!</h3>
+          <p style="font-size: 24px; text-align: center; color: #fff;">Inscrição Registrada!</p>
           
           <i class="bi bi-check-circle-fill" style="font-size: 40px;"></i>
         </td>
@@ -17,13 +17,13 @@
         <tr>
           <td>
             <div style="text-align: center;">
-              <h5>Olá <%= @client.name %></h5>
+              <p style="font-size: 24px;">Olá <%= @client.name %></p>
 
               <p>Sua inscrição para o evento foi registrada com sucesso! Estamos muito felizes em tê-lo(a) conosco</p>
             </div>
 
-            <div class="bg-body-secondary" style="padding: 20px;">
-              <h4 style="color: #031633; font-weight: bold; text-align: center;">Detalhes do Evento</h4>
+            <div style="padding: 20px; background-color: rgba(233, 236, 239);">
+              <p style="font-size: 24px; color: #031633; font-weight: bold; text-align: center;">Detalhes do Evento</p>
 
               <table align='center' valign="top">
                 <tbody>
@@ -49,7 +49,7 @@
             </div>
 
             <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-              <h5>Próximos passos</h5>
+              <p style="font-size: 24px;">Próximos passos</p>
 
               <p>
                 Aguarde a confirmação do pagamento para finalizar sua inscrição. <br>
@@ -69,7 +69,7 @@
   </tr>
 
   <% content_for :footer_mail do %>
-    <table class="text-center bg-body-secondary" style="height: 120px; width: 100%; margin-top: 20px;">
+    <table style="text-align: center; height: 120px; width: 100%; background-color: rgba(233, 236, 239)">
       <tr>
         <td>
           <p>Dúvidas ? Entre em contato conosco em <%= ENV.fetch('DEFAULT_MAIL', 'geventos@gmail.com')%></p>

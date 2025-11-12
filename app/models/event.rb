@@ -76,7 +76,7 @@ class Event < ApplicationRecord
   end
 
   def subscribers_sellout_sum
-    tickets.joins(:payments).sum(&:tickets_sold)
+    tickets.sum(&:tickets_sold)
   end
 
   def tickets_sells_verbose

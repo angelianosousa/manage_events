@@ -36,7 +36,7 @@ class Ticket < ApplicationRecord
   end
 
   def tickets_sold
-    payments.where(status: %i[pending paid]).sum(&:quantity)
+    payments.where(status: %i[pending paid]).sum('payments.quantity')
   end
 
   def tickets_receipt
