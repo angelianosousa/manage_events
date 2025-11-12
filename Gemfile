@@ -20,11 +20,17 @@ gem 'dotenv', '~> 3.1'
 # Devise is a flexible authentication solution for Rails based on Warden. It
 gem 'devise', '~> 4.9'
 
+# Faraday for http request
+gem 'faraday', '~> 2.14'
+
 # It lets you create pretty URLs and work with human-friendly strings as if they were numeric ids.
 gem 'friendly_id', '~> 5.5'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
+
+# Json parse
+gem 'json', '~> 2.15'
 
 # RMagick is an interface between the Ruby programming language and the ImageMagick image processing library.
 gem 'image_magick', '~> 0.1.9'
@@ -55,6 +61,9 @@ gem 'rails-i18n', '~> 7.0'
 
 # Ransack will help you easily add searching to your Rails application, without any additional dependencies.
 gem 'ransack', '~> 4.2.1'
+
+# Sendgrid for mail delivery
+gem 'sendgrid-ruby', '~> 6.7'
 
 # Rails dynamic nested forms using vanilla JS
 gem 'vanilla_nested', '~> 1.7'
@@ -90,6 +99,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
-
-gem "faraday", "~> 2.14"
-gem "json", "~> 2.15"
