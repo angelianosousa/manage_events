@@ -1,11 +1,11 @@
 <table role="presentation" align="center" style="width: 96%; width: 600px;">
   <% content_for :header_mail do %>
-    <table class='text-white text-center' style="background-color: #031633; height: 150px; width: 100%;" align="center">
+    <table style="text-align: center; color: #fff; background-color: #031633; height: 150px; width: 100%;" align="center">
       <tr>
         <td>
           <p style="font-size: 24px; text-align: center; color: #fff;">Inscrição Registrada!</p>
           
-          <i class="bi bi-check-circle-fill" style="font-size: 40px;"></i>
+          <%= image_tag 'icon_check.png', alt: "check-icon-img", style:"width: 40px;" %>
         </td>
       </tr>
     </table>
@@ -29,7 +29,7 @@
                 <tbody>
                   <tr class="text-secondary">
                     <td style="padding-right: 85px;"><b>Evento:</b></td>
-                    <td><%= I18n.l @event.date_start, format: :short %></td>
+                    <td><%= @event.name %></td>
                   </tr>
 
                   <tr class="text-secondary">
@@ -55,13 +55,14 @@
                 Aguarde a confirmação do pagamento para finalizar sua inscrição. <br>
                 Você receberá um novo e-mail assim que o pagamento for processado.
               </p>
-            </div>
 
-            <div class="text-center" style="margin-top: 20px;">
-              <a href="<%= @payment.link %>" class="btn btn-outline-dark" target="_blank">CONFIRME SUA INSCRIÇÃO</a><br><br>
+              <a href="<%= @payment.link %>" target="_blank"
+              style="display: block; border: 1px solid black; border-radius: 10px; padding: 10px 3px; text-decoration: none; color: black; margin: 30px 150px;"
+              >CONFIRME SUA INSCRIÇÃO</a>
 
               <small>Se já realizou o pagamento desconside</small>
             </div>
+
           </td>
         </tr>
       </table>

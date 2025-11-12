@@ -44,16 +44,22 @@ class Payment < ApplicationRecord
   end
 
   def confirm_sub_success!
+    return if paided_at.present?
+
     SubsMailer.with(payment: self).subs_success.deliver_later
     update(paided_at: DateTime.now, status: :paid)
   end
 
   def cancel_sub!
+    return if cancelled_at.present?
+
     SubsMailer.with(payment: self).subs_cancel.deliver_later
     update(cancelled_at: DateTime.now, status: :cancelled)
   end
 
   def expire_sub!
+    return if expired_at.present?
+
     update(expireed_at: DateTime.now, status: :expired)
   end
 end

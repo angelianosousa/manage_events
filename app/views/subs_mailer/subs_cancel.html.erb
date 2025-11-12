@@ -1,11 +1,11 @@
 <table role="presentation" align="center" style="width: 96%; width: 600px;">
   <% content_for :header_mail do %>
-    <table class='text-white text-center bg-danger' style="height: 150px; width: 100%;" align="center">
+    <table style="height: 150px; width: 100%; text-align: center; color: #fff; background-color: rgba(220, 53, 69)" align="center">
       <tr>
         <td>
-          <h3 class="text-center">Inscrição Cancelada!</h3>
+          <h2 style="text-align: center;">Inscrição Cancelada!</h2>
           
-          <i class="bi bi-check-circle-fill" style="font-size: 40px;"></i>
+          <%= image_tag 'icon_check.png', alt: "check-icon-img", style:"width: 40px;" %>
         </td>
       </tr>
     </table>
@@ -34,7 +34,7 @@
 
                   <tr class="text-secondary">
                     <td style="padding-right: 85px;"><b>Data Cancelamento</b></td>
-                    <td><%#= "#{@event.id}.#{@payment.id}.#{@client.id}" %></td>
+                    <td><%= I18n.l @payment.cancelled_at, format: :short %></td>
                   </tr>
 
                   <tr class="text-secondary">
@@ -62,12 +62,12 @@
               <div style="padding: 5px; border-left: 5px solid; color: rgba(13, 110, 253); background-color: #cfe2ff">
                 <p style="font-size: 24px; font-weight: bold;">Interessado em outros eventos?</p>
 
-                Temos outros eventos incríveis acontecendo em breve. Confira nossa programação completa e encontre o evento perfeito para você!
+                <p>Temos outros eventos incríveis acontecendo em breve. Confira nossa programação completa e encontre o evento perfeito para você!</p>
               </div>
             </div>
             
-            <div class="text-center" style="margin-top: 20px; margin-bottom: 20px;">
-              <%= link_to 'Ver Outros Eventos', @url_all_events, class: 'btn btn-primary', target: "_blank" %> <br> <br>
+            <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+              <%= link_to 'Ver Outros Eventos', @url_all_events, target: "_blank", style: 'display: block; background-color: rgba(13, 110, 253); color: #fff; margin: 30px 200px; padding: 10px; border-radius: 10px; text-decoration: none;' %>
 
               <small>Sentiremos sua falta! Esperamos vê-lo(a) em um próximo evento.</small>
             </div>
@@ -78,7 +78,7 @@
   </tr>
 
   <% content_for :footer_mail do %>
-    <table class="text-center bg-body-secondary" style="height: 120px; width: 100%;">
+    <table style="height: 120px; width: 100%; text-align: center; background-color: rgba(233, 236, 239)">
       <tr>
         <td>
           <p>Dúvidas sobre o cancelamento ? Contate-nos em <%= ENV.fetch('DEFAULT_MAIL', 'geventos@gmail.com')%></p>
