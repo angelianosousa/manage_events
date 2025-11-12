@@ -95,6 +95,9 @@ Rails.application.configure do
     address: 'smtp.sendgrid.net',
     host: 'smtp.sendgrid.net',
     port: '587',
-    authentication: :login
+    authentication: :plain,
+    enable_starttls_auto: true,
+    open_timeout: 10,
+    read_timeout: 10
   }
 end
